@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Domain.Models
 {
-    public class Review
+    public class Review : Base
     {
-        public int Id { get; set; }
         public int Rating { get; set; }
         public string Comment { get; set; }
         public int ClientId { get; set; }

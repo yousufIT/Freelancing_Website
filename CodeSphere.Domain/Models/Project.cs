@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Domain.Models
 {
-    public class Project
+    public class Project : Base
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public double Budget { get; set; }

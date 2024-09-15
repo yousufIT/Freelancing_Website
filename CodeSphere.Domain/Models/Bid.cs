@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Domain.Models
 {
-    public class Bid
+    public class Bid : Base
     {
-        public int Id { get; set; }
         public double Amount { get; set; }
         public string Proposal { get; set; }
         public int FreelancerId { get; set; }

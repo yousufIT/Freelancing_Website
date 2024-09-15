@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Domain.Models
 {
-    public class RequiredSkill : Base
+    public class Base
     {
-        public string Name { get; set; }
-        public int ProjectId { get; set; }
-        public Project Project { get; set; }
+        public int Id { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

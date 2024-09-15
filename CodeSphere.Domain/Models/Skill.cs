@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Domain.Models
 {
-    public class Skill
+    public class Skill : Base
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public List<Profile> Profiles { get; set; } 
     }

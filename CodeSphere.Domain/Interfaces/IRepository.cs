@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeSphere.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace CodeSphere.Domain.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<(List<T>, PaginationMetaData)> GetAllAsync(int pageNumber, int pageSize);
         Task<T> GetByIdAsync(int id);
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);

@@ -12,12 +12,12 @@ namespace CodeSphere.Domain.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public decimal Budget { get; set; }
+        public double Budget { get; set; }
         public string Status { get; set; } 
         public int ClientId { get; set; }
         public User Client { get; set; } 
-         public ICollection<Bid> Bids { get; set; }
-        public ICollection<RequiredSkill> RequiredSkills { get; set; }
+         public List<Bid> Bids { get; set; }
+        public List<RequiredSkill> RequiredSkills { get; set; }
         public int? SelectedFreelancerId { get; set; }
         public User SelectedFreelancer { get; set; }
     }

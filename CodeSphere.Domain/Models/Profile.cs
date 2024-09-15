@@ -10,8 +10,8 @@ namespace CodeSphere.Domain.Models
     {
         public int Id { get; set; }
         public string Bio { get; set; }
-        public ICollection<Skill> Skills { get; set; }
-        public ICollection<PortfolioItem> Portfolio { get; set; }
+        public List<Skill> Skills { get; set; }
+        public List<PortfolioItem> Portfolio { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
     }

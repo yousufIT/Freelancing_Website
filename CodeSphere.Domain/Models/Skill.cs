@@ -10,6 +10,6 @@ namespace CodeSphere.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Profile> Profiles { get; set; } 
+        public List<Profile> Profiles { get; set; } 
     }
 }

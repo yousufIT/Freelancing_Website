@@ -48,10 +48,11 @@ namespace CodeSphere.Infrastructure.Context
             modelBuilder.Entity<Bid>()
                .HasOne(b => b.Freelancer)
                .WithMany(u => u.Bids)
-               .HasForeignKey(b => b.FreelancerId);
+               .HasForeignKey(b => b.FreelancerId)
+               .OnDelete(DeleteBehavior.NoAction);
 
 
-           modelBuilder.Entity<Bid>()
+            modelBuilder.Entity<Bid>()
                 .HasOne(b => b.Project)
                 .WithMany(p => p.Bids)
                 .HasForeignKey(b => b.ProjectId);
@@ -60,13 +61,14 @@ namespace CodeSphere.Infrastructure.Context
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Client)
                 .WithMany(u => u.ReviewsGiven)
-                .HasForeignKey(r => r.ClientId);
+                .HasForeignKey(r => r.ClientId)
+                .OnDelete(DeleteBehavior.NoAction); 
 
-
-             modelBuilder.Entity<Review>()
+            modelBuilder.Entity<Review>()
                 .HasOne(r => r.Freelancer)
                 .WithMany(u => u.ReviewsReceived)
-                .HasForeignKey(r => r.FreelancerId);
+                .HasForeignKey(r => r.FreelancerId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             modelBuilder.Entity<Project>()

@@ -16,9 +16,9 @@ namespace CodeSphere.Domain.Models
         public string Role { get; set; }
         public double Rating { get; set; }
         public Profile Profile { get; set; }
-        public ICollection<Project> Projects { get; set; }
-        public ICollection<Bid> Bids { get; set; }
-        public ICollection<Review> ReviewsReceived { get; set; } 
-        public ICollection<Review> ReviewsGiven { get; set; } 
+        public List<Project> Projects { get; set; }
+        public List<Bid> Bids { get; set; }
+        public List<Review> ReviewsReceived { get; set; } 
+        public List<Review> ReviewsGiven { get; set; } 
     }
 }

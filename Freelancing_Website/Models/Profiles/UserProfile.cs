@@ -11,6 +11,14 @@ namespace Freelancing_Website.Models.Profiles
         {
             CreateMap<User, UserView>();
             CreateMap<UserForCreate, User>();
+
+            // Freelancer Mapping
+            CreateMap<Freelancer, FreelancerView>();
+            CreateMap<FreelancerForCreate, Freelancer>();
+
+            // Client Mapping
+            CreateMap<Client, ClientView>();
+            CreateMap<ClientForCreate, Client>();
         }
     }
 }

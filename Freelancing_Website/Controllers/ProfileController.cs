@@ -53,7 +53,7 @@ namespace Freelancing_Website.Controllers
             _logger.LogInformation("Creating new profile.");
             var newProfile = _mapper.Map<Profile>(profile);
             await _profileRepository.AddAsync(newProfile);
-            return CreatedAtAction(nameof(GetProfile), new { id = newProfile.Id }, _mapper.Map<ProfileView>(newProfile));
+            return CreatedAtAction(nameof(GetProfile), new { id = ((IBase)newProfile).Id }, _mapper.Map<ProfileView>(newProfile));
         }
 
         [HttpPut("{id}")]

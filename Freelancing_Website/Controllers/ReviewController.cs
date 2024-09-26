@@ -52,7 +52,7 @@ namespace Freelancing_Website.Controllers
             _logger.LogInformation("Creating new review.");
             var newReview = _mapper.Map<Review>(review);
             await _reviewRepository.AddAsync(newReview);
-            return CreatedAtAction(nameof(GetReview), new { id = newReview.Id }, _mapper.Map<ReviewView>(newReview));
+            return CreatedAtAction(nameof(GetReview), new { id = ((IBase)newReview).Id }, _mapper.Map<ReviewView>(newReview));
         }
 
         [HttpPut("{id}")]

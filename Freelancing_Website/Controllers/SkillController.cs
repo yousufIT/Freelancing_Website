@@ -52,7 +52,7 @@ namespace Freelancing_Website.Controllers
             _logger.LogInformation("Creating new skill.");
             var newSkill = _mapper.Map<Skill>(skill);
             await _skillRepository.AddAsync(newSkill);
-            return CreatedAtAction(nameof(GetSkill), new { id = newSkill.Id }, _mapper.Map<SkillView>(newSkill));
+            return CreatedAtAction(nameof(GetSkill), new { id = ((IBase)newSkill).Id }, _mapper.Map<SkillView>(newSkill));
         }
 
         [HttpPut("{id}")]

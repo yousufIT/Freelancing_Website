@@ -53,7 +53,7 @@ namespace Freelancing_Website.Controllers
             _logger.LogInformation("Creating new project.");
             var newProject = _mapper.Map<Project>(project);
             await _projectRepository.AddAsync(newProject);
-            return CreatedAtAction(nameof(GetProject), new { id = newProject.Id }, _mapper.Map<ProjectView>(newProject));
+            return CreatedAtAction(nameof(GetProject), new { id = ((IBase)newProject).Id }, _mapper.Map<ProjectView>(newProject));
         }
 
         [HttpPut("{id}")]

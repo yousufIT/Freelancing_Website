@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Domain.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : IBase
     {
         Task<(List<T>, PaginationMetaData)> GetAllAsync(int pageNumber, int pageSize);
         Task<T> GetByIdAsync(int id);

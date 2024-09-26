@@ -54,7 +54,7 @@ namespace Freelancing_Website.Controllers
             _logger.LogInformation("Creating new bid.");
             var newBid = _mapper.Map<Bid>(bid);
             await _bidRepository.AddAsync(newBid);
-            return CreatedAtAction(nameof(GetBid), new { id = newBid.Id }, _mapper.Map<BidView>(newBid));
+            return CreatedAtAction(nameof(GetBid), new { id = ((IBase)newBid).Id }, _mapper.Map<BidView>(newBid));
         }
 
         [HttpPut("{id}")]

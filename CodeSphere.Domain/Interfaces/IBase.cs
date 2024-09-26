@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Domain.Models
 {
-    public class Base
+    public interface IBase
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }

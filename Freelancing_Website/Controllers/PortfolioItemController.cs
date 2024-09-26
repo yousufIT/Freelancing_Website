@@ -52,7 +52,7 @@ namespace Freelancing_Website.Controllers
             _logger.LogInformation("Creating new portfolio item.");
             var newPortfolioItem = _mapper.Map<PortfolioItem>(portfolioItem);
             await _portfolioItemRepository.AddAsync(newPortfolioItem);
-            return CreatedAtAction(nameof(GetPortfolioItem), new { id = newPortfolioItem.Id }, _mapper.Map<PortfolioItemView>(newPortfolioItem));
+            return CreatedAtAction(nameof(GetPortfolioItem), new { id = ((IBase)newPortfolioItem).Id }, _mapper.Map<PortfolioItemView>(newPortfolioItem));
         }
 
         [HttpPut("{id}")]

@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Domain.Models
 {
-    public class Bid : Base
+    public class Bid : IBase
     {
         public double Amount { get; set; }
         public string Proposal { get; set; }
         public int FreelancerId { get; set; }
-        public User Freelancer { get; set; }
+        public Freelancer Freelancer { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+        public bool IsDeleted { get; set; }
+        int IBase.Id { get; set; }
     }
 }

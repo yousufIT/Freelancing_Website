@@ -17,7 +17,8 @@ namespace CodeSphere.Infrastructure.Context
         {
 
         }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Freelancer> Freelancers { get; set; }
+        public DbSet<Client> Clients { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<RequiredSkill> RequiredSkills { get; set; }
@@ -25,24 +26,34 @@ namespace CodeSphere.Infrastructure.Context
         public DbSet<Project> Projects { get; set; }
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-               .HasOne(u => u.Profile)
-               .WithOne(p => p.User)
-               .HasForeignKey<Profile>(p => p.UserId);
+            modelBuilder.Entity<Freelancer>()
+                .HasMany(f => f.Bids)
+                .WithOne(b => b.Freelancer)
+                .HasForeignKey(b => b.FreelancerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.PostedProjects)
+                .WithOne(p => p.Client)
+                .HasForeignKey(p => p.ClientId);
+
+            modelBuilder.Entity<Profile>()
+                .HasOne(p => p.Freelancer)
+                .WithOne(f => f.Profile)
+                .HasForeignKey<Profile>(p => p.FreelancerId);
+
+            modelBuilder.Entity<Freelancer>()
+               .HasOne(f => f.Profile)
+               .WithOne(p => p.Freelancer)
+               .HasForeignKey<Profile>(p => p.FreelancerId);
 
 
             modelBuilder.Entity<Profile>()
                .HasMany(p => p.Skills)
                .WithMany(s => s.Profiles);
-
-
-            modelBuilder.Entity<Project>()
-               .HasOne(p => p.Client)
-               .WithMany(u => u.Projects)
-               .HasForeignKey(p => p.ClientId);
 
 
             modelBuilder.Entity<Bid>()
@@ -60,13 +71,13 @@ namespace CodeSphere.Infrastructure.Context
 
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Client)
-                .WithMany(u => u.ReviewsGiven)
+                .WithMany(c => c.ReviewsGiven)
                 .HasForeignKey(r => r.ClientId)
                 .OnDelete(DeleteBehavior.NoAction); 
 
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Freelancer)
-                .WithMany(u => u.ReviewsReceived)
+                .WithMany(f => f.ReviewsReceived)
                 .HasForeignKey(r => r.FreelancerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -75,6 +86,34 @@ namespace CodeSphere.Infrastructure.Context
                 .HasMany(p => p.RequiredSkills)
                 .WithOne(rs => rs.Project)
                 .HasForeignKey(rs => rs.ProjectId);
+
+
+            modelBuilder.Entity<Bid>()
+                .HasKey(b => ((IBase)b).Id);
+
+            modelBuilder.Entity<Client>()
+                .HasKey(c => ((IBase)c).Id);
+
+            modelBuilder.Entity<Freelancer>()
+                .HasKey(f => ((IBase)f).Id);
+
+            modelBuilder.Entity<PortfolioItem>()
+                .HasKey(p => ((IBase)p).Id);
+
+            modelBuilder.Entity<Profile>()
+                .HasKey(p => ((IBase)p).Id);
+
+            modelBuilder.Entity<Project>()
+                .HasKey(p => ((IBase)p).Id);
+
+            modelBuilder.Entity<RequiredSkill>()
+                .HasKey(r => ((IBase)r).Id);
+
+            modelBuilder.Entity<Review>()
+                .HasKey(r => ((IBase)r).Id);
+
+            modelBuilder.Entity<Skill>()
+                .HasKey(s => ((IBase)s).Id);
 
         }
     }

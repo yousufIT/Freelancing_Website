@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CodeSphere.Domain.Interfaces;
 using CodeSphere.Domain.Models;
+using CodeSphere.Infrastructure.Repos;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -12,11 +13,11 @@ namespace Freelancing_Website.Controllers
     [ApiController]
     public class ProjectController : ControllerBase
     {
-        private readonly IRepository<Project> _projectRepository;
+        private readonly ProjectRepository _projectRepository;
         private readonly ILogger<ProjectController> _logger;
         private readonly IMapper _mapper;
 
-        public ProjectController(IRepository<Project> projectRepository, ILogger<ProjectController> logger,IMapper mapper)
+        public ProjectController(ProjectRepository projectRepository, ILogger<ProjectController> logger,IMapper mapper)
         {
             _projectRepository = projectRepository;
             _logger = logger;
@@ -24,10 +25,21 @@ namespace Freelancing_Website.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProjects(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetProjects(int pageNumber = 1, int pageSize = 10,List<string> filterSkills = null)
         {
-            _logger.LogInformation("Fetching all projects.");
-            var (projects,paginationMetaData) = await _projectRepository.GetAllAsync(pageNumber, pageSize);
+            List<Project> projects;
+            PaginationMetaData paginationMetaData;
+
+            if (filterSkills == null)
+            {
+                _logger.LogInformation("Fetching all projects.");
+                (projects, paginationMetaData) = await _projectRepository.GetAllAsync(pageNumber, pageSize);
+            }
+            else
+            {
+                _logger.LogInformation("Fetching all the projects that match filterskills.");
+                (projects, paginationMetaData) = await _projectRepository.Search(pageNumber, pageSize,filterSkills);
+            }
             return Ok(_mapper.Map<List<ProjectView>>(projects));
         }
 

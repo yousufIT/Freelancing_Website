@@ -13,8 +13,8 @@ namespace CodeSphere.Infrastructure.Repos
 {
     public class Repository<T> : IRepository<T> where T : class,IBase
     {
-        private readonly CodeSphereContext _context;
-        private readonly ILogger<Repository<T>> _logger;
+        protected readonly CodeSphereContext _context;
+        protected readonly ILogger<Repository<T>> _logger;
         public Repository(CodeSphereContext context, ILogger<Repository<T>>
         logger)
         {

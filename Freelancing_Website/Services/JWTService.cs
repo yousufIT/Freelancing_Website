@@ -12,7 +12,7 @@ public class JWTService
     {
         _config = config;
         _jwtkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-            _config["Authentivation:SecretKey"]));
+            _config["Authentication:SecretKey"]));
     }
 
     public string CreateJWT(UserForCreate user)
@@ -20,6 +20,7 @@ public class JWTService
         var userClaims = new List<Claim>
         {
             new Claim(ClaimTypes.Email, user.Email),
+            new Claim("user-name", user.UserName),
             new Claim(ClaimTypes.Role, user.Role),
             new Claim(ClaimTypes.Name, user.Name),
         };
@@ -43,8 +44,8 @@ public class JWTService
             Subject = new ClaimsIdentity(userClaims),
             Expires = DateTime.UtcNow.AddDays(7),
             SigningCredentials = credentials,
-            Issuer = _config["Authentivation:Issuer"],
-            Audience = _config["Authentivation:Audience"]
+            Issuer = _config["Authentication:Issuer"],
+            Audience = _config["Authentication:Audience"]
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

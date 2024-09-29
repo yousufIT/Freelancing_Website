@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces;
+using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
@@ -11,11 +11,11 @@ namespace Freelancing_Website.Controllers
     [ApiController]
     public class ReviewsController : ControllerBase
     {
-        private readonly IRepository<Review> _reviewRepository;
+        private readonly IReviewRepository _reviewRepository;
         private readonly ILogger<ReviewsController> _logger;
         private readonly IMapper _mapper;
 
-        public ReviewsController(IRepository<Review> reviewRepository, ILogger<ReviewsController> logger, IMapper mapper)
+        public ReviewsController(IReviewRepository reviewRepository, ILogger<ReviewsController> logger, IMapper mapper)
         {
             _reviewRepository = reviewRepository;
             _logger = logger;

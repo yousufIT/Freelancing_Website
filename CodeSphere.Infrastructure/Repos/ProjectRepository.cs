@@ -1,4 +1,5 @@
-﻿using CodeSphere.Domain.Models;
+﻿using CodeSphere.Domain.Interfaces.Repos;
+using CodeSphere.Domain.Models;
 using CodeSphere.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -10,13 +11,18 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Infrastructure.Repos
 {
-    public class ProjectRepository : Repository<Project>
+    public class ProjectRepository : Repository<Project>, IProjectRepository
     {
-        public ProjectRepository(CodeSphereContext _context, ILogger<Repository<Project>> _logger)
-        : base(_context, _logger)
+        public ProjectRepository(CodeSphereContext context, ILogger<Repository<Project>> logger)
+            : base(context, logger)
         {
         }
 
+        public async Task<IEnumerable<Project>> GetProjectsByClientIdAsync(int clientId)
+        {
+            _logger.LogInformation($"Fetching projects for client ID {clientId}");
+            return await _context.Projects.Where(p => p.ClientId == clientId).ToListAsync();
+        }
         public async Task<(List<Project>,PaginationMetaData)> Search(int pageNumber, int pageSize, List<string> filterWords )
         {
             var totalItemCount = await _context.Set<Project>()

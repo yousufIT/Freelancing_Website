@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Infrastructure.Repos
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class PortfolioItemRepository : Repository<PortfolioItem>, IPortfolioItemRepository
     {
-        public UserRepository(CodeSphereContext context, ILogger<Repository<User>> logger)
+        public PortfolioItemRepository(CodeSphereContext context, ILogger<Repository<PortfolioItem>> logger)
             : base(context, logger)
         {
         }
+
+        // Add any custom methods specific to PortfolioItem here
     }
 }

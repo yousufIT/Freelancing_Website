@@ -24,10 +24,9 @@ public class AccountsController : Controller
         {
             var freelancer = new Freelancer
             {
-                UserName = model.Email,
+                UserName = model.UserName,
                 Email = model.Email,
                 Name = model.Name,
-                Skills = model.Skills,
                 ProfileId = model.ProfileId,
                 Profile = model.Profile,
                 Hourlysalary = model.Hourlysalary
@@ -59,7 +58,7 @@ public class AccountsController : Controller
         {
             var client = new Client
             {
-                UserName = model.Email,
+                UserName = model.UserName,
                 Email = model.Email,
                 Name = model.Name,
                 CompanyName = model.CompanyName,

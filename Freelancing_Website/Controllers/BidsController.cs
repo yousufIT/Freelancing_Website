@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces;
+using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
@@ -11,11 +11,11 @@ namespace Freelancing_Website.Controllers
     [ApiController]
     public class BidsController : ControllerBase
     {
-        private readonly IRepository<Bid> _bidRepository;
+        private readonly IBidRepository _bidRepository;
         private readonly ILogger<BidsController> _logger;
         private readonly IMapper _mapper;
 
-        public BidsController(IRepository<Bid> bidRepository, ILogger<BidsController> logger, IMapper mapper)
+        public BidsController(IBidRepository bidRepository, ILogger<BidsController> logger, IMapper mapper)
         {
             _bidRepository = bidRepository;
             _logger = logger;

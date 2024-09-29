@@ -4,7 +4,6 @@ namespace Freelancing_Website.Models.ViewModels
 {
     public class FreelancerView : UserView
     {
-        public List<Skill> Skills { get; set; }
         public List<Project> CompletedProjects { get; set; }
         public List<Bid> Bids { get; set; }
         public List<Review> ReviewsReceived { get; set; }
@@ -14,7 +13,6 @@ namespace Freelancing_Website.Models.ViewModels
 
         public FreelancerView()
         {
-            Skills = new List<Skill>();
             CompletedProjects = new List<Project>();
             Bids = new List<Bid>();
             ReviewsReceived = new List<Review>();

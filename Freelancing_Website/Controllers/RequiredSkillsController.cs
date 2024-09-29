@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces;
+using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
@@ -11,11 +11,11 @@ namespace Freelancing_Website.Controllers
     [ApiController]
     public class RequiredSkillsController : ControllerBase
     {
-        private readonly IRepository<RequiredSkill> _requiredSkillRepository;
+        private readonly IRequiredSkillRepository _requiredSkillRepository;
         private readonly ILogger<RequiredSkillsController> _logger;
         private readonly IMapper _mapper;
 
-        public RequiredSkillsController(IRepository<RequiredSkill> requiredSkillRepository, ILogger<RequiredSkillsController> logger, IMapper mapper)
+        public RequiredSkillsController(IRequiredSkillRepository requiredSkillRepository, ILogger<RequiredSkillsController> logger, IMapper mapper)
         {
             _requiredSkillRepository = requiredSkillRepository;
             _logger = logger;

@@ -1,5 +1,4 @@
-
-using CodeSphere.Domain.Interfaces;
+using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using CodeSphere.Infrastructure.Context;
 using CodeSphere.Infrastructure.Repos;
@@ -20,22 +19,25 @@ namespace Freelancing_Website
             builder.Services.AddDbContext<CodeSphereContext>(options =>
                                  options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddControllers()
-                .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                })
-                .AddXmlSerializerFormatters();
+            builder.Services.AddControllers(options =>
+            {
+                options.ReturnHttpNotAcceptable = true;
+            })
+             .AddJsonOptions(options =>
+             {
+                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
+             })
+             .AddXmlSerializerFormatters();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddAuthentication().AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new()
                 {
-                    ValidIssuer = builder.Configuration["Authentivation:Issuer"],
-                    ValidAudience = builder.Configuration["Authentivation:Audience"],
+                    ValidIssuer = builder.Configuration["Authentication:Issuer"],
+                    ValidAudience = builder.Configuration["Authentication:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(
-                                         builder.Configuration["Authentivation:SecretKey"])),
+                                         builder.Configuration["Authentication:SecretKey"])),
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateIssuerSigningKey = true
@@ -78,17 +80,17 @@ namespace Freelancing_Website
             builder.Services.AddLogging();
 
             // Register Repositories
-            builder.Services.AddScoped<IRepository<Bid>, BidRepository>();
-            builder.Services.AddScoped<IRepository<PortfolioItem>, PortofolioItemRepository>();
-            builder.Services.AddScoped<IRepository<Profile>, ProfileRepository>();
-            builder.Services.AddScoped<IRepository<Project>, ProjectRepository>();
-            builder.Services.AddScoped<IRepository<RequiredSkill>, RequiredSkillRepository>();
-            builder.Services.AddScoped<IRepository<Review>, ReviewRepository>();
-            builder.Services.AddScoped<IRepository<Skill>, SkillRepository>();
-            builder.Services.AddScoped<IRepository<Client>, ClientRepository>();
-            builder.Services.AddScoped<IRepository<Freelancer>, FreelancerRepository>();
-            builder.Services.AddScoped<IRepository<User>, UserRepository>();
-            builder.Services.AddScoped<ProjectRepository>();
+            builder.Services.AddScoped<IBidRepository, BidRepository>();
+            builder.Services.AddScoped<IPortfolioItemRepository, PortfolioItemRepository>();
+            builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+            builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+            builder.Services.AddScoped<IRequiredSkillRepository, RequiredSkillRepository>();
+            builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+            builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+            builder.Services.AddScoped<IClientRepository, ClientRepository>();
+            builder.Services.AddScoped<IFreelancerRepository, FreelancerRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
             var app = builder.Build();
 

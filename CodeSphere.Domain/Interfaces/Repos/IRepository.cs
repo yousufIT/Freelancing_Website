@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeSphere.Domain.Interfaces
+namespace CodeSphere.Domain.Interfaces.Repos
 {
     public interface IRepository<T> where T : IBase
     {

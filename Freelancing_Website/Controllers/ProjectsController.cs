@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CodeSphere.Domain.Interfaces;
+using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using CodeSphere.Infrastructure.Repos;
 using Freelancing_Website.Models.ForCreate;
@@ -13,11 +14,11 @@ namespace Freelancing_Website.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        private readonly ProjectRepository _projectRepository;
+        private readonly IProjectRepository _projectRepository;
         private readonly ILogger<ProjectsController> _logger;
         private readonly IMapper _mapper;
 
-        public ProjectsController(ProjectRepository projectRepository, ILogger<ProjectsController> logger,IMapper mapper)
+        public ProjectsController(IProjectRepository projectRepository, ILogger<ProjectsController> logger,IMapper mapper)
         {
             _projectRepository = projectRepository;
             _logger = logger;

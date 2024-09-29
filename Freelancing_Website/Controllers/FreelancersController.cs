@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CodeSphere.Domain.Interfaces;
+using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
@@ -12,11 +13,11 @@ namespace Freelancing_Website.Controllers
     [ApiController]
     public class FreelancersController : ControllerBase
     {
-        private readonly IRepository<Freelancer> _freelancerRepository;
+        private readonly IFreelancerRepository _freelancerRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<FreelancersController> _logger;
 
-        public FreelancersController(IRepository<Freelancer> freelancerRepository, IMapper mapper, ILogger<FreelancersController> logger)
+        public FreelancersController(IFreelancerRepository freelancerRepository, IMapper mapper, ILogger<FreelancersController> logger)
         {
             _freelancerRepository = freelancerRepository;
             _mapper = mapper;
@@ -83,7 +84,6 @@ namespace Freelancing_Website.Controllers
                 existingFreelancer.Email = freelancerForCreate.Email;
                 existingFreelancer.Rating = freelancerForCreate.Rating;
                 existingFreelancer.Role = freelancerForCreate.Role;
-                existingFreelancer.Skills = freelancerForCreate.Skills;
                 existingFreelancer.Hourlysalary = freelancerForCreate.Hourlysalary;
 
                 await _freelancerRepository.UpdateAsync(existingFreelancer);

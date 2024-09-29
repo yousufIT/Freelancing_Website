@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces;
+using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
@@ -11,11 +11,11 @@ namespace Freelancing_Website.Controllers
     [ApiController]
     public class PortfolioItemsController : ControllerBase
     {
-        private readonly IRepository<PortfolioItem> _portfolioItemRepository;
+        private readonly IPortfolioItemRepository _portfolioItemRepository;
         private readonly ILogger<PortfolioItemsController> _logger;
         private readonly IMapper _mapper;
 
-        public PortfolioItemsController(IRepository<PortfolioItem> portfolioItemRepository, ILogger<PortfolioItemsController> logger, IMapper mapper)
+        public PortfolioItemsController(IPortfolioItemRepository portfolioItemRepository, ILogger<PortfolioItemsController> logger, IMapper mapper)
         {
             _portfolioItemRepository = portfolioItemRepository;
             _logger = logger;

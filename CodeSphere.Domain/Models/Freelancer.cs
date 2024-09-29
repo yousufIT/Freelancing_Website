@@ -8,7 +8,6 @@ namespace CodeSphere.Domain.Models
 {
     public class Freelancer : User
     {
-        public List<Skill> Skills { get; set; }
         public List<Project> CompletedProjects { get; set; }
         public List<Bid> Bids { get; set; }
         public List<Review> ReviewsReceived { get; set; }
@@ -18,7 +17,6 @@ namespace CodeSphere.Domain.Models
 
         public Freelancer()
         {
-            Skills = new List<Skill>();
             CompletedProjects = new List<Project>();
             Bids= new List<Bid>();
             ReviewsReceived = new List<Review>();

@@ -1,4 +1,4 @@
-﻿using CodeSphere.Domain.Interfaces;
+﻿using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using CodeSphere.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;

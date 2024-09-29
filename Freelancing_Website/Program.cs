@@ -20,7 +20,12 @@ namespace Freelancing_Website
             builder.Services.AddDbContext<CodeSphereContext>(options =>
                                  options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                })
+                .AddXmlSerializerFormatters();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddAuthentication().AddJwtBearer(options =>
@@ -36,6 +41,18 @@ namespace Freelancing_Website
                     ValidateIssuerSigningKey = true
                 };
             });
+
+            // 1. Enable CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
             builder.Services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = true;
@@ -71,6 +88,7 @@ namespace Freelancing_Website
             builder.Services.AddScoped<IRepository<Client>, ClientRepository>();
             builder.Services.AddScoped<IRepository<Freelancer>, FreelancerRepository>();
             builder.Services.AddScoped<IRepository<User>, UserRepository>();
+            builder.Services.AddScoped<ProjectRepository>();
 
             var app = builder.Build();
 
@@ -85,6 +103,8 @@ namespace Freelancing_Website
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors("AllowAll");
 
 
             app.MapControllers();

@@ -9,13 +9,13 @@ namespace Freelancing_Website.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewController : ControllerBase
+    public class ReviewsController : ControllerBase
     {
         private readonly IRepository<Review> _reviewRepository;
-        private readonly ILogger<ReviewController> _logger;
+        private readonly ILogger<ReviewsController> _logger;
         private readonly IMapper _mapper;
 
-        public ReviewController(IRepository<Review> reviewRepository, ILogger<ReviewController> logger, IMapper mapper)
+        public ReviewsController(IRepository<Review> reviewRepository, ILogger<ReviewsController> logger, IMapper mapper)
         {
             _reviewRepository = reviewRepository;
             _logger = logger;

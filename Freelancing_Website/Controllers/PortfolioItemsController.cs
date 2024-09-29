@@ -9,13 +9,13 @@ namespace Freelancing_Website.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PortfolioItemController : ControllerBase
+    public class PortfolioItemsController : ControllerBase
     {
         private readonly IRepository<PortfolioItem> _portfolioItemRepository;
-        private readonly ILogger<PortfolioItemController> _logger;
+        private readonly ILogger<PortfolioItemsController> _logger;
         private readonly IMapper _mapper;
 
-        public PortfolioItemController(IRepository<PortfolioItem> portfolioItemRepository, ILogger<PortfolioItemController> logger, IMapper mapper)
+        public PortfolioItemsController(IRepository<PortfolioItem> portfolioItemRepository, ILogger<PortfolioItemsController> logger, IMapper mapper)
         {
             _portfolioItemRepository = portfolioItemRepository;
             _logger = logger;

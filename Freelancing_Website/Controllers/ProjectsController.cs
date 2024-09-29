@@ -11,13 +11,13 @@ namespace Freelancing_Website.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectController : ControllerBase
+    public class ProjectsController : ControllerBase
     {
         private readonly ProjectRepository _projectRepository;
-        private readonly ILogger<ProjectController> _logger;
+        private readonly ILogger<ProjectsController> _logger;
         private readonly IMapper _mapper;
 
-        public ProjectController(ProjectRepository projectRepository, ILogger<ProjectController> logger,IMapper mapper)
+        public ProjectsController(ProjectRepository projectRepository, ILogger<ProjectsController> logger,IMapper mapper)
         {
             _projectRepository = projectRepository;
             _logger = logger;

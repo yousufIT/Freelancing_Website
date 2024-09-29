@@ -9,13 +9,13 @@ namespace Freelancing_Website.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequiredSkillController : ControllerBase
+    public class RequiredSkillsController : ControllerBase
     {
         private readonly IRepository<RequiredSkill> _requiredSkillRepository;
-        private readonly ILogger<RequiredSkillController> _logger;
+        private readonly ILogger<RequiredSkillsController> _logger;
         private readonly IMapper _mapper;
 
-        public RequiredSkillController(IRepository<RequiredSkill> requiredSkillRepository, ILogger<RequiredSkillController> logger, IMapper mapper)
+        public RequiredSkillsController(IRepository<RequiredSkill> requiredSkillRepository, ILogger<RequiredSkillsController> logger, IMapper mapper)
         {
             _requiredSkillRepository = requiredSkillRepository;
             _logger = logger;

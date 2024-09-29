@@ -1,0 +1,32 @@
+<div class="container">
+    <h2 class="text-center my-4">Reviews</h2>
+    <form (ngSubmit)="submitReview()">
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment</label>
+        <textarea class="form-control" id="comment" rows="3" [(ngModel)]="newReview.comment" name="comment" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="rating" class="form-label">Rating</label>
+        <select class="form-select" id="rating" [(ngModel)]="newReview.rating" name="rating">
+            @for (rating of [1, 2, 3, 4, 5]; track $index) {
+                <option [value]="rating">{{ rating }}</option>
+            }
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+    <hr>
+    <div class="row">
+      @for (review of reviews; track $index) {
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">Rating: {{ review.rating }}</h5>
+                <p class="card-text">{{ review.comment }}</p>
+              </div>
+            </div>
+          </div>
+      }
+    </div>
+  </div>
+  

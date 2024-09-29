@@ -3,13 +3,13 @@ using Freelancing_Website.Models.ForCreate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-public class AccountController : Controller
+public class AccountsController : Controller
 {
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly JWTService _jwtService;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, JWTService jwtService)
+    public AccountsController(UserManager<User> userManager, SignInManager<User> signInManager, JWTService jwtService)
     {
         _userManager = userManager;
         _signInManager = signInManager;

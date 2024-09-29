@@ -9,13 +9,13 @@ namespace Freelancing_Website.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BidController : ControllerBase
+    public class BidsController : ControllerBase
     {
         private readonly IRepository<Bid> _bidRepository;
-        private readonly ILogger<BidController> _logger;
+        private readonly ILogger<BidsController> _logger;
         private readonly IMapper _mapper;
 
-        public BidController(IRepository<Bid> bidRepository, ILogger<BidController> logger, IMapper mapper)
+        public BidsController(IRepository<Bid> bidRepository, ILogger<BidsController> logger, IMapper mapper)
         {
             _bidRepository = bidRepository;
             _logger = logger;

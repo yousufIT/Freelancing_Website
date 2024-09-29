@@ -1,0 +1,19 @@
+<div class="container">
+    <h2 class="my-4">Create New Project</h2>
+    <form (ngSubmit)="createProject()">
+      <div class="mb-3">
+        <label for="title" class="form-label">Project Title</label>
+        <input type="text" class="form-control" id="title" [(ngModel)]="project.title" name="title" required>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Project Description</label>
+        <textarea class="form-control" id="description" rows="3" [(ngModel)]="project.description" name="description" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="budget" class="form-label">Budget</label>
+        <input type="number" class="form-control" id="budget" [(ngModel)]="project.budget" name="budget" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+  </div>
+  

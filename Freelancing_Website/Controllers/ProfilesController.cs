@@ -10,13 +10,13 @@ namespace Freelancing_Website.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProfileController : ControllerBase
+    public class ProfilesController : ControllerBase
     {
         private readonly IRepository<Profile> _profileRepository;
-        private readonly ILogger<ProfileController> _logger;
+        private readonly ILogger<ProfilesController> _logger;
         private readonly IMapper _mapper;
 
-        public ProfileController(IRepository<Profile> profileRepository, ILogger<ProfileController> logger, IMapper mapper)
+        public ProfilesController(IRepository<Profile> profileRepository, ILogger<ProfilesController> logger, IMapper mapper)
         {
             _profileRepository = profileRepository;
             _logger = logger;

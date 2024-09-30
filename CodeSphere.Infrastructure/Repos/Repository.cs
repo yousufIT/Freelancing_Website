@@ -21,7 +21,7 @@ namespace CodeSphere.Infrastructure.Repos
             _context = context;
             _logger = logger;
         }
-        public async Task<(List<T>, PaginationMetaData)> GetAllAsync(int pageNumber, int pageSize)
+        public async Task<DataWithPagination<T>> GetAllAsync(int pageNumber, int pageSize)
         {
             var totalItemCount = await _context.Set<T>().CountAsync(e => !e.IsDeleted);
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
@@ -32,7 +32,11 @@ namespace CodeSphere.Infrastructure.Repos
                                 .Take(pageSize)
                                 .ToListAsync();
 
-            return (response, paginationData);
+            DataWithPagination<T> result = new DataWithPagination<T>();
+            result.Items = response;
+            result.PaginationMetaData = paginationData;
+
+            return result;
         }
         public async Task<T> GetByIdAsync(int id)
         {

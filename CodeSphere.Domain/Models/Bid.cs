@@ -8,6 +8,7 @@ namespace CodeSphere.Domain.Models
 {
     public class Bid : IBase
     {
+        public int Id { get; set; }
         public double Amount { get; set; }
         public string Proposal { get; set; }
         public int FreelancerId { get; set; }
@@ -15,6 +16,5 @@ namespace CodeSphere.Domain.Models
         public int ProjectId { get; set; }
         public Project Project { get; set; }
         public bool IsDeleted { get; set; }
-        int IBase.Id { get; set; }
     }
 }

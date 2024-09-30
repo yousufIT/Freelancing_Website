@@ -18,21 +18,6 @@ namespace CodeSphere.Infrastructure.Repos
         {
         }
 
-        public async Task<IEnumerable<Review>> GetReviewsByClientIdAsync(int clientId)
-        {
-            _logger.LogInformation($"Fetching reviews for client ID {clientId}");
-            return await _context.Reviews
-                .Where(r => r.ClientId == clientId)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Review>> GetReviewsByFreelancerIdAsync(int freelancerId)
-        {
-            _logger.LogInformation($"Fetching reviews for freelancer ID {freelancerId}");
-            return await _context.Reviews
-                .Where(r => r.FreelancerId == freelancerId)
-                .ToListAsync();
-        }
         public async Task DeleteReviewsByFreelancerIdAsync(int freelancerId)
         {
             var reviews = await _context.Reviews
@@ -41,9 +26,50 @@ namespace CodeSphere.Infrastructure.Repos
 
             foreach (var review in reviews)
             {
-                review.IsDeleted = true; // Soft delete
+                review.IsDeleted = true; 
                 await UpdateAsync(review);
             }
+        }
+
+        public async Task DeleteReviewsByClientIdAsync(int clientId)
+        {
+            var reviews = await _context.Reviews.Where(r => r.ClientId == clientId).ToListAsync();
+            foreach (var review in reviews)
+            {
+                await DeleteAsync(review.Id);
+            }
+        }
+
+        public async Task<DataWithPagination<Review>> GetReviewsByClientIdAsync(int clientId, int pageNumber, int pageSize)
+        {
+            var reviews = await _context.Reviews
+                .Where(r => r.ClientId == clientId && !r.IsDeleted)
+                .ToListAsync();
+
+            var totalItemCount = reviews.Count();
+
+            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
+
+            DataWithPagination<Review> result = new DataWithPagination<Review>();
+            result.PaginationMetaData = paginationData;
+            result.Items = reviews;
+            return result;
+        }
+
+        public async Task<DataWithPagination<Review>> GetReviewsByFreelancerIdAsync(int freelancerId, int pageNumber, int pageSize)
+        {
+            var reviews = await _context.Reviews
+                .Where(r => r.FreelancerId == freelancerId && !r.IsDeleted)
+                .ToListAsync();
+
+            var totalItemCount = reviews.Count();
+
+            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
+
+            DataWithPagination<Review> result = new DataWithPagination<Review>();
+            result.PaginationMetaData = paginationData;
+            result.Items = reviews;
+            return result;
         }
     }
 }

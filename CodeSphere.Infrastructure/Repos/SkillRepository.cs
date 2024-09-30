@@ -18,16 +18,9 @@ namespace CodeSphere.Infrastructure.Repos
         {
         }
 
-        public async Task<List<Skill>> GetSkillsForFreelancerAsync(int freelancerId)
-        {
-            return await _context.Skills
-                .Where(skill => skill.Profiles.Any(profile => profile.FreelancerId == freelancerId) && !skill.IsDeleted)
-                .ToListAsync();
-        }
-
         public async Task AddSkillToFreelancerAsync(int freelancerId, Skill skill)
         {
-            skill.Profiles.Add(new Profile { FreelancerId = freelancerId }); // Associate skill with freelancer
+            skill.Profiles.Add(new Profile { FreelancerId = freelancerId }); 
             await AddAsync(skill);
         }
 
@@ -35,22 +28,38 @@ namespace CodeSphere.Infrastructure.Repos
         {
             foreach (var skill in skills)
             {
-                skill.Profiles.Add(new Profile { FreelancerId = freelancerId }); // Update association
+                skill.Profiles.Add(new Profile { FreelancerId = freelancerId }); 
                 await UpdateAsync(skill);
             }
         }
 
         public async Task DeleteSkillsForFreelancerAsync(int freelancerId)
         {
+            /*var skills = await _context.Skills
+                .Where(skill => skill.Profiles.Any(profile => profile.FreelancerId == freelancerId) && !skill.IsDeleted)
+                .ToListAsync();*/
+
+            var freelancer = await _context.Freelancers.Include(f => f.Profile).ThenInclude(p => p.Skills).FirstOrDefaultAsync(f => f.Id == freelancerId);
+
+            if(freelancer != null) freelancer.Profile.Skills.Clear();
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<DataWithPagination<Skill>> GetSkillsForFreelancerAsync(int freelancerId, int pageNumber, int pageSize)
+        {
             var skills = await _context.Skills
                 .Where(skill => skill.Profiles.Any(profile => profile.FreelancerId == freelancerId) && !skill.IsDeleted)
                 .ToListAsync();
 
-            foreach (var skill in skills)
-            {
-                skill.IsDeleted = true; // Soft delete
-                await UpdateAsync(skill);
-            }
+            var totalItemCount = skills.Count();
+
+            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
+
+            DataWithPagination<Skill> result = new DataWithPagination<Skill>();
+            result.PaginationMetaData = paginationData;
+            result.Items = skills;
+            return result;
         }
     }
 

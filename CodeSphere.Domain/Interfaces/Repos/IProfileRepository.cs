@@ -11,6 +11,7 @@ namespace CodeSphere.Domain.Interfaces.Repos
     {
         Task DeleteByFreelancerIdAsync(int freelancerId);
         Task<Profile> GetProfileByFreelancerIdAsync(int freelancerId);
+        Task<Profile> GetProfileWithPortfolioAsync(int profileId);
     }
 
 }

@@ -8,6 +8,7 @@ namespace CodeSphere.Domain.Models
 {
     public class Review : IBase
     {
+        public int Id { get; set; }
         public int Rating { get; set; }
         public string Comment { get; set; }
         public int ClientId { get; set; }
@@ -15,7 +16,6 @@ namespace CodeSphere.Domain.Models
         public int FreelancerId { get; set; }
         public Freelancer Freelancer { get; set; }
         public bool IsDeleted { get; set; }
-        int IBase.Id { get; set; }
 
     }
 }

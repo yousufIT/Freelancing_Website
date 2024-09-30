@@ -14,20 +14,39 @@ namespace CodeSphere.Infrastructure.Repos
     public class BidRepository : Repository<Bid>, IBidRepository
     {
         public BidRepository(CodeSphereContext context, ILogger<Repository<Bid>> logger)
-            : base(context, logger)
+            : base(context, logger) { }
+
+        public async Task<DataWithPagination<Bid>> GetBidsByProjectIdAsync(int projectId, int pageNumber, int pageSize)
         {
+            var bids = await _context.Bids.Where(b => b.ProjectId == projectId && !b.IsDeleted).ToListAsync();
+            var totalItemCount = bids.Count();
+            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
+
+            DataWithPagination<Bid> result = new DataWithPagination<Bid>();
+            result.PaginationMetaData = paginationData;
+            result.Items = bids;
+            return  result;
         }
 
-        public async Task<IEnumerable<Bid>> GetBidsByProjectIdAsync(int projectId)
+        public async Task<DataWithPagination<Bid>> GetBidsByFreelancerIdAsync(int freelancerId, int pageNumber, int pageSize)
         {
-            _logger.LogInformation($"Fetching bids for project ID {projectId}");
-            return await _context.Bids.Where(b => b.ProjectId == projectId).ToListAsync();
+            var bids = await _context.Bids.Where(b => b.FreelancerId == freelancerId && !b.IsDeleted).ToListAsync();
+            var totalItemCount = bids.Count();
+            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
+
+            DataWithPagination<Bid> result = new DataWithPagination<Bid>();
+            result.PaginationMetaData = paginationData;
+            result.Items = bids;
+            return result;
         }
 
-        public async Task<IEnumerable<Bid>> GetBidsByFreelancerIdAsync(int freelancerId)
+        public async Task DeleteBidsForProjectAsync(int projectId)
         {
-            _logger.LogInformation($"Fetching bids for freelancer ID {freelancerId}");
-            return await _context.Bids.Where(b => b.FreelancerId == freelancerId).ToListAsync();
+            var bids = await _context.Bids.Where(b => b.ProjectId == projectId).ToListAsync();
+            foreach (var bid in bids)
+            {
+                await DeleteAsync(bid.Id);
+            }
         }
     }
 

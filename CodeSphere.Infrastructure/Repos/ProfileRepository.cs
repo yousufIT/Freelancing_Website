@@ -29,9 +29,16 @@ namespace CodeSphere.Infrastructure.Repos
             var profile = await GetProfileByFreelancerIdAsync(freelancerId);
             if (profile != null)
             {
-                profile.IsDeleted = true; // Soft delete
+                profile.IsDeleted = true; 
                 await UpdateAsync(profile);
             }
+        }
+
+        public async Task<Profile> GetProfileWithPortfolioAsync(int profileId)
+        {
+            return await _context.Set<Profile>()
+                .Include(p => p.Portfolio)
+                .FirstOrDefaultAsync(p => p.Id == profileId && !p.IsDeleted);
         }
     }
 

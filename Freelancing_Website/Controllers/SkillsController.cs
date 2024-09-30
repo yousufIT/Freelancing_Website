@@ -1,81 +1,72 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces.Repos;
-using CodeSphere.Domain.Models;
-using Freelancing_Website.Models.ForCreate;
-using Freelancing_Website.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Freelancing_Website.Interfaces;
+using Freelancing_Website.Models.ForCreate;
+using Freelancing_Website.Models;
+using CodeSphere.Domain.Models;
+using Freelancing_Website.Models.ViewModels;
 
 namespace Freelancing_Website.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class SkillsController : ControllerBase
     {
-        private readonly ISkillRepository _skillRepository;
-        private readonly ILogger<SkillsController> _logger;
+        private readonly ISkillService _skillService;
         private readonly IMapper _mapper;
 
-        public SkillsController(ISkillRepository skillRepository, ILogger<SkillsController> logger, IMapper mapper)
+        public SkillsController(ISkillService skillService, IMapper mapper)
         {
-            _skillRepository = skillRepository;
-            _logger = logger;
+            _skillService = skillService;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetSkills(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAllSkills(int pageNumber = 1, int pageSize = 10)
         {
-            _logger.LogInformation("Fetching all skills.");
-            var (skills, paginationMetaData) = await _skillRepository.GetAllAsync(pageNumber, pageSize);
-            return Ok(_mapper.Map<List<SkillView>>(skills));
+            var skills = await _skillService.GetAllSkillsAsync(pageNumber,pageSize);
+            var skillViews = _mapper.Map<IEnumerable<SkillView>>(skills);
+            return Ok(skillViews);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSkill(int id)
+        public async Task<IActionResult> GetSkillById(int id)
         {
-            _logger.LogInformation($"Fetching skill with id {id}");
-            var skill = await _skillRepository.GetByIdAsync(id);
+            var skill = await _skillService.GetSkillByIdAsync(id);
             if (skill == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<SkillView>(skill));
+            var skillView = _mapper.Map<SkillView>(skill);
+            return Ok(skillView);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSkill([FromBody] SkillForCreate skill)
+        public async Task<IActionResult> CreateSkill([FromBody] SkillForCreate skillForCreate)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _logger.LogInformation("Creating new skill.");
-            var newSkill = _mapper.Map<Skill>(skill);
-            await _skillRepository.AddAsync(newSkill);
-            return CreatedAtAction(nameof(GetSkill), new { id = ((IBase)newSkill).Id }, _mapper.Map<SkillView>(newSkill));
+            var skill = _mapper.Map<Skill>(skillForCreate);
+            await _skillService.CreateSkillAsync(skill);
+            var skillView = _mapper.Map<SkillView>(skill);
+            return CreatedAtAction(nameof(GetSkillById), new { id = skill.Id }, skillView);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSkill(int id, [FromBody] SkillForCreate skill)
+        public async Task<IActionResult> UpdateSkill(int id, [FromBody] SkillForCreate skillForCreate)
         {
-            var oldSkill = await _skillRepository.GetByIdAsync(id);
-            if (oldSkill == null)
+            var skill = _mapper.Map<Skill>(skillForCreate);
+            if (id != skill.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
-            _logger.LogInformation($"Updating skill with id {id}");
-
-            oldSkill.Name = skill.Name;
-
-            await _skillRepository.UpdateAsync(oldSkill);
-            return NoContent();
+            await _skillService.UpdateSkillAsync(skill);
+            var skillView = _mapper.Map<SkillView>(skill);
+            return Ok(skillView);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSkill(int id)
         {
-            _logger.LogInformation($"Deleting skill with id {id}");
-            await _skillRepository.DeleteAsync(id);
+            await _skillService.DeleteSkillAsync(id);
             return NoContent();
         }
     }

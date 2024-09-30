@@ -1,6 +1,7 @@
 ﻿using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using CodeSphere.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,20 @@ namespace CodeSphere.Infrastructure.Repos
         {
         }
 
-        // Add any custom methods specific to PortfolioItem here
+        public async Task<DataWithPagination<PortfolioItem>> GetPortfolioItemsByProfileIdAsync(int profileId, int pageNumber, int pageSize)
+        {
+            var portfolioItems = await _context.Set<PortfolioItem>()
+                .Where(pi => pi.ProfileId == profileId && !pi.IsDeleted)
+                .ToListAsync();
+            var totalItemCount = portfolioItems.Count();
+
+            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
+
+            DataWithPagination<PortfolioItem> result = new DataWithPagination<PortfolioItem>();
+            result.PaginationMetaData = paginationData;
+            result.Items = portfolioItems;
+            return result;
+        }
+
     }
 }

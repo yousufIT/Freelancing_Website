@@ -1,82 +1,54 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces.Repos;
-using CodeSphere.Domain.Models;
-using Freelancing_Website.Models.ForCreate;
-using Freelancing_Website.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Freelancing_Website.Interfaces;
+using Freelancing_Website.Models.ForCreate;
+using Freelancing_Website.Models;
+using CodeSphere.Domain.Models;
+using Freelancing_Website.Models.ViewModels;
 
 namespace Freelancing_Website.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class RequiredSkillsController : ControllerBase
     {
-        private readonly IRequiredSkillRepository _requiredSkillRepository;
-        private readonly ILogger<RequiredSkillsController> _logger;
+        private readonly IRequiredSkillService _requiredSkillService;
         private readonly IMapper _mapper;
 
-        public RequiredSkillsController(IRequiredSkillRepository requiredSkillRepository, ILogger<RequiredSkillsController> logger, IMapper mapper)
+        public RequiredSkillsController(IRequiredSkillService requiredSkillService, IMapper mapper)
         {
-            _requiredSkillRepository = requiredSkillRepository;
-            _logger = logger;
+            _requiredSkillService = requiredSkillService;
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetRequiredSkills(int pageNumber = 1, int pageSize = 10)
+        [HttpGet("project/{projectId}")]
+        public async Task<IActionResult> GetSkillsForProject(int projectId,int pageNumber = 1, int pageSize = 10)
         {
-            _logger.LogInformation("Fetching all required skills.");
-            var (requiredSkills, paginationMetaData) = await _requiredSkillRepository.GetAllAsync(pageNumber, pageSize);
-            return Ok(_mapper.Map<List<RequiredSkillView>>(requiredSkills));
+            var skills = await _requiredSkillService.GetSkillsForProjectAsync(projectId,pageNumber,pageSize);
+            var skillViews = _mapper.Map<IEnumerable<RequiredSkillView>>(skills);
+            return Ok(skillViews);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetRequiredSkill(int id)
+        [HttpPost("project/{projectId}")]
+        public async Task<IActionResult> AddSkillsToProject(int projectId, [FromBody] List<RequiredSkillForCreate> skills)
         {
-            _logger.LogInformation($"Fetching required skill with id {id}");
-            var requiredSkill = await _requiredSkillRepository.GetByIdAsync(id);
-            if (requiredSkill == null)
-            {
-                return NotFound();
-            }
-            return Ok(_mapper.Map<RequiredSkillView>(requiredSkill));
+            var requiredSkills = _mapper.Map<List<RequiredSkill>>(skills);
+            await _requiredSkillService.AddSkillsToProjectAsync(projectId, requiredSkills);
+            return CreatedAtAction(nameof(GetSkillsForProject), new { projectId }, requiredSkills);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateRequiredSkill([FromBody] RequiredSkillForCreate requiredSkill)
+        [HttpPut("project/{projectId}")]
+        public async Task<IActionResult> UpdateSkillsForProject(int projectId, [FromBody] List<RequiredSkillForCreate> skills)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _logger.LogInformation("Creating new required skill.");
-            var newRequiredSkill = _mapper.Map<RequiredSkill>(requiredSkill);
-            await _requiredSkillRepository.AddAsync(newRequiredSkill);
-            return CreatedAtAction(nameof(GetRequiredSkill), new { id = ((IBase)newRequiredSkill).Id }, _mapper.Map<RequiredSkillView>(newRequiredSkill));
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRequiredSkill(int id, [FromBody] RequiredSkillForCreate requiredSkill)
-        {
-            var oldRequiredSkill = await _requiredSkillRepository.GetByIdAsync(id);
-            if (oldRequiredSkill == null)
-            {
-                return NotFound();
-            }
-            _logger.LogInformation($"Updating required skill with id {id}");
-
-            oldRequiredSkill.Name = requiredSkill.Name;
-            oldRequiredSkill.ProjectId = requiredSkill.ProjectId;
-
-            await _requiredSkillRepository.UpdateAsync(oldRequiredSkill);
+            var requiredSkills = _mapper.Map<List<RequiredSkill>>(skills);
+            await _requiredSkillService.UpdateSkillsForProjectAsync(projectId, requiredSkills);
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRequiredSkill(int id)
+        [HttpDelete("project/{projectId}/skill/{skillId}")]
+        public async Task<IActionResult> RemoveSkillFromProject(int projectId, int skillId)
         {
-            _logger.LogInformation($"Deleting required skill with id {id}");
-            await _requiredSkillRepository.DeleteAsync(id);
+            await _requiredSkillService.RemoveSkillFromProjectAsync(projectId, skillId);
             return NoContent();
         }
     }

@@ -9,8 +9,9 @@ namespace CodeSphere.Domain.Interfaces.Repos
 {
     public interface IBidRepository : IRepository<Bid>
     {
-        Task<IEnumerable<Bid>> GetBidsByProjectIdAsync(int projectId);
-        Task<IEnumerable<Bid>> GetBidsByFreelancerIdAsync(int freelancerId);
+        Task<DataWithPagination<Bid>> GetBidsByProjectIdAsync(int projectId, int pageNumber, int pageSize);
+        Task<DataWithPagination<Bid>> GetBidsByFreelancerIdAsync(int freelancerId, int pageNumber, int pageSize);
+        Task DeleteBidsForProjectAsync(int projectId); 
     }
 
 }

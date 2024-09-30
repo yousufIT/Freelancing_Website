@@ -17,7 +17,6 @@ namespace CodeSphere.Infrastructure.Repos
         {
         }
 
-        // Add any custom methods specific to Client here
     }
 
 }

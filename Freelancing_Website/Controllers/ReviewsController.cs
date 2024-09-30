@@ -1,83 +1,48 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces.Repos;
-using CodeSphere.Domain.Models;
-using Freelancing_Website.Models.ForCreate;
-using Freelancing_Website.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Freelancing_Website.Interfaces;
+using Freelancing_Website.Models.ForCreate;
+using Freelancing_Website.Models;
+using CodeSphere.Domain.Models;
+using Freelancing_Website.Models.ViewModels;
 
 namespace Freelancing_Website.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ReviewsController : ControllerBase
     {
-        private readonly IReviewRepository _reviewRepository;
-        private readonly ILogger<ReviewsController> _logger;
+        private readonly IReviewService _reviewService;
         private readonly IMapper _mapper;
 
-        public ReviewsController(IReviewRepository reviewRepository, ILogger<ReviewsController> logger, IMapper mapper)
+        public ReviewsController(IReviewService reviewService, IMapper mapper)
         {
-            _reviewRepository = reviewRepository;
-            _logger = logger;
+            _reviewService = reviewService;
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetReviews(int pageNumber = 1, int pageSize = 10)
+        [HttpGet("freelancer/{freelancerId}")]
+        public async Task<IActionResult> GetReviewsForFreelancer(int freelancerId, int pageNumber = 1, int pageSize = 10)
         {
-            _logger.LogInformation("Fetching all reviews.");
-            var (reviews, paginationMetaData) = await _reviewRepository.GetAllAsync(pageNumber, pageSize);
-            return Ok(_mapper.Map<List<ReviewView>>(reviews));
+            var reviews = await _reviewService.GetReviewsByFreelancerIdAsync(freelancerId, pageNumber, pageSize);
+            var reviewViews = _mapper.Map<IEnumerable<ReviewView>>(reviews);
+            return Ok(reviewViews);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetReview(int id)
+        [HttpGet("client/{clientId}")]
+        public async Task<IActionResult> GetReviewsForClient(int clientId, int pageNumber = 1, int pageSize = 10)
         {
-            _logger.LogInformation($"Fetching review with id {id}");
-            var review = await _reviewRepository.GetByIdAsync(id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-            return Ok(_mapper.Map<ReviewView>(review));
+            var reviews = await _reviewService.GetReviewsByClientIdAsync(clientId, pageNumber, pageSize);
+            var reviewViews = _mapper.Map<IEnumerable<ReviewView>>(reviews);
+            return Ok(reviewViews);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReview([FromBody] ReviewForCreate review)
+        public async Task<IActionResult> CreateReview([FromBody] ReviewForCreate reviewForCreate)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _logger.LogInformation("Creating new review.");
-            var newReview = _mapper.Map<Review>(review);
-            await _reviewRepository.AddAsync(newReview);
-            return CreatedAtAction(nameof(GetReview), new { id = ((IBase)newReview).Id }, _mapper.Map<ReviewView>(newReview));
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReview(int id, [FromBody] ReviewForCreate review)
-        {
-            var oldReview = await _reviewRepository.GetByIdAsync(id);
-            if (oldReview == null)
-            {
-                return NotFound();
-            }
-            _logger.LogInformation($"Updating review with id {id}");
-
-            oldReview.Comment = review.Comment;
-            oldReview.Rating = review.Rating;
-
-            await _reviewRepository.UpdateAsync(oldReview);
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReview(int id)
-        {
-            _logger.LogInformation($"Deleting review with id {id}");
-            await _reviewRepository.DeleteAsync(id);
-            return NoContent();
+            var review = _mapper.Map<Review>(reviewForCreate);
+            await _reviewService.CreateReviewAsync(review);
+            return CreatedAtAction(nameof(GetReviewsForFreelancer), new { freelancerId = review.FreelancerId }, review);
         }
     }
 }

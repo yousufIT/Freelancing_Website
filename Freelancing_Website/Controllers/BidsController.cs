@@ -1,84 +1,74 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces.Repos;
-using CodeSphere.Domain.Models;
+using Microsoft.AspNetCore.Mvc;
+using Freelancing_Website.Interfaces;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
-using Microsoft.AspNetCore.Mvc;
+using CodeSphere.Domain.Models;
 
 namespace Freelancing_Website.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class BidsController : ControllerBase
     {
-        private readonly IBidRepository _bidRepository;
-        private readonly ILogger<BidsController> _logger;
+        private readonly IBidService _bidService;
         private readonly IMapper _mapper;
 
-        public BidsController(IBidRepository bidRepository, ILogger<BidsController> logger, IMapper mapper)
+        public BidsController(IBidService bidService, IMapper mapper)
         {
-            _bidRepository = bidRepository;
-            _logger = logger;
+            _bidService = bidService;
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetBids(int pageNumber = 1, int pageSize = 10)
+        [HttpGet("project/{projectId}")]
+        public async Task<IActionResult> GetBidsByProjectId(int projectId, int pageNumber = 1, int pageSize = 10)
         {
-            _logger.LogInformation("Fetching all bids.");
-            var (bids, paginationMetaData) = await _bidRepository.GetAllAsync(pageNumber, pageSize);
-            return Ok(_mapper.Map<List<BidView>>(bids));
+            var result = await _bidService.GetBidsByProjectIdAsync(projectId, pageNumber, pageSize);
+            var bids = _mapper.Map<IEnumerable<BidView>>(result);
+            return Ok(bids);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetBid(int id)
+        [HttpGet("freelancer/{freelancerId}")]
+        public async Task<IActionResult> GetBidsByFreelancerId(int freelancerId, int pageNumber = 1, int pageSize = 10)
         {
-            _logger.LogInformation($"Fetching bid with id {id}");
-            var bid = await _bidRepository.GetByIdAsync(id);
-            if
-
- (bid == null)
-            {
-                return NotFound();
-            }
-            return Ok(_mapper.Map<BidView>(bid));
+            var result = await _bidService.GetBidsByFreelancerIdAsync(freelancerId, pageNumber, pageSize);
+            var bids = _mapper.Map<IEnumerable<BidView>>(result);
+            return Ok(bids);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBid([FromBody] BidForCreate bid)
+        public async Task<IActionResult> CreateBid([FromBody] BidForCreate bidForCreate)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _logger.LogInformation("Creating new bid.");
-            var newBid = _mapper.Map<Bid>(bid);
-            await _bidRepository.AddAsync(newBid);
-            return CreatedAtAction(nameof(GetBid), new { id = ((IBase)newBid).Id }, _mapper.Map<BidView>(newBid));
+            var bid = _mapper.Map<Bid>(bidForCreate);
+            await _bidService.CreateBidAsync(bid);
+            var bidViewModel = _mapper.Map<BidView>(bid);
+            return CreatedAtAction(nameof(GetBidsByProjectId), new { projectId = bid.ProjectId }, bidViewModel);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBid(int id, [FromBody] BidForCreate bid)
+        public async Task<IActionResult> UpdateBid(int id, [FromBody] BidForCreate bidForCreate)
         {
-            var oldBid = await _bidRepository.GetByIdAsync(id);
-            if (oldBid == null)
+            var bid = _mapper.Map<Bid>(bidForCreate);
+            if (id != bid.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
-            _logger.LogInformation($"Updating bid with id {id}");
-
-            oldBid.Amount = bid.Amount;
-            oldBid.Proposal = bid.Proposal;
-
-            await _bidRepository.UpdateAsync(oldBid);
-            return NoContent();
+            await _bidService.UpdateBidAsync(bid);
+            var bidViewModel = _mapper.Map<BidView>(bid);
+            return Ok(bidViewModel);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBid(int id)
         {
-            _logger.LogInformation($"Deleting bid with id {id}");
-            await _bidRepository.DeleteAsync(id);
+            await _bidService.DeleteBidAsync(id);
+            return NoContent();
+        }
+
+        [HttpDelete("project/{projectId}")]
+        public async Task<IActionResult> DeleteBidsForProject(int projectId)
+        {
+            await _bidService.DeleteBidsForProjectAsync(projectId);
             return NoContent();
         }
     }

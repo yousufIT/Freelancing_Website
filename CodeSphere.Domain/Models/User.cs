@@ -12,15 +12,15 @@ namespace CodeSphere.Domain.Models
 {
     public class User :IdentityUser, IBase
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public double Rating { get; set; } // Rating (out of 5 stars)
-        public string Role { get; set; }   // Freelancer, Client, or Admin
+        public string Role { get; set; }   // Freelancer, Client
 
         public User()
         {
             Rating = 0;
         }
         public bool IsDeleted { get; set ; }
-        int IBase.Id { get ; set ; }
     }
 }

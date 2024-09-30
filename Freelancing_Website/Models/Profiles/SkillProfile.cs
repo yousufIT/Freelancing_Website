@@ -10,6 +10,8 @@ namespace Freelancing_Website.Models.Profiles
         {
             CreateMap<Skill, SkillView>();
             CreateMap<SkillForCreate, Skill>();
+
+            CreateMap<RequiredSkill, Skill>().ReverseMap();
         }
     }
 }

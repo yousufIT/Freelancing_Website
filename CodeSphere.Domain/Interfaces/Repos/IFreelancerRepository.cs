@@ -9,7 +9,8 @@ namespace CodeSphere.Domain.Interfaces.Repos
 {
     public interface IFreelancerRepository : IRepository<Freelancer>
     {
-        Task<IEnumerable<Freelancer>> GetFreelancersBySkillAsync(string skill);
+        Task<DataWithPagination<Freelancer>> GetFreelancersBySkillAsync(string skill, int pageNumber, int pageSize);
     }
+
 
 }

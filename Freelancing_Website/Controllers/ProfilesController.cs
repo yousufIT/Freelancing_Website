@@ -1,82 +1,88 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces.Repos;
-using CodeSphere.Domain.Models;
+using Microsoft.AspNetCore.Mvc;
+using Freelancing_Website.Interfaces;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
-using Microsoft.AspNetCore.Mvc;
+using CodeSphere.Domain.Models;
 using Profile = CodeSphere.Domain.Models.Profile;
 
 namespace Freelancing_Website.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ProfilesController : ControllerBase
     {
-        private readonly IProfileRepository _profileRepository;
-        private readonly ILogger<ProfilesController> _logger;
+        private readonly IProfileService _profileService;
         private readonly IMapper _mapper;
 
-        public ProfilesController(IProfileRepository profileRepository, ILogger<ProfilesController> logger, IMapper mapper)
+        public ProfilesController(IProfileService profileService, IMapper mapper)
         {
-            _profileRepository = profileRepository;
-            _logger = logger;
+            _profileService = profileService;
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProfiles(int pageNumber = 1, int pageSize = 10)
+        [HttpGet("{profileId}")]
+        public async Task<IActionResult> GetProfile(int profileId)
         {
-            _logger.LogInformation("Fetching all profiles.");
-            var (profiles, paginationMetaData) = await _profileRepository.GetAllAsync(pageNumber, pageSize);
-            return Ok(_mapper.Map<List<ProfileView>>(profiles));
+            var profile = await _profileService.GetProfileAsync(profileId);
+            if (profile == null) return NotFound();
+
+            var profileView = _mapper.Map<ProfileView>(profile);
+            return Ok(profileView);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProfile(int id)
+        [HttpGet("{profileId}/portfolio")]
+        public async Task<IActionResult> GetPortfolioItems(int profileId, int pageNumber = 1, int pageSize = 10)
         {
-            _logger.LogInformation($"Fetching profile with id {id}");
-            var profile = await _profileRepository.GetByIdAsync(id);
-            if (profile == null)
-            {
-                return NotFound();
-            }
-            return Ok(_mapper.Map<ProfileView>(profile));
+            var items = await _profileService.GetPortfolioItemsAsync(profileId, pageNumber, pageSize);
+            var itemsView = _mapper.Map<List<PortfolioItemView>>(items.Items); 
+            return Ok(new { items = itemsView,count = items.Items.Count() });
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProfile([FromBody] ProfileForCreate profile)
+        public async Task<IActionResult> CreateProfile([FromBody] ProfileForCreate profileForCreate)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _logger.LogInformation("Creating new profile.");
-            var newProfile = _mapper.Map<Profile>(profile);
-            await _profileRepository.AddAsync(newProfile);
-            return CreatedAtAction(nameof(GetProfile), new { id = ((IBase)newProfile).Id }, _mapper.Map<ProfileView>(newProfile));
+            var profile = _mapper.Map<Profile>(profileForCreate);
+            var createdProfile = await _profileService.CreateProfileAsync(profile);
+            var profileView = _mapper.Map<ProfileView>(createdProfile);
+            return CreatedAtAction(nameof(GetProfile), new { profileId = profileView.Id }, profileView);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProfile(int id, [FromBody] ProfileForCreate profile)
+        [HttpPost("{profileId}/portfolio")]
+        public async Task<IActionResult> CreatePortfolioItem(int profileId, [FromBody] PortfolioItemForCreate itemForCreate)
         {
-            var oldProfile = await _profileRepository.GetByIdAsync(id);
-            if (oldProfile == null)
-            {
-                return NotFound();
-            }
-            _logger.LogInformation($"Updating profile with id {id}");
+            var portfolioItem = _mapper.Map<PortfolioItem>(itemForCreate);
+            var createdItem = await _profileService.CreatePortfolioItemAsync(profileId, portfolioItem);
+            var itemView = _mapper.Map<PortfolioItemView>(createdItem);
+            return CreatedAtAction(nameof(GetPortfolioItems), new { profileId }, itemView);
+        }
 
-            oldProfile.Bio = profile.Bio;
-
-            await _profileRepository.UpdateAsync(oldProfile);
+        [HttpPut]
+        public async Task<IActionResult> UpdateProfile([FromBody] ProfileForCreate profileForCreate)
+        {
+            var profile = _mapper.Map<Profile>(profileForCreate);
+            await _profileService.UpdateProfileAsync(profile);
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProfile(int id)
+        [HttpPut("portfolio")]
+        public async Task<IActionResult> UpdatePortfolioItem([FromBody] PortfolioItem item)
         {
-            _logger.LogInformation($"Deleting profile with id {id}");
-            await _profileRepository.DeleteAsync(id);
+            await _profileService.UpdatePortfolioItemAsync(item);
+            return NoContent();
+        }
+
+        [HttpDelete("{profileId}")]
+        public async Task<IActionResult> DeleteProfile(int profileId)
+        {
+            await _profileService.DeleteProfileAsync(profileId);
+            return NoContent();
+        }
+
+        [HttpDelete("portfolio/{itemId}")]
+        public async Task<IActionResult> DeletePortfolioItem(int itemId)
+        {
+            await _profileService.DeletePortfolioItemAsync(itemId);
             return NoContent();
         }
     }

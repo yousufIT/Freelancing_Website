@@ -17,7 +17,7 @@ namespace CodeSphere.Domain.Models
         {
             PostedProjects = new List<Project>();
             ReviewsGiven = new List<Review>();
-
         }
     }
+
 }

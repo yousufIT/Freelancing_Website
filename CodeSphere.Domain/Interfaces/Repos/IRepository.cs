@@ -9,10 +9,16 @@ namespace CodeSphere.Domain.Interfaces.Repos
 {
     public interface IRepository<T> where T : IBase
     {
-        Task<(List<T>, PaginationMetaData)> GetAllAsync(int pageNumber, int pageSize);
+        Task<DataWithPagination<T>> GetAllAsync(int pageNumber, int pageSize);
         Task<T> GetByIdAsync(int id);
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
+    }
+
+    public class DataWithPagination<T>
+    {
+        public List<T> Items { get; set; }
+        public PaginationMetaData PaginationMetaData { get; set; }
     }
 }

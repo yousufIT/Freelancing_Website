@@ -1,114 +1,72 @@
 ﻿using AutoMapper;
-using CodeSphere.Domain.Interfaces;
-using CodeSphere.Domain.Interfaces.Repos;
-using CodeSphere.Domain.Models;
+using Microsoft.AspNetCore.Mvc;
+using Freelancing_Website.Interfaces;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using CodeSphere.Domain.Models;
 
 namespace Freelancing_Website.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class FreelancersController : ControllerBase
     {
-        private readonly IFreelancerRepository _freelancerRepository;
+        private readonly IFreelancerService _freelancerService;
         private readonly IMapper _mapper;
-        private readonly ILogger<FreelancersController> _logger;
 
-        public FreelancersController(IFreelancerRepository freelancerRepository, IMapper mapper, ILogger<FreelancersController> logger)
+        public FreelancersController(IFreelancerService freelancerService, IMapper mapper)
         {
-            _freelancerRepository = freelancerRepository;
+            _freelancerService = freelancerService;
             _mapper = mapper;
-            _logger = logger;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllFreelancers(int pageNumber = 1, int pageSize = 10)
-        {
-            try
-            {
-                var (freelancers, paginationMetaData) = await _freelancerRepository.GetAllAsync(pageNumber, pageSize);
-                return Ok(_mapper.Map<List<FreelancerView>>(freelancers));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error fetching freelancers");
-                return StatusCode(500, "Internal server error");
-            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetFreelancerById(int id)
         {
-            try
+            var freelancer = await _freelancerService.GetFreelancerByIdAsync(id);
+            if (freelancer == null)
             {
-                var freelancer = await _freelancerRepository.GetByIdAsync(id);
-                if (freelancer == null) return NotFound();
-                return Ok(_mapper.Map<FreelancerView>(freelancer));
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error fetching freelancer with id {id}");
-                return StatusCode(500, "Internal server error");
-            }
+            var freelancerViewModel = _mapper.Map<FreelancerView>(freelancer);
+            return Ok(freelancerViewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateFreelancer([FromBody] FreelancerForCreate freelancerForCreate)
         {
-            try
-            {
-                if (freelancerForCreate == null) return BadRequest("Freelancer is null");
-                var freelancer = _mapper.Map<Freelancer>(freelancerForCreate);
-                await _freelancerRepository.AddAsync(freelancer);
-                return CreatedAtAction(nameof(GetFreelancerById), new { id = freelancer.Id }, _mapper.Map<FreelancerView>(freelancer));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error creating freelancer");
-                return StatusCode(500, "Internal server error");
-            }
+            var freelancer = _mapper.Map<Freelancer>(freelancerForCreate);
+            await _freelancerService.CreateFreelancerAsync(freelancer);
+            var freelancerViewModel = _mapper.Map<FreelancerView>(freelancer);
+            return CreatedAtAction(nameof(GetFreelancerById), new { id = freelancer.Id }, freelancerViewModel);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateFreelancer(int id, [FromBody] FreelancerForCreate freelancerForCreate)
         {
-            try
+            var freelancer = _mapper.Map<Freelancer>(freelancerForCreate);
+            if (id != freelancer.Id)
             {
-                var existingFreelancer = await _freelancerRepository.GetByIdAsync(id);
-                if (existingFreelancer == null) return NotFound();
-
-                existingFreelancer.Name = freelancerForCreate.Name;
-                existingFreelancer.Email = freelancerForCreate.Email;
-                existingFreelancer.Rating = freelancerForCreate.Rating;
-                existingFreelancer.Role = freelancerForCreate.Role;
-                existingFreelancer.Hourlysalary = freelancerForCreate.Hourlysalary;
-
-                await _freelancerRepository.UpdateAsync(existingFreelancer);
-                return NoContent();
+                return BadRequest();
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error updating freelancer with id {id}");
-                return StatusCode(500, "Internal server error");
-            }
+            await _freelancerService.UpdateFreelancerAsync(freelancer);
+            var freelancerViewModel = _mapper.Map<FreelancerView>(freelancer);
+            return Ok(freelancerViewModel);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFreelancer(int id)
         {
-            try
-            {
-                await _freelancerRepository.DeleteAsync(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error deleting freelancer with id {id}");
-                return StatusCode(500, "Internal server error");
-            }
+            await _freelancerService.DeleteFreelancerAsync(id);
+            return NoContent();
+        }
+
+        [HttpGet("{freelancerId}/reviews")]
+        public async Task<IActionResult> GetReviewsForFreelancer(int freelancerId, int pageNumber = 1, int pageSize = 10)
+        {
+            var reviews = await _freelancerService.GetReviewsForFreelancerAsync(freelancerId, pageNumber, pageSize);
+            var reviewViewModels = _mapper.Map<IEnumerable<ReviewView>>(reviews);
+            return Ok(reviewViewModels);
         }
     }
 }

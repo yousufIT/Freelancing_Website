@@ -14,30 +14,31 @@ namespace CodeSphere.Infrastructure.Repos
     public class ProjectRepository : Repository<Project>, IProjectRepository
     {
         public ProjectRepository(CodeSphereContext context, ILogger<Repository<Project>> logger)
-            : base(context, logger)
+            : base(context, logger) { }
+
+
+        public async Task DeleteProjectsByClientIdAsync(int clientId)
         {
+            var projects = await _context.Projects.Where(p => p.ClientId == clientId && !p.IsDeleted).ToListAsync();
+            foreach (var project in projects)
+            {
+                await DeleteAsync(project.Id);
+            }
         }
 
-        public async Task<IEnumerable<Project>> GetProjectsByClientIdAsync(int clientId)
+        public async Task<DataWithPagination<Project>> GetProjectsByClientIdAsync(int clientId, int pageNumber, int pageSize)
         {
-            _logger.LogInformation($"Fetching projects for client ID {clientId}");
-            return await _context.Projects.Where(p => p.ClientId == clientId).ToListAsync();
-        }
-        public async Task<(List<Project>,PaginationMetaData)> Search(int pageNumber, int pageSize, List<string> filterWords )
-        {
-            var totalItemCount = await _context.Set<Project>()
-        .Where(e => !e.IsDeleted && filterWords.All(fw => e.RequiredSkills.Any(rs => rs.Name.Contains(fw))))
-        .CountAsync();
+            var projects = await _context.Projects.Where(p => p.ClientId == clientId && !p.IsDeleted).ToListAsync();
+
+            var totalItemCount = projects.Count();
 
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
 
-            var response = await _context.Set<Project>()
-                .Where(e => !e.IsDeleted && filterWords.All(fw => e.RequiredSkills.Any(rs => rs.Name.Contains(fw))))
-                .Skip(pageSize * (pageNumber - 1))
-                .Take(pageSize)
-                .ToListAsync();
-
-            return (response, paginationData);
+            DataWithPagination<Project> result = new DataWithPagination<Project>();
+            result.PaginationMetaData = paginationData;
+            result.Items = projects;
+            return result;
         }
     }
+
 }

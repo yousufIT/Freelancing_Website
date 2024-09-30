@@ -17,16 +17,26 @@ namespace CodeSphere.Infrastructure.Repos
             : base(context, logger)
         {
         }
-        public async Task<IEnumerable<Freelancer>> GetFreelancersBySkillAsync(string skill)
+        
+        public async Task<DataWithPagination<Freelancer>> GetFreelancersBySkillAsync(string skill, int pageNumber, int pageSize)
         {
-            return await _context.Freelancers
+            var freelancers = await _context.Freelancers
                 .Include(f => f.Profile)
                 .ThenInclude(p => p.Skills)
-                .Where(f => f.Profile.Skills.Any(s => s.Name.ToLower() == skill.ToLower()))
+                .Where(f => f.Profile.Skills.Any(s => s.Name.ToLower() == skill.ToLower()) && !f.IsDeleted)
                 .ToListAsync();
+
+            var totalItemCount = freelancers.Count();
+
+            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
+
+            DataWithPagination<Freelancer> result = new DataWithPagination<Freelancer>();
+            result.PaginationMetaData = paginationData;
+            result.Items = freelancers;
+            return result;
+
         }
 
-        // Add any custom methods specific to Freelancer here
     }
 
 

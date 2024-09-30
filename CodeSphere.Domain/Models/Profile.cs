@@ -9,12 +9,12 @@ namespace CodeSphere.Domain.Models
 {
     public class Profile : IBase
     {
+        public int Id { get; set; }
         public string Bio { get; set; }
         public List<Skill> Skills { get; set; }
         public List<PortfolioItem> Portfolio { get; set; }
         public int FreelancerId { get; set; }
         public Freelancer Freelancer { get; set; }
         public bool IsDeleted { get; set; }
-        int IBase.Id { get; set; }
     }
 }

@@ -53,7 +53,7 @@ namespace Freelancing_Website.Services
             var profile = await _profileRepository.GetByIdAsync(profileId);
             if (profile != null)
             {
-                profile.IsDeleted = true; // Soft delete
+                profile.IsDeleted = true;
                 await _profileRepository.UpdateAsync(profile);
             }
         }
@@ -63,7 +63,7 @@ namespace Freelancing_Website.Services
             var item = await _portfolioItemRepository.GetByIdAsync(itemId);
             if (item != null)
             {
-                item.IsDeleted = true; // Soft delete
+                item.IsDeleted = true; 
                 await _portfolioItemRepository.UpdateAsync(item);
             }
         }

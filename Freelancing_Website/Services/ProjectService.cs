@@ -33,7 +33,7 @@ namespace Freelancing_Website.Services
             await _projectRepository.AddAsync(project);
             foreach (var requiredSkill in project.RequiredSkills)
             {
-                var skill = new Skill
+                var skill = new RequiredSkill
                 {
                     Id = requiredSkill.Id,
                     Name = requiredSkill.Name

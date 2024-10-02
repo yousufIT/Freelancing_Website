@@ -5,6 +5,7 @@ using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ViewModels;
+using CodeSphere.Domain.Interfaces.Repos;
 
 namespace Freelancing_Website.Controllers
 {
@@ -25,8 +26,11 @@ namespace Freelancing_Website.Controllers
         public async Task<IActionResult> GetAllSkills(int pageNumber = 1, int pageSize = 10)
         {
             var skills = await _skillService.GetAllSkillsAsync(pageNumber,pageSize);
-            var skillViews = _mapper.Map<IEnumerable<SkillView>>(skills);
-            return Ok(skillViews);
+            var skillViews = _mapper.Map<List<SkillView>>(skills.Items);
+            DataWithPagination<SkillView> skillsWithPagination = new DataWithPagination<SkillView>();
+            skillsWithPagination.Items = skillViews;
+            skillsWithPagination.PaginationMetaData = skills.PaginationMetaData;
+            return Ok(skillsWithPagination);
         }
 
         [HttpGet("{id}")]

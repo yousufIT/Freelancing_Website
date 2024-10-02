@@ -4,6 +4,7 @@ using Freelancing_Website.Interfaces;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Models;
+using CodeSphere.Domain.Interfaces.Repos;
 
 namespace Freelancing_Website.Controllers
 {
@@ -24,16 +25,26 @@ namespace Freelancing_Website.Controllers
         public async Task<IActionResult> GetBidsByProjectId(int projectId, int pageNumber = 1, int pageSize = 10)
         {
             var result = await _bidService.GetBidsByProjectIdAsync(projectId, pageNumber, pageSize);
-            var bids = _mapper.Map<IEnumerable<BidView>>(result);
-            return Ok(bids);
+            var bids = _mapper.Map<List<BidView>>(result.Items);
+            DataWithPagination<BidView> bidsWithPagination = new DataWithPagination<BidView>();
+
+            bidsWithPagination.Items = bids;
+            bidsWithPagination.PaginationMetaData = result.PaginationMetaData;
+
+            return Ok(bidsWithPagination);
         }
 
         [HttpGet("freelancer/{freelancerId}")]
         public async Task<IActionResult> GetBidsByFreelancerId(int freelancerId, int pageNumber = 1, int pageSize = 10)
         {
             var result = await _bidService.GetBidsByFreelancerIdAsync(freelancerId, pageNumber, pageSize);
-            var bids = _mapper.Map<IEnumerable<BidView>>(result);
-            return Ok(bids);
+            var bids = _mapper.Map<List<BidView>>(result.Items);
+            DataWithPagination<BidView> bidsWithPagination = new DataWithPagination<BidView>();
+
+            bidsWithPagination.Items = bids;
+            bidsWithPagination.PaginationMetaData = result.PaginationMetaData;
+
+            return Ok(bidsWithPagination);
         }
 
         [HttpPost]

@@ -115,6 +115,7 @@ namespace CodeSphere.Infrastructure.Context
             modelBuilder.Entity<Skill>()
                 .HasKey(s => ((IBase)s).Id);
 
+
         }
     }
 }

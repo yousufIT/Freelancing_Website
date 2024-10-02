@@ -4,6 +4,7 @@ using Freelancing_Website.Interfaces;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Models;
+using CodeSphere.Domain.Interfaces.Repos;
 
 namespace Freelancing_Website.Controllers
 {
@@ -65,8 +66,11 @@ namespace Freelancing_Website.Controllers
         public async Task<IActionResult> GetReviewsForFreelancer(int freelancerId, int pageNumber = 1, int pageSize = 10)
         {
             var reviews = await _freelancerService.GetReviewsForFreelancerAsync(freelancerId, pageNumber, pageSize);
-            var reviewViewModels = _mapper.Map<IEnumerable<ReviewView>>(reviews);
-            return Ok(reviewViewModels);
+            var reviewViewModels = _mapper.Map<List<ReviewView>>(reviews.Items);
+            DataWithPagination<ReviewView> reviewsWithPagination = new DataWithPagination<ReviewView>();
+            reviewsWithPagination.Items = reviewViewModels;
+            reviewsWithPagination.PaginationMetaData = reviews.PaginationMetaData;
+            return Ok(reviewsWithPagination);
         }
     }
 }

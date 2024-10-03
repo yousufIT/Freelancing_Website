@@ -1,24 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Review } from '../models/review';
+import { environment } from '../../environments/environment';
+import { DataWithPagination } from '../models/data-with-pagination';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReviewService {
-  private apiUrl = 'https://localhost:7240/api/reviews';
+  private apiUrl = `${environment.apiUrl}/reviews`;
 
   constructor(private http: HttpClient) {}
 
-  getReviews(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getReviewsByFreelancerId(freelancerId: number, pageNumber: number, pageSize: number): Observable<DataWithPagination<Review>> {
+    return this.http.get<DataWithPagination<Review>>(`${this.apiUrl}/freelancer/${freelancerId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
-  createReview(review: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, review);
+  getReviewsByClientId(clientId: number, pageNumber: number, pageSize: number): Observable<DataWithPagination<Review>> {
+    return this.http.get<DataWithPagination<Review>>(`${this.apiUrl}/client/${clientId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
-  deleteReview(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  createReview(review: Review): Observable<Review> {
+    return this.http.post<Review>(this.apiUrl, review);
+  }
+
+  updateReview(review: Review): Observable<Review> {
+    return this.http.put<Review>(`${this.apiUrl}/${review.id}`, review);
+  }
+
+  deleteReview(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

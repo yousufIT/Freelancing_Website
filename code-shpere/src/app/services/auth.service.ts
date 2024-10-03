@@ -1,32 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from '../models/user';
+import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:7240/api/acount';
+  private apiUrl = `${environment.apiUrl}/account`;
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials);
+  login(credentials: { email: string; password: string }): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/login`, credentials);
   }
 
-  register(user: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, user);
+  register(user: User): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/register`, user);
   }
 
-  logout() {
-    localStorage.removeItem('token');
-  }
-
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  logout(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/logout`, {});
   }
 }

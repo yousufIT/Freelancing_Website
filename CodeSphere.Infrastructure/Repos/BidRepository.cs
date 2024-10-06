@@ -48,6 +48,27 @@ namespace CodeSphere.Infrastructure.Repos
                 await DeleteAsync(bid.Id);
             }
         }
+
+        public async Task AddBidToProjectAsync(int freelancerId, int projectId, Bid bid)
+        {
+
+            var freelancer = await _context.Freelancers
+                .Include(f=>f.Bids)
+                .FirstOrDefaultAsync(f => f.Id == freelancerId);
+            var project=await _context.Projects
+                .Include(p=>p.Bids)
+                .FirstOrDefaultAsync(p=>p.Id == projectId);
+            bid.FreelancerId = freelancerId;
+            bid.Freelancer = freelancer;
+            bid.ProjectId = projectId;
+            bid.Project = project;
+            await AddAsync(bid);
+            freelancer.Bids.Add(bid);
+            project.Bids.Add(bid);
+            
+            _context.SaveChanges();
+
+        }
     }
 
 }

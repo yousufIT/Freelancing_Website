@@ -15,22 +15,14 @@ namespace Freelancing_Website.Services
             _portfolioItemRepository = portfolioItemRepository;
         }
 
-        public async Task<Profile> GetProfileAsync(int profileId)
-        {
-            return await _profileRepository.GetProfileWithPortfolioAsync(profileId);
-        }
-
+       
+        
         public async Task<DataWithPagination<PortfolioItem>> GetPortfolioItemsAsync(int profileId, int pageNumber, int pageSize)
         {
             return await _portfolioItemRepository.GetPortfolioItemsByProfileIdAsync(profileId,pageNumber,pageSize);
         }
 
-        public async Task<Profile> CreateProfileAsync(Profile profile)
-        {
-            await _profileRepository.AddAsync(profile);
-            return profile;
-        }
-
+      
         public async Task<PortfolioItem> CreatePortfolioItemAsync(int profileId, PortfolioItem item)
         {
             item.ProfileId = profileId; // Set the profile ID for the portfolio item
@@ -38,25 +30,14 @@ namespace Freelancing_Website.Services
             return item;
         }
 
-        public async Task UpdateProfileAsync(Profile profile)
-        {
-            await _profileRepository.UpdateAsync(profile);
-        }
 
         public async Task UpdatePortfolioItemAsync(PortfolioItem item)
         {
+
             await _portfolioItemRepository.UpdateAsync(item);
         }
 
-        public async Task DeleteProfileAsync(int profileId)
-        {
-            var profile = await _profileRepository.GetByIdAsync(profileId);
-            if (profile != null)
-            {
-                profile.IsDeleted = true;
-                await _profileRepository.UpdateAsync(profile);
-            }
-        }
+      
 
         public async Task DeletePortfolioItemAsync(int itemId)
         {
@@ -66,6 +47,11 @@ namespace Freelancing_Website.Services
                 item.IsDeleted = true; 
                 await _portfolioItemRepository.UpdateAsync(item);
             }
+        }
+
+        public async Task<PortfolioItem> GetPortfolioItemByIdAsync(int id)
+        {
+            return await _portfolioItemRepository.GetByIdAsync(id);
         }
     }
 }

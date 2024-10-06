@@ -19,12 +19,14 @@ namespace CodeSphere.Infrastructure.Repos
   
         public async Task AddSkillToProjectAsync(int projectId, RequiredSkill skill)
         {
-            var requiredSkill = new RequiredSkill
-            {
-                Name = skill.Name,
-                ProjectId = projectId
-            };
-            await AddAsync(requiredSkill);
+            var project = await _context.Projects
+                .Include(p => p.RequiredSkills)
+                .FirstOrDefaultAsync(p => p.Id == projectId);
+            
+            skill.ProjectId = projectId;
+            skill.Project = project;
+            project.RequiredSkills.Add(skill);
+            await AddAsync(skill);
         }
 
         public async Task DeleteSkillsForProjectAsync(int projectId)
@@ -38,10 +40,7 @@ namespace CodeSphere.Infrastructure.Repos
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateSkillsForProjectAsync(int projectId, List<RequiredSkill> requiredSkills)
-        {
-            // Implement the update logic
-        }
+       
 
         public async Task<DataWithPagination<RequiredSkill>> GetSkillsForProjectAsync(int projectId, int pageNumber, int pageSize)
         {
@@ -60,7 +59,8 @@ namespace CodeSphere.Infrastructure.Repos
         {
             var project = await _context.Projects.Include(p => p.RequiredSkills).FirstOrDefaultAsync(p => p.Id == projectId);
             var skill = await _context.RequiredSkills.FirstOrDefaultAsync(p => p.Id == skillId);
-            if (project != null) project.RequiredSkills.Remove(skill);
+            if (project != null && skill != null) project.RequiredSkills.Remove(skill);
+            await _context.SaveChangesAsync();
         }
     }
 

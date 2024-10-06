@@ -28,30 +28,14 @@ namespace Freelancing_Website.Services
             return project;
         }
 
-        public async Task CreateProjectAsync(Project project)
+        public async Task CreateProjectAsync(int clientId, Project project)
         {
-            await _projectRepository.AddAsync(project);
-            foreach (var requiredSkill in project.RequiredSkills)
-            {
-                var skill = new RequiredSkill
-                {
-                    Id = requiredSkill.Id,
-                    Name = requiredSkill.Name
-                };
-                await _requiredSkillRepository.AddSkillToProjectAsync(project.Id, skill);
-            }
+            await _projectRepository.AddProjectToClient(clientId,project);
         }
 
         public async Task UpdateProjectAsync(Project project)
         {
             await _projectRepository.UpdateAsync(project);
-            var requiredSkills = project.RequiredSkills.Select(rs => new RequiredSkill
-            {
-                Id = rs.Id,
-                Name = rs.Name
-            }).ToList();
-
-            await _requiredSkillRepository.UpdateSkillsForProjectAsync(project.Id, requiredSkills);
         }
 
         public async Task DeleteProjectAsync(int id)

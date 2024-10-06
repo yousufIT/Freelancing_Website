@@ -16,6 +16,17 @@ namespace CodeSphere.Infrastructure.Repos
         public ProjectRepository(CodeSphereContext context, ILogger<Repository<Project>> logger)
             : base(context, logger) { }
 
+        public async Task AddProjectToClient(int clientId, Project project)
+        {
+            var client = await _context.Clients
+                .Include(c => c.PostedProjects)
+                .FirstOrDefaultAsync(c => c.Id == clientId);
+            
+            project.ClientId = clientId;
+            project.Client = client;
+            client.PostedProjects.Add(project);
+            await AddAsync(project);
+        }
 
         public async Task DeleteProjectsByClientIdAsync(int clientId)
         {

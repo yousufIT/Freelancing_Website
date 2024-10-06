@@ -23,9 +23,9 @@ namespace Freelancing_Website.Services
             await _requiredSkillRepository.AddSkillToProjectAsync(projectId, skill);
         }
 
-        public async Task UpdateSkillsForProjectAsync(int projectId, List<RequiredSkill> requiredSkills)
+        public async Task UpdateSkillForProjectAsync( RequiredSkill requiredSkill)
         {
-            await _requiredSkillRepository.UpdateSkillsForProjectAsync(projectId, requiredSkills);
+            await _requiredSkillRepository.UpdateAsync(requiredSkill);
         }
 
         public async Task DeleteSkillsForProjectAsync(int projectId)
@@ -44,6 +44,11 @@ namespace Freelancing_Website.Services
         public async Task RemoveSkillFromProjectAsync(int projectId, int skillId)
         {
             await _requiredSkillRepository.DeleteSkillForProjectAsync(projectId, skillId);
+        }
+
+        public async Task<RequiredSkill> GetSkillByIdAsync(int id)
+        {
+            return await _requiredSkillRepository.GetByIdAsync(id);
         }
     }
 

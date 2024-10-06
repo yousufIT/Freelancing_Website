@@ -23,9 +23,9 @@ namespace Freelancing_Website.Services
             return await _reviewRepository.GetReviewsByClientIdAsync(clientId, pageNumber, pageSize);
         }
 
-        public async Task CreateReviewAsync(Review review)
+        public async Task CreateReviewAsync(int clientId,int freelancerId,Review review)
         {
-            await _reviewRepository.AddAsync(review);
+            await _reviewRepository.AddReviewToFreelancerAndClient(clientId,freelancerId, review);
         }
 
         public async Task UpdateReviewAsync(Review review)

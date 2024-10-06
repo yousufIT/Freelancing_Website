@@ -5,6 +5,7 @@ using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ViewModels;
+using CodeSphere.Domain.Interfaces.Repos;
 
 namespace Freelancing_Website.Controllers
 {
@@ -21,28 +22,43 @@ namespace Freelancing_Website.Controllers
             _mapper = mapper;
         }
 
+
+
         [HttpGet("freelancer/{freelancerId}")]
         public async Task<IActionResult> GetReviewsForFreelancer(int freelancerId, int pageNumber = 1, int pageSize = 10)
         {
             var reviews = await _reviewService.GetReviewsByFreelancerIdAsync(freelancerId, pageNumber, pageSize);
-            var reviewViews = _mapper.Map<IEnumerable<ReviewView>>(reviews);
-            return Ok(reviewViews);
+            var reviewViews = _mapper.Map<List<ReviewView>>(reviews.Items);
+            DataWithPagination<ReviewView> reviewsWithPagination = new DataWithPagination<ReviewView>();
+            reviewsWithPagination.Items = reviewViews;
+            reviewsWithPagination.PaginationMetaData = reviews.PaginationMetaData;
+            return Ok(reviewsWithPagination);
         }
 
         [HttpGet("client/{clientId}")]
         public async Task<IActionResult> GetReviewsForClient(int clientId, int pageNumber = 1, int pageSize = 10)
         {
             var reviews = await _reviewService.GetReviewsByClientIdAsync(clientId, pageNumber, pageSize);
-            var reviewViews = _mapper.Map<IEnumerable<ReviewView>>(reviews);
-            return Ok(reviewViews);
+            var reviewViews = _mapper.Map<List<ReviewView>>(reviews.Items);
+            DataWithPagination<ReviewView> reviewsWithPagination = new DataWithPagination<ReviewView>();
+            reviewsWithPagination.Items = reviewViews;
+            reviewsWithPagination.PaginationMetaData = reviews.PaginationMetaData;
+            return Ok(reviewsWithPagination);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateReview([FromBody] ReviewForCreate reviewForCreate)
+        [HttpPost("Client/{clientId}/Freelancer/{freelancerId}")]
+        public async Task<IActionResult> CreateReview(int clientId,int freelancerId,[FromBody] ReviewForCreate reviewForCreate)
         {
             var review = _mapper.Map<Review>(reviewForCreate);
-            await _reviewService.CreateReviewAsync(review);
-            return CreatedAtAction(nameof(GetReviewsForFreelancer), new { freelancerId = review.FreelancerId }, review);
+            await _reviewService.CreateReviewAsync(clientId,freelancerId,review);
+            var reviewView = _mapper.Map<ReviewView>(review);
+            return Ok(reviewView);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteReviewById(int id)
+        {
+            await _reviewService.DeleteReviewAsync(id);
+            return NoContent();
         }
     }
 }

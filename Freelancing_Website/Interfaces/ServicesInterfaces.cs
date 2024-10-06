@@ -25,7 +25,7 @@ namespace Freelancing_Website.Interfaces
     public interface IProjectService
     {
         Task<Project> GetProjectByIdAsync(int id);
-        Task CreateProjectAsync(Project project);
+        Task CreateProjectAsync(int clientId,Project project);
         Task UpdateProjectAsync(Project project);
         Task DeleteProjectAsync(int id);
     }
@@ -44,14 +44,15 @@ namespace Freelancing_Website.Interfaces
     {
         Task<DataWithPagination<Review>> GetReviewsByFreelancerIdAsync(int freelancerId, int pageNumber, int pageSize);
         Task<DataWithPagination<Review>> GetReviewsByClientIdAsync(int clientId, int pageNumber, int pageSize);
-        Task CreateReviewAsync(Review review);
+        Task CreateReviewAsync(int clientId,int freelancerId, Review review);
         Task UpdateReviewAsync(Review review);
         Task DeleteReviewAsync(int id);
     }
     public interface IBidService
     {
         Task<DataWithPagination<Bid>> GetBidsByProjectIdAsync(int projectId, int pageNumber, int pageSize);
-        Task CreateBidAsync(Bid bid);
+        Task<Bid> GetByIdAsync(int id);
+        Task CreateBidAsync(int freelancerId, int projectId, Bid bid);
         Task UpdateBidAsync(Bid bid);
         Task DeleteBidAsync(int bidId);
         Task DeleteBidsForProjectAsync(int projectId);
@@ -60,22 +61,20 @@ namespace Freelancing_Website.Interfaces
     public interface IRequiredSkillService
     {
         Task<DataWithPagination<RequiredSkill>> GetSkillsForProjectAsync(int projectId, int pageNumber, int pageSize);
+        Task<RequiredSkill> GetSkillByIdAsync(int id);
         Task AddSkillToProjectAsync(int projectId, RequiredSkill skill);
         Task AddSkillsToProjectAsync(int projectId, List<RequiredSkill> skills);
         Task DeleteSkillsForProjectAsync(int projectId);
-        Task UpdateSkillsForProjectAsync(int projectId, List<RequiredSkill> requiredSkills);
+        Task UpdateSkillForProjectAsync(RequiredSkill requiredSkill);
         Task RemoveSkillFromProjectAsync(int projectId, int skillId);
     }
 
     public interface IProfileService
     {
-        Task<Profile> GetProfileAsync(int profileId);
         Task<DataWithPagination<PortfolioItem>> GetPortfolioItemsAsync(int profileId, int pageNumber, int pageSize);
-        Task<Profile> CreateProfileAsync(Profile profile);
         Task<PortfolioItem> CreatePortfolioItemAsync(int profileId, PortfolioItem item);
-        Task UpdateProfileAsync(Profile profile);
+        Task<PortfolioItem> GetPortfolioItemByIdAsync(int id);
         Task UpdatePortfolioItemAsync(PortfolioItem item);
-        Task DeleteProfileAsync(int profileId);
         Task DeletePortfolioItemAsync(int itemId);
     }
 

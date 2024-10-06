@@ -21,15 +21,6 @@ namespace Freelancing_Website.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{profileId}")]
-        public async Task<IActionResult> GetProfile(int profileId)
-        {
-            var profile = await _profileService.GetProfileAsync(profileId);
-            if (profile == null) return NotFound();
-
-            var profileView = _mapper.Map<ProfileView>(profile);
-            return Ok(profileView);
-        }
 
         [HttpGet("{profileId}/portfolio")]
         public async Task<IActionResult> GetPortfolioItems(int profileId, int pageNumber = 1, int pageSize = 10)
@@ -39,14 +30,7 @@ namespace Freelancing_Website.Controllers
             return Ok(new { items = itemsView,count = items.Items.Count() });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateProfile([FromBody] ProfileForCreate profileForCreate)
-        {
-            var profile = _mapper.Map<Profile>(profileForCreate);
-            var createdProfile = await _profileService.CreateProfileAsync(profile);
-            var profileView = _mapper.Map<ProfileView>(createdProfile);
-            return CreatedAtAction(nameof(GetProfile), new { profileId = profileView.Id }, profileView);
-        }
+       
 
         [HttpPost("{profileId}/portfolio")]
         public async Task<IActionResult> CreatePortfolioItem(int profileId, [FromBody] PortfolioItemForCreate itemForCreate)
@@ -57,28 +41,24 @@ namespace Freelancing_Website.Controllers
             return CreatedAtAction(nameof(GetPortfolioItems), new { profileId }, itemView);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateProfile([FromBody] ProfileForCreate profileForCreate)
-        {
-            var profile = _mapper.Map<Profile>(profileForCreate);
-            await _profileService.UpdateProfileAsync(profile);
-            return NoContent();
-        }
-
+       
         [HttpPut("portfolio")]
-        public async Task<IActionResult> UpdatePortfolioItem([FromBody] PortfolioItem item)
+        public async Task<IActionResult> UpdatePortfolioItem(int id,[FromBody] PortfolioItemForCreate item)
         {
-            await _profileService.UpdatePortfolioItemAsync(item);
+            var portfolioItem=await _profileService.GetPortfolioItemByIdAsync(id);
+            if (portfolioItem == null)
+            {
+                return NotFound();
+            }
+            portfolioItem.Title=item.Title;
+            portfolioItem.Description=item.Description;
+            portfolioItem.ImageUrl=item.ImageUrl;
+
+            await _profileService.UpdatePortfolioItemAsync(portfolioItem);
             return NoContent();
         }
 
-        [HttpDelete("{profileId}")]
-        public async Task<IActionResult> DeleteProfile(int profileId)
-        {
-            await _profileService.DeleteProfileAsync(profileId);
-            return NoContent();
-        }
-
+        
         [HttpDelete("portfolio/{itemId}")]
         public async Task<IActionResult> DeletePortfolioItem(int itemId)
         {

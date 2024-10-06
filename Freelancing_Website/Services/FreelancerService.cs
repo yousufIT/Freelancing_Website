@@ -40,20 +40,8 @@ namespace Freelancing_Website.Services
         public async Task CreateFreelancerAsync(Freelancer freelancer)
         {
             await _freelancerRepository.AddAsync(freelancer);
-
-            // Assign FreelancerId to Profile
-            freelancer.Profile.FreelancerId = freelancer.Id;
-            await _profileRepository.AddAsync(freelancer.Profile);
-
-            foreach (var skillId in freelancer.Profile.Skills.Select(s => s.Id))
-            {
-                // Fix: Fetch Skill entity by Id
-                var skill = await _skillRepository.GetByIdAsync(skillId);
-                if (skill != null)
-                {
-                    await _skillRepository.AddSkillToFreelancerAsync(freelancer.Id, skill);
-                }
-            }
+            freelancer.ProfileId = freelancer.Profile.Id;
+            await _freelancerRepository.UpdateAsync(freelancer);
         }
 
         public async Task UpdateFreelancerAsync(Freelancer freelancer)

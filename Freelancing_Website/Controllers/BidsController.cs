@@ -47,11 +47,11 @@ namespace Freelancing_Website.Controllers
             return Ok(bidsWithPagination);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateBid([FromBody] BidForCreate bidForCreate)
+        [HttpPost("freelancer/{freelancerId}/project/{projectId}")]
+        public async Task<IActionResult> CreateBid(int freelancerId, int projectId, [FromBody] BidForCreate bidForCreate)
         {
             var bid = _mapper.Map<Bid>(bidForCreate);
-            await _bidService.CreateBidAsync(bid);
+            await _bidService.CreateBidAsync( freelancerId, projectId, bid);
             var bidViewModel = _mapper.Map<BidView>(bid);
             return CreatedAtAction(nameof(GetBidsByProjectId), new { projectId = bid.ProjectId }, bidViewModel);
         }
@@ -59,13 +59,16 @@ namespace Freelancing_Website.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBid(int id, [FromBody] BidForCreate bidForCreate)
         {
-            var bid = _mapper.Map<Bid>(bidForCreate);
-            if (id != bid.Id)
+            
+            var oldBid = await _bidService.GetByIdAsync(id);
+            if (oldBid==null)
             {
-                return BadRequest();
+                return NotFound();
             }
-            await _bidService.UpdateBidAsync(bid);
-            var bidViewModel = _mapper.Map<BidView>(bid);
+            oldBid.Proposal=bidForCreate.Proposal;
+            oldBid.Amount=bidForCreate.Amount;
+            await _bidService.UpdateBidAsync(oldBid);
+            var bidViewModel = _mapper.Map<BidView>(oldBid);
             return Ok(bidViewModel);
         }
 

@@ -10,7 +10,8 @@ namespace CodeSphere.Domain.Interfaces.Repos
     public interface IProjectRepository : IRepository<Project>
     {
         Task<DataWithPagination<Project>> GetProjectsByClientIdAsync(int clientId, int pageNumber, int pageSize);
-        Task DeleteProjectsByClientIdAsync(int clientId); 
+        Task DeleteProjectsByClientIdAsync(int clientId);
+        Task AddProjectToClient(int clientId, Project project);
     }
 
 

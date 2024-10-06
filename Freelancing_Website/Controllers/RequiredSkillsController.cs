@@ -5,6 +5,7 @@ using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ViewModels;
+using CodeSphere.Domain.Interfaces.Repos;
 
 namespace Freelancing_Website.Controllers
 {
@@ -25,8 +26,11 @@ namespace Freelancing_Website.Controllers
         public async Task<IActionResult> GetSkillsForProject(int projectId,int pageNumber = 1, int pageSize = 10)
         {
             var skills = await _requiredSkillService.GetSkillsForProjectAsync(projectId,pageNumber,pageSize);
-            var skillViews = _mapper.Map<IEnumerable<RequiredSkillView>>(skills);
-            return Ok(skillViews);
+            var skillViews = _mapper.Map<List<RequiredSkillView>>(skills.Items);
+            DataWithPagination<RequiredSkillView> data = new DataWithPagination<RequiredSkillView>();
+            data.Items = skillViews;
+            data.PaginationMetaData = skills.PaginationMetaData;
+            return Ok(data);
         }
 
         [HttpPost("project/{projectId}")]
@@ -34,14 +38,19 @@ namespace Freelancing_Website.Controllers
         {
             var requiredSkills = _mapper.Map<List<RequiredSkill>>(skills);
             await _requiredSkillService.AddSkillsToProjectAsync(projectId, requiredSkills);
-            return CreatedAtAction(nameof(GetSkillsForProject), new { projectId }, requiredSkills);
+            return CreatedAtAction(nameof(GetSkillsForProject), new { projectId }, _mapper.Map<List<RequiredSkillView>>(requiredSkills));
         }
 
-        [HttpPut("project/{projectId}")]
-        public async Task<IActionResult> UpdateSkillsForProject(int projectId, [FromBody] List<RequiredSkillForCreate> skills)
+        [HttpPut("{skillId}")]
+        public async Task<IActionResult> UpdateSkillsForProject(int skillId, [FromBody] RequiredSkillForCreate skill)
         {
-            var requiredSkills = _mapper.Map<List<RequiredSkill>>(skills);
-            await _requiredSkillService.UpdateSkillsForProjectAsync(projectId, requiredSkills);
+            var requiredSkill = await _requiredSkillService.GetSkillByIdAsync(skillId);
+            if(requiredSkill==null)
+            {
+                return NotFound();
+            }
+            requiredSkill.Name = skill.Name;
+            await _requiredSkillService.UpdateSkillForProjectAsync(requiredSkill);
             return NoContent();
         }
 

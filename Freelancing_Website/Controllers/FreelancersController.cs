@@ -45,11 +45,20 @@ namespace Freelancing_Website.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateFreelancer(int id, [FromBody] FreelancerForCreate freelancerForCreate)
         {
-            var freelancer = _mapper.Map<Freelancer>(freelancerForCreate);
-            if (id != freelancer.Id)
+            var freelancer = await _freelancerService
+                .GetFreelancerByIdAsync(id);
+            if (freelancer==null)
             {
-                return BadRequest();
+                return NotFound();
             }
+            freelancer.Hourlysalary = freelancerForCreate.Hourlysalary;
+            freelancer.Profile.Bio = freelancerForCreate.Profile.Bio;
+            freelancer.Name = freelancerForCreate.Name;
+            freelancer.UserName = freelancerForCreate.UserName;
+            freelancer.Email = freelancerForCreate.Email;
+            freelancer.PasswordHash = freelancerForCreate.PasswordHash;
+            freelancer.Role = freelancerForCreate.Role;
+            freelancer.Rating = freelancerForCreate.Rating;
             await _freelancerService.UpdateFreelancerAsync(freelancer);
             var freelancerViewModel = _mapper.Map<FreelancerView>(freelancer);
             return Ok(freelancerViewModel);

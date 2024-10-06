@@ -21,6 +21,7 @@ namespace CodeSphere.Infrastructure.Repos
         public async Task<Profile> GetProfileByFreelancerIdAsync(int freelancerId)
         {
             return await _context.Profiles
+                .Include(p => p.Skills)
                 .FirstOrDefaultAsync(profile => profile.FreelancerId == freelancerId && !profile.IsDeleted);
         }
 

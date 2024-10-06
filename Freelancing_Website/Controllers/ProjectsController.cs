@@ -33,11 +33,11 @@ namespace Freelancing_Website.Controllers
             return Ok(projectView);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateProject([FromBody] ProjectForCreate projectForCreate)
+        [HttpPost("Client/{clientId}")]
+        public async Task<IActionResult> CreateProject(int clientId,[FromBody] ProjectForCreate projectForCreate)
         {
             var project = _mapper.Map<Project>(projectForCreate);
-            await _projectService.CreateProjectAsync(project);
+            await _projectService.CreateProjectAsync(clientId,project);
             var projectView = _mapper.Map<ProjectView>(project);
             return CreatedAtAction(nameof(GetProjectById), new { id = project.Id }, projectView);
         }
@@ -45,11 +45,15 @@ namespace Freelancing_Website.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProject(int id, [FromBody] ProjectForCreate projectForCreate)
         {
-            var project = _mapper.Map<Project>(projectForCreate);
-            if (id != project.Id)
+            var project = await _projectService.GetProjectByIdAsync(id);
+            if (project==null)
             {
-                return BadRequest();
+                return NotFound();
             }
+            project.Title = projectForCreate.Title;
+            project.Description = projectForCreate.Description;
+            project.Budget = projectForCreate.Budget;
+            project.Status = projectForCreate.Status;
             await _projectService.UpdateProjectAsync(project);
             var projectView = _mapper.Map<ProjectView>(project);
             return Ok(projectView);

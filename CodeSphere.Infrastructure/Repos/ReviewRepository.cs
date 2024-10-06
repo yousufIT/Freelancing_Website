@@ -71,5 +71,23 @@ namespace CodeSphere.Infrastructure.Repos
             result.Items = reviews;
             return result;
         }
+
+        public async Task AddReviewToFreelancerAndClient(int clientId, int freelancerId, Review review)
+        {
+            var client=await _context.Clients
+                .Include(c =>c.ReviewsGiven)
+                .FirstOrDefaultAsync(c => c.Id==clientId);
+            var freelancer=await _context.Freelancers
+                .Include(f => f.ReviewsReceived)
+                .FirstOrDefaultAsync(f => f.Id==freelancerId);
+            review.FreelancerId = freelancerId;
+            review.Freelancer = freelancer;
+            review.ClientId = clientId;
+            review.Client = client;
+            await AddAsync(review);
+            freelancer.ReviewsReceived.Add(review);
+            client.ReviewsGiven.Add(review);
+            await _context.SaveChangesAsync();
+        }
     }
 }

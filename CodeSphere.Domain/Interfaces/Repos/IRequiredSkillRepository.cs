@@ -13,7 +13,6 @@ namespace CodeSphere.Domain.Interfaces.Repos
         Task AddSkillToProjectAsync(int projectId, RequiredSkill skill);
         Task DeleteSkillsForProjectAsync(int projectId);
         Task DeleteSkillForProjectAsync(int projectId, int skillId);
-        Task UpdateSkillsForProjectAsync(int projectId, List<RequiredSkill> requiredSkills);
     }
 
 

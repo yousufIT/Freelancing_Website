@@ -23,9 +23,9 @@ namespace Freelancing_Website.Services
             return await _bidRepository.GetBidsByFreelancerIdAsync(freelancerId, pageNumber, pageSize);
         }
 
-        public async Task CreateBidAsync(Bid bid)
+        public async Task CreateBidAsync(int freelancerId,int projectId,Bid bid)
         {
-            await _bidRepository.AddAsync(bid);
+            await _bidRepository.AddBidToProjectAsync(freelancerId,projectId,bid);
         }
 
         public async Task UpdateBidAsync(Bid bid)
@@ -41,6 +41,11 @@ namespace Freelancing_Website.Services
         public async Task DeleteBidsForProjectAsync(int projectId)
         {
             await _bidRepository.DeleteBidsForProjectAsync(projectId);
+        }
+
+        public async Task<Bid> GetByIdAsync(int id)
+        {
+            return await _bidRepository.GetByIdAsync(id);
         }
     }
 

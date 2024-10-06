@@ -45,11 +45,19 @@ namespace Freelancing_Website.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateClient(int id, [FromBody] ClientForCreate clientForCreate)
         {
-            var client = _mapper.Map<Client>(clientForCreate);
-            if (id != client.Id)
+            var client = await _clientService.GetClientByIdAsync(id);
+            if ( client == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+            client.CompanyName = clientForCreate.CompanyName;
+            client.ContactNumber = clientForCreate.ContactNumber;
+            client.Name = clientForCreate.Name;
+            client.UserName = clientForCreate.UserName;
+            client.Email = clientForCreate.Email;
+            client.PasswordHash = clientForCreate.PasswordHash;
+            client.Role = clientForCreate.Role;
+            client.Rating = clientForCreate.Rating;
             await _clientService.UpdateClientAsync(client);
             var clientViewModel = _mapper.Map<ClientView>(client);
             return Ok(clientViewModel);

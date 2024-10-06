@@ -4,18 +4,18 @@ namespace Freelancing_Website.Models.ViewModels
 {
     public class FreelancerView : UserView
     {
-        public List<Project> CompletedProjects { get; set; }
-        public List<Bid> Bids { get; set; }
-        public List<Review> ReviewsReceived { get; set; }
+        public List<ProjectView> CompletedProjects { get; set; }
+        public List<BidView> Bids { get; set; }
+        public List<ReviewView> ReviewsReceived { get; set; }
         public int ProfileId { get; set; }
-        public Profile Profile { get; set; }
+        public ProfileView Profile { get; set; }
         public double Hourlysalary { get; set; }
 
         public FreelancerView()
         {
-            CompletedProjects = new List<Project>();
-            Bids = new List<Bid>();
-            ReviewsReceived = new List<Review>();
+            CompletedProjects = new List<ProjectView>();
+            Bids = new List<BidView>();
+            ReviewsReceived = new List<ReviewView>();
 
         }
     }

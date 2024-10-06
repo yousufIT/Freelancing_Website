@@ -22,17 +22,24 @@ public class AccountsController : Controller
     {
         if (ModelState.IsValid)
         {
+            var profile = model.Profile;
             var freelancer = new Freelancer
             {
                 UserName = model.UserName,
                 Email = model.Email,
                 Name = model.Name,
-                ProfileId = model.ProfileId,
-                Profile = model.Profile,
+                Profile = new Profile()
+                {
+                    Bio = profile.Bio,
+                },
                 Hourlysalary = model.Hourlysalary
             };
+            freelancer.Profile.Freelancer = freelancer;
 
-            var result = await _userManager.CreateAsync(freelancer, model.Password);
+            var result = await _userManager.CreateAsync(freelancer, model.PasswordHash);
+
+            freelancer.Profile.FreelancerId = freelancer.Id;
+            freelancer.ProfileId=freelancer.Profile.Id;
 
             if (result.Succeeded)
             {
@@ -65,7 +72,7 @@ public class AccountsController : Controller
                 ContactNumber = model.ContactNumber
             };
 
-            var result = await _userManager.CreateAsync(client, model.Password);
+            var result = await _userManager.CreateAsync(client, model.PasswordHash);
 
             if (result.Succeeded)
             {

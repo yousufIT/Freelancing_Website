@@ -7,5 +7,10 @@
         public string Description { get; set; }
         public double Budget { get; set; }
         public string Status { get; set; }
+        public List<RequiredSkillView> Skills { get; set; }
+        public ProjectView()
+        {
+            Skills = new List<RequiredSkillView>();
+        }
     }
 }

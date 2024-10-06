@@ -20,7 +20,13 @@ namespace CodeSphere.Infrastructure.Repos
 
         public async Task AddSkillToFreelancerAsync(int freelancerId, Skill skill)
         {
-            skill.Profiles.Add(new Profile { FreelancerId = freelancerId }); 
+            var freelancer = await _context.Freelancers
+                 .Include(f => f.Profile)
+                 .ThenInclude(p=>p.Skills)
+                 .FirstOrDefaultAsync(f => f.Id == freelancerId);
+            var profile=freelancer.Profile;
+            skill.Profiles.Add(profile);
+            profile.Skills.Add(skill);
             await AddAsync(skill);
         }
 

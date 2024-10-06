@@ -34,8 +34,10 @@ namespace Freelancing_Website.Interfaces
     public interface ISkillService
     {
         Task<DataWithPagination<Skill>> GetAllSkillsAsync(int pageNumber, int pageSize);
+        Task<DataWithPagination<Skill>> GetSkillsForFreelancerAsync(int id,int pageNumber, int pageSize);
         Task<Skill> GetSkillByIdAsync(int id);
         Task CreateSkillAsync(Skill skill);
+        Task CreateSkillsToFreelancerAsync(int freelancerId, List<Skill> skill);
         Task UpdateSkillAsync(Skill skill);
         Task DeleteSkillAsync(int id);
     }
@@ -44,6 +46,7 @@ namespace Freelancing_Website.Interfaces
     {
         Task<DataWithPagination<Review>> GetReviewsByFreelancerIdAsync(int freelancerId, int pageNumber, int pageSize);
         Task<DataWithPagination<Review>> GetReviewsByClientIdAsync(int clientId, int pageNumber, int pageSize);
+        Task<Review> GetReviewByIdAsync(int id);
         Task CreateReviewAsync(int clientId,int freelancerId, Review review);
         Task UpdateReviewAsync(Review review);
         Task DeleteReviewAsync(int id);

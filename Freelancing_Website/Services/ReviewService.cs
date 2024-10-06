@@ -37,5 +37,10 @@ namespace Freelancing_Website.Services
         {
             await _reviewRepository.DeleteAsync(id);
         }
+
+        public async Task<Review> GetReviewByIdAsync(int id)
+        {
+            return await _reviewRepository.GetByIdAsync(id);
+        }
     }
 }

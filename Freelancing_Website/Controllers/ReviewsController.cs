@@ -6,6 +6,7 @@ using Freelancing_Website.Models;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Interfaces.Repos;
+using Freelancing_Website.Services;
 
 namespace Freelancing_Website.Controllers
 {
@@ -53,6 +54,20 @@ namespace Freelancing_Website.Controllers
             await _reviewService.CreateReviewAsync(clientId,freelancerId,review);
             var reviewView = _mapper.Map<ReviewView>(review);
             return Ok(reviewView);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateReview(int id,[FromBody] ReviewForCreate reviewForCreate)
+        {
+            var review= await _reviewService.GetReviewByIdAsync(id);
+            if (review == null)
+            {
+                return NotFound();
+            }
+            review.Rating = reviewForCreate.Rating;
+            review.Comment = reviewForCreate.Comment;
+            await _reviewService.UpdateReviewAsync(review);
+            var reviewViewModel = _mapper.Map<ReviewView>(review);
+            return Ok(reviewViewModel);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReviewById(int id)

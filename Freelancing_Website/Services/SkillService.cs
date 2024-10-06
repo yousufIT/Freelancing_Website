@@ -38,5 +38,16 @@ namespace Freelancing_Website.Services
         {
             await _skillRepository.DeleteAsync(id);
         }
+
+        public async Task<DataWithPagination<Skill>> GetSkillsForFreelancerAsync(int id, int pageNumber, int pageSize)
+        {
+            return await _skillRepository.GetSkillsForFreelancerAsync(id, pageNumber, pageSize);
+        }
+
+        public async Task CreateSkillsToFreelancerAsync(int freelancerId,List<Skill>  skills)
+        {
+            foreach (Skill skill in skills)
+             await _skillRepository.AddSkillToFreelancerAsync(freelancerId, skill);
+        }
     }
 }

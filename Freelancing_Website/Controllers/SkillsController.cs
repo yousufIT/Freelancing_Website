@@ -6,6 +6,7 @@ using Freelancing_Website.Models;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Interfaces.Repos;
+using Freelancing_Website.Services;
 
 namespace Freelancing_Website.Controllers
 {
@@ -21,11 +22,20 @@ namespace Freelancing_Website.Controllers
             _skillService = skillService;
             _mapper = mapper;
         }
-
         [HttpGet]
-        public async Task<IActionResult> GetAllSkills(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAllSkills(int id, int pageNumber = 1, int pageSize = 10)
         {
-            var skills = await _skillService.GetAllSkillsAsync(pageNumber,pageSize);
+            var skills = await _skillService.GetSkillsForFreelancerAsync(id, pageNumber, pageSize);
+            var skillViews = _mapper.Map<List<SkillView>>(skills.Items);
+            DataWithPagination<SkillView> skillsWithPagination = new DataWithPagination<SkillView>();
+            skillsWithPagination.Items = skillViews;
+            skillsWithPagination.PaginationMetaData = skills.PaginationMetaData;
+            return Ok(skillsWithPagination);
+        }
+        [HttpGet("Freelancer/{freelancerId}")]
+        public async Task<IActionResult> GetSkillsForFreelancer(int freelancerId, int pageNumber = 1, int pageSize = 10)
+        {
+            var skills = await _skillService.GetSkillsForFreelancerAsync(freelancerId, pageNumber,pageSize);
             var skillViews = _mapper.Map<List<SkillView>>(skills.Items);
             DataWithPagination<SkillView> skillsWithPagination = new DataWithPagination<SkillView>();
             skillsWithPagination.Items = skillViews;
@@ -52,6 +62,13 @@ namespace Freelancing_Website.Controllers
             await _skillService.CreateSkillAsync(skill);
             var skillView = _mapper.Map<SkillView>(skill);
             return CreatedAtAction(nameof(GetSkillById), new { id = skill.Id }, skillView);
+        }
+        [HttpPost("Freelancer/{freelancerId}")]
+        public async Task<IActionResult> CreateSkillsForFreelancer(int freelancerId,[FromBody] List<SkillForCreate> skillsForCreate)
+        {
+            var skills = _mapper.Map<List<Skill>>(skillsForCreate);
+            await _skillService.CreateSkillsToFreelancerAsync(freelancerId, skills);
+            return CreatedAtAction(nameof(GetSkillsForFreelancer), new { freelancerId }, _mapper.Map<List<SkillView>>(skills));
         }
 
         [HttpPut("{id}")]

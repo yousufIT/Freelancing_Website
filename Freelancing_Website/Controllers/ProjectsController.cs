@@ -22,10 +22,13 @@ namespace Freelancing_Website.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("skills/{skills}")]
-        public async Task<IActionResult> GetProjectsFilteredBySkills([FromBody] List<Skill> skills, int pageNumber = 1, int pagesize = 10)
+        [HttpGet("Skill/{Ids}")]
+        public async Task<IActionResult> GetProjectsFilteredBySkills( string Ids, int pageNumber = 1, int pagesize = 10)
         {
-            var projects = await _projectService.GetProjectsBySkills(skills, pageNumber, pagesize);
+            List<int> skillsIds= Ids.Split(',') 
+                      .Select(int.Parse) 
+                      .ToList();
+            var projects = await _projectService.GetProjectsBySkills(skillsIds, pageNumber, pagesize);
             var projectsViews = _mapper.Map<List<ProjectView>>(projects.Items);
             DataWithPagination<ProjectView> dataWithPagination = new DataWithPagination<ProjectView>();
             dataWithPagination.Items = projectsViews;

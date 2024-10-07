@@ -33,10 +33,11 @@ namespace Freelancing_Website.Services
             await _requiredSkillRepository.DeleteSkillsForProjectAsync(projectId);
         }
 
-        public async Task AddSkillsToProjectAsync(int projectId, List<Skill> skills)
+        public async Task AddSkillsToProjectAsync(int projectId, List<int> skillsIds)
         {
-            foreach (var skill in skills)
+            foreach (var skillsId in skillsIds)
             {
+                var skill=await _requiredSkillRepository.GetByIdAsync(skillsId);
                 await _requiredSkillRepository.AddSkillToProjectAsync(projectId, skill);
             }
         }

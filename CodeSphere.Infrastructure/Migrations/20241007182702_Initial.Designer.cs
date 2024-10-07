@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(CodeSphereContext))]
-    [Migration("20241007134512_edit-skill-model")]
-    partial class editskillmodel
+    [Migration("20241007182702_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

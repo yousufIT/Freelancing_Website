@@ -45,9 +45,10 @@ namespace Freelancing_Website.Services
             await _projectRepository.DeleteAsync(id);
         }
 
-        public async Task<DataWithPagination<Project>> GetProjectsBySkills(List<Skill> skills,int pageNumber, int pageSize)
+        public async Task<DataWithPagination<Project>> GetProjectsBySkills(List<int> skillsIds,int pageNumber, int pageSize)
         {
-            return await _projectRepository.GetProjectsBySkillsAsync(skills,pageNumber,pageSize);
+
+            return await _projectRepository.GetProjectsBySkillsAsync(skillsIds,pageNumber,pageSize);
         }
     }
 

@@ -44,39 +44,31 @@ namespace CodeSphere.Infrastructure.Repos
             var totalItemCount = projects.Count();
 
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
+            projects=projects.Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize).ToList();
             DataWithPagination<Project> result = new DataWithPagination<Project>();
             result.PaginationMetaData = paginationData;
             result.Items = projects;
             return result;
         }
 
-        public async Task<DataWithPagination<Project>> GetProjectsBySkillsAsync(List<Skill> skills,int pageSize, int pageNumber)
+        public async Task<DataWithPagination<Project>> GetProjectsBySkillsAsync(List<int> skillsIds,int pageSize, int pageNumber)
         {
             var projects = await _context.Projects
                 .Include(p => p.RequiredSkills)
-                .Where(p => IsProjectContainsAnySkill(p,skills) && !p.IsDeleted)
-                .Take(pageSize + pageNumber).ToListAsync();
+                .Where(p => !p.IsDeleted && p.RequiredSkills.Any(s => skillsIds.Contains(s.Id))).ToListAsync();
 
             var totalItemCount = projects.Count();
 
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
+            projects=projects.Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize).ToList();
             DataWithPagination<Project> result = new DataWithPagination<Project>();
             result.PaginationMetaData = paginationData;
             result.Items = projects;
             return result;
         }
 
-        public bool IsProjectContainsAnySkill(Project project, List<Skill> skills)
-        {
-            foreach(Skill skill in skills)
-            {
-                if (project.RequiredSkills.Contains(skill))
-                    return true;
-            };
-            return false;
-        }
     }
 
 }

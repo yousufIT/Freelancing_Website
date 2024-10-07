@@ -24,7 +24,7 @@ namespace Freelancing_Website.Interfaces
 
     public interface IProjectService
     {
-        Task<DataWithPagination<Project>> GetProjectsBySkills(List<Skill> skills, int pageNumber, int pageSize);
+        Task<DataWithPagination<Project>> GetProjectsBySkills(List<int> skillsIds, int pageNumber, int pageSize);
         Task<Project> GetProjectByIdAsync(int id);
         Task CreateProjectAsync(int clientId,Project project);
         Task UpdateProjectAsync(Project project);
@@ -67,7 +67,7 @@ namespace Freelancing_Website.Interfaces
         Task<List<Skill>> GetSkillsForProjectAsync(int projectId);
         Task<Skill> GetSkillByIdAsync(int id);
         Task AddSkillToProjectAsync(int projectId, Skill skill);
-        Task AddSkillsToProjectAsync(int projectId, List<Skill> skills);
+        Task AddSkillsToProjectAsync(int projectId, List<int> skillsIds);
         Task DeleteSkillsForProjectAsync(int projectId);
         Task UpdateSkillForProjectAsync(Skill requiredSkill);
         Task RemoveSkillFromProjectAsync(int projectId, int skillId);

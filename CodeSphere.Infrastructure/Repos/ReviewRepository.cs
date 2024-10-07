@@ -49,7 +49,8 @@ namespace CodeSphere.Infrastructure.Repos
             var totalItemCount = reviews.Count();
 
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
+            reviews=reviews.Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize).ToList();
             DataWithPagination<Review> result = new DataWithPagination<Review>();
             result.PaginationMetaData = paginationData;
             result.Items = reviews;
@@ -65,7 +66,8 @@ namespace CodeSphere.Infrastructure.Repos
             var totalItemCount = reviews.Count();
 
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
+            reviews=reviews.Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize).ToList();
             DataWithPagination<Review> result = new DataWithPagination<Review>();
             result.PaginationMetaData = paginationData;
             result.Items = reviews;

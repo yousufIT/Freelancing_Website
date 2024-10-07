@@ -18,10 +18,13 @@ namespace CodeSphere.Infrastructure.Repos
 
         public async Task<DataWithPagination<Bid>> GetBidsByProjectIdAsync(int projectId, int pageNumber, int pageSize)
         {
-            var bids = await _context.Bids.Where(b => b.ProjectId == projectId && !b.IsDeleted).ToListAsync();
+            var bids = await _context.Bids
+                 .Where(b => b.ProjectId == projectId && !b.IsDeleted)
+                 .ToListAsync();
             var totalItemCount = bids.Count();
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
+            bids = bids.Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize).ToList();
             DataWithPagination<Bid> result = new DataWithPagination<Bid>();
             result.PaginationMetaData = paginationData;
             result.Items = bids;
@@ -33,7 +36,8 @@ namespace CodeSphere.Infrastructure.Repos
             var bids = await _context.Bids.Where(b => b.FreelancerId == freelancerId && !b.IsDeleted).ToListAsync();
             var totalItemCount = bids.Count();
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
+            bids=bids.Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize).ToList();
             DataWithPagination<Bid> result = new DataWithPagination<Bid>();
             result.PaginationMetaData = paginationData;
             result.Items = bids;

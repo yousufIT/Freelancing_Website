@@ -26,7 +26,8 @@ namespace CodeSphere.Infrastructure.Repos
             var totalItemCount = portfolioItems.Count();
 
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
+            portfolioItems=portfolioItems.Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize).ToList();
             DataWithPagination<PortfolioItem> result = new DataWithPagination<PortfolioItem>();
             result.PaginationMetaData = paginationData;
             result.Items = portfolioItems;

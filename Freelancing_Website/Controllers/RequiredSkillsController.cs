@@ -26,20 +26,19 @@ namespace Freelancing_Website.Controllers
         public async Task<IActionResult> GetSkillsForProject(int projectId)
         {
             var skills = await _requiredSkillService.GetSkillsForProjectAsync(projectId);
-            var skillViews = _mapper.Map<List<RequiredSkillView>>(skills);
+            var skillViews = _mapper.Map<List<SkillView>>(skills);
             return Ok(skillViews);
         }
 
         [HttpPost("project/{projectId}")]
-        public async Task<IActionResult> AddSkillsToProject(int projectId, [FromBody] List<Skill> skills)
+        public async Task<IActionResult> AddSkillsToProject(int projectId, [FromBody] List<int> skillsIds)
         {
-            var requiredSkills = _mapper.Map<List<Skill>>(skills);
-            await _requiredSkillService.AddSkillsToProjectAsync(projectId, requiredSkills);
-            return CreatedAtAction(nameof(GetSkillsForProject), new { projectId }, _mapper.Map<List<RequiredSkillView>>(requiredSkills));
+            await _requiredSkillService.AddSkillsToProjectAsync(projectId, skillsIds);
+            return Ok();
         }
 
         [HttpPut("{skillId}")]
-        public async Task<IActionResult> UpdateSkillsForProject(int skillId, [FromBody] RequiredSkillForCreate skill)
+        public async Task<IActionResult> UpdateSkillsForProject(int skillId, [FromBody] SkillForCreate skill)
         {
             var requiredSkill = await _requiredSkillService.GetSkillByIdAsync(skillId);
             if(requiredSkill==null)

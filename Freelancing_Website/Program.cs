@@ -29,7 +29,8 @@ namespace Freelancing_Website
              {
                  options.JsonSerializerOptions.PropertyNamingPolicy = null;
              })
-             .AddXmlSerializerFormatters();
+             .AddXmlSerializerFormatters()
+             .AddNewtonsoftJson();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddAuthentication().AddJwtBearer(options =>

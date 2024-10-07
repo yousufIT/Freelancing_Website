@@ -24,7 +24,7 @@ namespace CodeSphere.Infrastructure.Repos
                 .FirstOrDefaultAsync(p => p.Id == projectId);
             
             project.RequiredSkills.Add(skill);
-            await AddAsync(skill);
+            _context.SaveChanges();
         }
 
         public async Task DeleteSkillsForProjectAsync(int projectId)

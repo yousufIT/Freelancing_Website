@@ -29,7 +29,8 @@ namespace CodeSphere.Infrastructure.Repos
             var totalItemCount = freelancers.Count();
 
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
+            freelancers=freelancers.Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize).ToList();
             DataWithPagination<Freelancer> result = new DataWithPagination<Freelancer>();
             result.PaginationMetaData = paginationData;
             result.Items = freelancers;

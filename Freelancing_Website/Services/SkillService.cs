@@ -13,10 +13,10 @@ namespace Freelancing_Website.Services
             _skillRepository = skillRepository;
         }
 
-        public async Task<DataWithPagination<Skill>> GetAllSkillsAsync(int pageNumber,int pageSize)
+        public async Task<List<Skill>> GetAllSkillsAsync()
         {
-            var result = await _skillRepository.GetAllAsync(pageNumber, pageSize);
-            return result ;
+            var result = await _skillRepository.GetAllAsync(1, int.MaxValue);
+            return result.Items ;
         }
 
         public async Task<Skill> GetSkillByIdAsync(int id)
@@ -39,15 +39,18 @@ namespace Freelancing_Website.Services
             await _skillRepository.DeleteAsync(id);
         }
 
-        public async Task<DataWithPagination<Skill>> GetSkillsForFreelancerAsync(int id, int pageNumber, int pageSize)
+        public async Task<List<Skill>> GetSkillsForFreelancerAsync(int id)
         {
-            return await _skillRepository.GetSkillsForFreelancerAsync(id, pageNumber, pageSize);
+            return await _skillRepository.GetSkillsForFreelancerAsync(id);
         }
 
-        public async Task CreateSkillsToFreelancerAsync(int freelancerId,List<Skill>  skills)
+        public async Task CreateSkillsToFreelancerAsync(int freelancerId,List<int>  skillsIds)
         {
-            foreach (Skill skill in skills)
-             await _skillRepository.AddSkillToFreelancerAsync(freelancerId, skill);
+            foreach (int skillId in skillsIds)
+            {
+                var skill = await GetSkillByIdAsync(skillId);
+                await _skillRepository.AddSkillToFreelancerAsync(freelancerId, skill);
+            }
         }
     }
 }

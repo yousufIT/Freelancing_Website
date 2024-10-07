@@ -50,6 +50,33 @@ namespace CodeSphere.Infrastructure.Repos
             result.Items = projects;
             return result;
         }
+
+        public async Task<DataWithPagination<Project>> GetProjectsBySkillsAsync(List<Skill> skills,int pageSize, int pageNumber)
+        {
+            var projects = await _context.Projects
+                .Include(p => p.RequiredSkills)
+                .Where(p => IsProjectContainsAnySkill(p,skills) && !p.IsDeleted)
+                .Take(pageSize + pageNumber).ToListAsync();
+
+            var totalItemCount = projects.Count();
+
+            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
+
+            DataWithPagination<Project> result = new DataWithPagination<Project>();
+            result.PaginationMetaData = paginationData;
+            result.Items = projects;
+            return result;
+        }
+
+        public bool IsProjectContainsAnySkill(Project project, List<Skill> skills)
+        {
+            foreach(Skill skill in skills)
+            {
+                if (project.RequiredSkills.Contains(skill))
+                    return true;
+            };
+            return false;
+        }
     }
 
 }

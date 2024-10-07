@@ -11,10 +11,5 @@ namespace CodeSphere.Domain.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
-        public List<Profile> Profiles { get; set; }
-        public Skill()
-        {
-        Profiles = new List<Profile>();
-        }
     }
 }

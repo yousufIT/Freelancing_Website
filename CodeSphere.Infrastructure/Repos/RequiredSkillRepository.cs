@@ -11,20 +11,18 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Infrastructure.Repos
 {
-    public class RequiredSkillRepository : Repository<RequiredSkill>, IRequiredSkillRepository
+    public class RequiredSkillRepository : Repository<Skill>, IRequiredSkillRepository
     {
-        public RequiredSkillRepository(CodeSphereContext context, ILogger<Repository<RequiredSkill>> logger)
+        public RequiredSkillRepository(CodeSphereContext context, ILogger<Repository<Skill>> logger)
             : base(context, logger) { }
 
   
-        public async Task AddSkillToProjectAsync(int projectId, RequiredSkill skill)
+        public async Task AddSkillToProjectAsync(int projectId, Skill skill)
         {
             var project = await _context.Projects
                 .Include(p => p.RequiredSkills)
                 .FirstOrDefaultAsync(p => p.Id == projectId);
             
-            skill.ProjectId = projectId;
-            skill.Project = project;
             project.RequiredSkills.Add(skill);
             await AddAsync(skill);
         }
@@ -42,23 +40,17 @@ namespace CodeSphere.Infrastructure.Repos
 
        
 
-        public async Task<DataWithPagination<RequiredSkill>> GetSkillsForProjectAsync(int projectId, int pageNumber, int pageSize)
+        public async Task<List<Skill>> GetSkillsForProjectAsync(int projectId)
         {
-            var requiredSkills = await _context.RequiredSkills.Where(rs => rs.ProjectId == projectId && !rs.IsDeleted).ToListAsync();
-            var totalItemCount = requiredSkills.Count();
+            var project = await _context.Projects.Include(p => p.RequiredSkills).FirstOrDefaultAsync(p => p.Id == projectId && !p.IsDeleted);
 
-            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
-            DataWithPagination<RequiredSkill> result = new DataWithPagination<RequiredSkill>();
-            result.PaginationMetaData = paginationData;
-            result.Items = requiredSkills;
-            return result;
+            return project.RequiredSkills;
         }
 
         public async Task DeleteSkillForProjectAsync(int projectId, int skillId)
         {
             var project = await _context.Projects.Include(p => p.RequiredSkills).FirstOrDefaultAsync(p => p.Id == projectId);
-            var skill = await _context.RequiredSkills.FirstOrDefaultAsync(p => p.Id == skillId);
+            var skill = await _context.Skills.FirstOrDefaultAsync(p => p.Id == skillId);
             if (project != null && skill != null) project.RequiredSkills.Remove(skill);
             await _context.SaveChangesAsync();
         }

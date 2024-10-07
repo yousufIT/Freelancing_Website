@@ -21,7 +21,6 @@ namespace CodeSphere.Infrastructure.Context
         public DbSet<Client> Clients { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Skill> Skills { get; set; }
-        public DbSet<RequiredSkill> RequiredSkills { get; set; }
         public DbSet<PortfolioItem> PortfolioItems { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Bid> Bids { get; set; }
@@ -52,8 +51,7 @@ namespace CodeSphere.Infrastructure.Context
 
 
             modelBuilder.Entity<Profile>()
-               .HasMany(p => p.Skills)
-               .WithMany(s => s.Profiles);
+               .HasMany(p => p.Skills);
 
 
             modelBuilder.Entity<Bid>()
@@ -83,38 +81,10 @@ namespace CodeSphere.Infrastructure.Context
 
 
             modelBuilder.Entity<Project>()
-                .HasMany(p => p.RequiredSkills)
-                .WithOne(rs => rs.Project)
-                .HasForeignKey(rs => rs.ProjectId);
+                .HasMany(p => p.RequiredSkills);
 
 
-            modelBuilder.Entity<Bid>()
-                .HasKey(b => ((IBase)b).Id);
-
-            modelBuilder.Entity<Client>()
-                .HasKey(c => ((IBase)c).Id);
-
-            modelBuilder.Entity<Freelancer>()
-                .HasKey(f => ((IBase)f).Id);
-
-            modelBuilder.Entity<PortfolioItem>()
-                .HasKey(p => ((IBase)p).Id);
-
-            modelBuilder.Entity<Profile>()
-                .HasKey(p => ((IBase)p).Id);
-
-            modelBuilder.Entity<Project>()
-                .HasKey(p => ((IBase)p).Id);
-
-            modelBuilder.Entity<RequiredSkill>()
-                .HasKey(r => ((IBase)r).Id);
-
-            modelBuilder.Entity<Review>()
-                .HasKey(r => ((IBase)r).Id);
-
-            modelBuilder.Entity<Skill>()
-                .HasKey(s => ((IBase)s).Id);
-
+           
 
         }
     }

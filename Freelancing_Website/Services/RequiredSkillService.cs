@@ -13,17 +13,17 @@ namespace Freelancing_Website.Services
             _requiredSkillRepository = requiredSkillRepository;
         }
 
-        public async Task<DataWithPagination<RequiredSkill>> GetSkillsForProjectAsync(int projectId, int pageNumber, int pageSize)
+        public async Task<List<Skill>> GetSkillsForProjectAsync(int projectId)
         {
-            return await _requiredSkillRepository.GetSkillsForProjectAsync(projectId, pageNumber, pageSize);
+            return await _requiredSkillRepository.GetSkillsForProjectAsync(projectId);
         }
 
-        public async Task AddSkillToProjectAsync(int projectId, RequiredSkill skill)
+        public async Task AddSkillToProjectAsync(int projectId, Skill skill)
         {
             await _requiredSkillRepository.AddSkillToProjectAsync(projectId, skill);
         }
 
-        public async Task UpdateSkillForProjectAsync( RequiredSkill requiredSkill)
+        public async Task UpdateSkillForProjectAsync( Skill requiredSkill)
         {
             await _requiredSkillRepository.UpdateAsync(requiredSkill);
         }
@@ -33,7 +33,7 @@ namespace Freelancing_Website.Services
             await _requiredSkillRepository.DeleteSkillsForProjectAsync(projectId);
         }
 
-        public async Task AddSkillsToProjectAsync(int projectId, List<RequiredSkill> skills)
+        public async Task AddSkillsToProjectAsync(int projectId, List<Skill> skills)
         {
             foreach (var skill in skills)
             {
@@ -46,7 +46,7 @@ namespace Freelancing_Website.Services
             await _requiredSkillRepository.DeleteSkillForProjectAsync(projectId, skillId);
         }
 
-        public async Task<RequiredSkill> GetSkillByIdAsync(int id)
+        public async Task<Skill> GetSkillByIdAsync(int id)
         {
             return await _requiredSkillRepository.GetByIdAsync(id);
         }

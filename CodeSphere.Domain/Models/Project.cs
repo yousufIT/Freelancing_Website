@@ -17,7 +17,7 @@ namespace CodeSphere.Domain.Models
         public int ClientId { get; set; }
         public Client Client { get; set; } 
          public List<Bid> Bids { get; set; }
-        public List<RequiredSkill> RequiredSkills { get; set; }
+        public List<Skill> RequiredSkills { get; set; }
         public int? SelectedFreelancerId { get; set; }
         public Freelancer SelectedFreelancer { get; set; }
         public bool IsDeleted { get; set; }

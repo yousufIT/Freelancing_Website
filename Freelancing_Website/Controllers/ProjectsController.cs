@@ -5,6 +5,7 @@ using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ViewModels;
+using CodeSphere.Domain.Interfaces.Repos;
 
 namespace Freelancing_Website.Controllers
 {
@@ -19,6 +20,17 @@ namespace Freelancing_Website.Controllers
         {
             _projectService = projectService;
             _mapper = mapper;
+        }
+
+        [HttpGet("skills/{skills}")]
+        public async Task<IActionResult> GetProjectsFilteredBySkills([FromBody] List<Skill> skills, int pageNumber = 1, int pagesize = 10)
+        {
+            var projects = await _projectService.GetProjectsBySkills(skills, pageNumber, pagesize);
+            var projectsViews = _mapper.Map<List<ProjectView>>(projects.Items);
+            DataWithPagination<ProjectView> dataWithPagination = new DataWithPagination<ProjectView>();
+            dataWithPagination.Items = projectsViews;
+            dataWithPagination.PaginationMetaData = projects.PaginationMetaData;
+            return Ok(dataWithPagination);
         }
 
         [HttpGet("{id}")]

@@ -29,7 +29,7 @@ namespace Freelancing_Website.Services
             if (freelancer != null)
             {
                 freelancer.Profile = await _profileRepository.GetProfileByFreelancerIdAsync(freelancer.Id);
-                freelancer.Profile.Skills = (await _skillRepository.GetSkillsForFreelancerAsync(freelancer.Id,1,int.MaxValue)).Items;
+                freelancer.Profile.Skills = (await _skillRepository.GetSkillsForFreelancerAsync(freelancer.Id));
 
                 // Fix: Convert IEnumerable to List explicitly
                 freelancer.ReviewsReceived = ((await _reviewRepository.GetReviewsByFreelancerIdAsync(freelancer.Id, 1, int.MaxValue)).Items).ToList();

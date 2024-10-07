@@ -25,18 +25,18 @@ namespace CodeSphere.Infrastructure.Repos
                  .ThenInclude(p=>p.Skills)
                  .FirstOrDefaultAsync(f => f.Id == freelancerId);
             var profile=freelancer.Profile;
-            skill.Profiles.Add(profile);
             profile.Skills.Add(skill);
-            await AddAsync(skill);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateSkillsForFreelancerAsync(int freelancerId, List<Skill> skills)
         {
-            foreach (var skill in skills)
-            {
-                skill.Profiles.Add(new Profile { FreelancerId = freelancerId }); 
-                await UpdateAsync(skill);
-            }
+            var freelancer = await _context.Freelancers
+                 .Include(f => f.Profile)
+                 .ThenInclude(p => p.Skills)
+                 .FirstOrDefaultAsync(f => f.Id == freelancerId);
+            freelancer.Profile.Skills = skills;
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteSkillsForFreelancerAsync(int freelancerId)
@@ -52,20 +52,15 @@ namespace CodeSphere.Infrastructure.Repos
             await _context.SaveChangesAsync();
         }
 
-        public async Task<DataWithPagination<Skill>> GetSkillsForFreelancerAsync(int freelancerId, int pageNumber, int pageSize)
+        public async Task<List<Skill>> GetSkillsForFreelancerAsync(int freelancerId)
         {
-            var skills = await _context.Skills
-                .Where(skill => skill.Profiles.Any(profile => profile.FreelancerId == freelancerId) && !skill.IsDeleted)
-                .ToListAsync();
-
-            var totalItemCount = skills.Count();
-
-            var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-
-            DataWithPagination<Skill> result = new DataWithPagination<Skill>();
-            result.PaginationMetaData = paginationData;
-            result.Items = skills;
-            return result;
+            var freelancer = await _context.Freelancers
+                 .Include(f => f.Profile)
+                 .ThenInclude(p => p.Skills)
+                 .FirstOrDefaultAsync(f => f.Id == freelancerId);
+            var profile=freelancer.Profile;
+            var skills = profile.Skills;
+            return skills;
         }
     }
 

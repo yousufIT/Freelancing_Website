@@ -23,20 +23,17 @@ namespace Freelancing_Website.Controllers
         }
 
         [HttpGet("project/{projectId}")]
-        public async Task<IActionResult> GetSkillsForProject(int projectId,int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetSkillsForProject(int projectId)
         {
-            var skills = await _requiredSkillService.GetSkillsForProjectAsync(projectId,pageNumber,pageSize);
-            var skillViews = _mapper.Map<List<RequiredSkillView>>(skills.Items);
-            DataWithPagination<RequiredSkillView> data = new DataWithPagination<RequiredSkillView>();
-            data.Items = skillViews;
-            data.PaginationMetaData = skills.PaginationMetaData;
-            return Ok(data);
+            var skills = await _requiredSkillService.GetSkillsForProjectAsync(projectId);
+            var skillViews = _mapper.Map<List<RequiredSkillView>>(skills);
+            return Ok(skillViews);
         }
 
         [HttpPost("project/{projectId}")]
-        public async Task<IActionResult> AddSkillsToProject(int projectId, [FromBody] List<RequiredSkillForCreate> skills)
+        public async Task<IActionResult> AddSkillsToProject(int projectId, [FromBody] List<Skill> skills)
         {
-            var requiredSkills = _mapper.Map<List<RequiredSkill>>(skills);
+            var requiredSkills = _mapper.Map<List<Skill>>(skills);
             await _requiredSkillService.AddSkillsToProjectAsync(projectId, requiredSkills);
             return CreatedAtAction(nameof(GetSkillsForProject), new { projectId }, _mapper.Map<List<RequiredSkillView>>(requiredSkills));
         }

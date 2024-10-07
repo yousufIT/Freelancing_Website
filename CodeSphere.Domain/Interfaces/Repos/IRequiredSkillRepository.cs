@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace CodeSphere.Domain.Interfaces.Repos
 {
-    public interface IRequiredSkillRepository : IRepository<RequiredSkill>
+    public interface IRequiredSkillRepository : IRepository<Skill>
     {
-        Task<DataWithPagination<RequiredSkill>> GetSkillsForProjectAsync(int projectId, int pageNumber, int pageSize);
-        Task AddSkillToProjectAsync(int projectId, RequiredSkill skill);
+        Task<List<Skill>> GetSkillsForProjectAsync(int projectId);
+        Task AddSkillToProjectAsync(int projectId, Skill skill);
         Task DeleteSkillsForProjectAsync(int projectId);
         Task DeleteSkillForProjectAsync(int projectId, int skillId);
     }

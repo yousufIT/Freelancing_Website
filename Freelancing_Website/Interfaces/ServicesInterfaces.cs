@@ -24,6 +24,7 @@ namespace Freelancing_Website.Interfaces
 
     public interface IProjectService
     {
+        Task<DataWithPagination<Project>> GetProjectsBySkills(List<Skill> skills, int pageNumber, int pageSize);
         Task<Project> GetProjectByIdAsync(int id);
         Task CreateProjectAsync(int clientId,Project project);
         Task UpdateProjectAsync(Project project);
@@ -33,11 +34,11 @@ namespace Freelancing_Website.Interfaces
 
     public interface ISkillService
     {
-        Task<DataWithPagination<Skill>> GetAllSkillsAsync(int pageNumber, int pageSize);
-        Task<DataWithPagination<Skill>> GetSkillsForFreelancerAsync(int id,int pageNumber, int pageSize);
+        Task<List<Skill>> GetAllSkillsAsync();
+        Task<List<Skill>> GetSkillsForFreelancerAsync(int id);
         Task<Skill> GetSkillByIdAsync(int id);
         Task CreateSkillAsync(Skill skill);
-        Task CreateSkillsToFreelancerAsync(int freelancerId, List<Skill> skill);
+        Task CreateSkillsToFreelancerAsync(int freelancerId, List<int> skillsIds);
         Task UpdateSkillAsync(Skill skill);
         Task DeleteSkillAsync(int id);
     }
@@ -63,12 +64,12 @@ namespace Freelancing_Website.Interfaces
     }
     public interface IRequiredSkillService
     {
-        Task<DataWithPagination<RequiredSkill>> GetSkillsForProjectAsync(int projectId, int pageNumber, int pageSize);
-        Task<RequiredSkill> GetSkillByIdAsync(int id);
-        Task AddSkillToProjectAsync(int projectId, RequiredSkill skill);
-        Task AddSkillsToProjectAsync(int projectId, List<RequiredSkill> skills);
+        Task<List<Skill>> GetSkillsForProjectAsync(int projectId);
+        Task<Skill> GetSkillByIdAsync(int id);
+        Task AddSkillToProjectAsync(int projectId, Skill skill);
+        Task AddSkillsToProjectAsync(int projectId, List<Skill> skills);
         Task DeleteSkillsForProjectAsync(int projectId);
-        Task UpdateSkillForProjectAsync(RequiredSkill requiredSkill);
+        Task UpdateSkillForProjectAsync(Skill requiredSkill);
         Task RemoveSkillFromProjectAsync(int projectId, int skillId);
     }
 

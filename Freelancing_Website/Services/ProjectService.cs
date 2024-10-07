@@ -23,7 +23,7 @@ namespace Freelancing_Website.Services
             if (project != null)
             {
                 project.Bids = (await _bidRepository.GetBidsByProjectIdAsync(id, 1, int.MaxValue)).Items;
-                project.RequiredSkills = (await _requiredSkillRepository.GetSkillsForProjectAsync(id, 1, int.MaxValue)).Items;
+                project.RequiredSkills = (await _requiredSkillRepository.GetSkillsForProjectAsync(id));
             }
             return project;
         }
@@ -43,6 +43,11 @@ namespace Freelancing_Website.Services
             await _bidRepository.DeleteBidsForProjectAsync(id);
             await _requiredSkillRepository.DeleteSkillsForProjectAsync(id);
             await _projectRepository.DeleteAsync(id);
+        }
+
+        public async Task<DataWithPagination<Project>> GetProjectsBySkills(List<Skill> skills,int pageNumber, int pageSize)
+        {
+            return await _projectRepository.GetProjectsBySkillsAsync(skills,pageNumber,pageSize);
         }
     }
 

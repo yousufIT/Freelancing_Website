@@ -1,22 +1,17 @@
-﻿using CodeSphere.Domain.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Microsoft.EntityFrameworkCore;
+using CodeSphere.Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace CodeSphere.Infrastructure.Context
 {
-    public class CodeSphereContext : DbContext
+    public class CodeSphereContext : IdentityDbContext<User, IdentityRole, string>
     {
-        public CodeSphereContext(DbContextOptions<CodeSphereContext> options) : base(options)
+        public CodeSphereContext(DbContextOptions<CodeSphereContext> options): base(options)
         {
-
         }
+
+
         public DbSet<Freelancer> Freelancers { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Profile> Profiles { get; set; }
@@ -28,6 +23,36 @@ namespace CodeSphere.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //TPH it's kind to storage the data go search 
+            modelBuilder.Entity<Freelancer>().ToTable("AspNetUsers");
+            modelBuilder.Entity<Client>().ToTable("AspNetUsers");
+
+
+
+            modelBuilder.Entity<User>()
+                .ToTable("AspNetUsers");
+
+
+            modelBuilder.Entity<Freelancer>()
+                .HasDiscriminator<string>("UserType")
+                .HasValue<Freelancer>("Freelancer");
+
+
+            modelBuilder.Entity<Client>()
+                .HasBaseType<User>() 
+                .HasDiscriminator<string>("UserType")
+                .HasValue<Client>("Client");
+
+
+            modelBuilder.Entity<IdentityUserLogin<string>>()
+                .HasKey(login => new { login.LoginProvider, login.ProviderKey });
+
+            modelBuilder.Entity<IdentityUserRole<string>>()
+                .HasKey(userRole => new { userRole.UserId, userRole.RoleId });
+
+            modelBuilder.Entity<IdentityUserToken<string>>()
+                .HasKey(userToken => new { userToken.UserId, userToken.LoginProvider, userToken.Name });
+
             modelBuilder.Entity<Freelancer>()
                 .HasMany(f => f.Bids)
                 .WithOne(b => b.Freelancer)
@@ -44,34 +69,16 @@ namespace CodeSphere.Infrastructure.Context
                 .WithOne(f => f.Profile)
                 .HasForeignKey<Profile>(p => p.FreelancerId);
 
-            modelBuilder.Entity<Freelancer>()
-               .HasOne(f => f.Profile)
-               .WithOne(p => p.Freelancer)
-               .HasForeignKey<Profile>(p => p.FreelancerId);
-
-
-            modelBuilder.Entity<Profile>()
-               .HasMany(p => p.Skills);
-
-
-            modelBuilder.Entity<Bid>()
-               .HasOne(b => b.Freelancer)
-               .WithMany(u => u.Bids)
-               .HasForeignKey(b => b.FreelancerId)
-               .OnDelete(DeleteBehavior.NoAction);
-
-
             modelBuilder.Entity<Bid>()
                 .HasOne(b => b.Project)
                 .WithMany(p => p.Bids)
                 .HasForeignKey(b => b.ProjectId);
 
-
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Client)
                 .WithMany(c => c.ReviewsGiven)
                 .HasForeignKey(r => r.ClientId)
-                .OnDelete(DeleteBehavior.NoAction); 
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Freelancer)
@@ -79,13 +86,8 @@ namespace CodeSphere.Infrastructure.Context
                 .HasForeignKey(r => r.FreelancerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.RequiredSkills);
-
-
-           
-
         }
     }
 }

@@ -7,18 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/[controller]")]
 public class AccountsController : Controller
 {
-    private readonly UserManager<Freelancer> _userManagerForFreelancer;
-    private readonly UserManager<Client> _userManagerForCLient;
-    private readonly SignInManager<Freelancer> _signInManagerForFreelancer;
-    private readonly SignInManager<Client> _signInManagerForCLient;
+    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
     private readonly JWTService _jwtService;
 
-    public AccountsController(UserManager<Freelancer> userManagerForFreelancer, SignInManager<Freelancer> signInManagerForFreelancer, UserManager<Client> userManagerForCLient, SignInManager<Client> signInManagerForCLient, JWTService jwtService)
+    public AccountsController(UserManager<User> userManager, SignInManager<User> signInManager, JWTService jwtService)
     {
-        _userManagerForFreelancer = userManagerForFreelancer;
-        _userManagerForCLient = userManagerForCLient;
-        _signInManagerForFreelancer = signInManagerForFreelancer;
-        _signInManagerForCLient = signInManagerForCLient;
+        _userManager=userManager;
+        _signInManager=signInManager;
         _jwtService = jwtService;
     }
 
@@ -34,6 +30,8 @@ public class AccountsController : Controller
                 UserName = model.UserName,
                 Email = model.Email,
                 Name = model.Name,
+                Role=model.Role,
+                Rating=model.Rating,
                 Profile = new Profile()
                 {
                     Bio = profile.Bio,
@@ -42,14 +40,14 @@ public class AccountsController : Controller
             };
             freelancer.Profile.Freelancer = freelancer;
 
-            var result = await _userManagerForFreelancer.CreateAsync(freelancer, model.PasswordHash);
+            var result = await _userManager.CreateAsync(freelancer, model.PasswordHash);
 
             freelancer.Profile.FreelancerId = freelancer.Id;
             freelancer.ProfileId=freelancer.Profile.Id;
 
             if (result.Succeeded)
             {
-                await _userManagerForFreelancer.AddToRoleAsync(freelancer, "Freelancer");
+                await _userManager.AddToRoleAsync(freelancer, "Freelancer");
                 var token = _jwtService.CreateJWT(model);
                 return Ok(new { token });
             }
@@ -75,14 +73,17 @@ public class AccountsController : Controller
                 Email = model.Email,
                 Name = model.Name,
                 CompanyName = model.CompanyName,
-                ContactNumber = model.ContactNumber
+                ContactNumber = model.ContactNumber,
+                Role=model.Role,
+                Rating=model.Rating
+                
             };
 
-            var result = await _userManagerForCLient.CreateAsync(client, model.PasswordHash);
+            var result = await _userManager.CreateAsync(client, model.PasswordHash);
 
             if (result.Succeeded)
             {
-                await _userManagerForCLient.AddToRoleAsync(client, "Client");
+                await _userManager.AddToRoleAsync(client, "Client");
                 var token = _jwtService.CreateJWT(model);
                 return Ok(new { token });
             }
@@ -101,18 +102,18 @@ public class AccountsController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = await _userManagerForFreelancer.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user != null)
             {
-                var result = await _signInManagerForFreelancer.PasswordSignInAsync(user, password,
+                var result = await _signInManager.PasswordSignInAsync(user, password,
                     false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var role = (await _userManagerForFreelancer.GetRolesAsync(user)).FirstOrDefault();
+                    var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
                     UserForCreate model;
 
-                    if (role == "Freelancer")
+                    if (user.Role == "Freelancer")
                     {
                         model = new FreelancerForCreate
                         {
@@ -121,7 +122,7 @@ public class AccountsController : Controller
                             Role = role
                         };
                     }
-                    else if (role == "Client")
+                    else if (user.Role == "Client")
                     {
                         model = new ClientForCreate
                         {

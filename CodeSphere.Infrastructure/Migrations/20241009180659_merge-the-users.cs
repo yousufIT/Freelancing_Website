@@ -6,19 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CodeSphere.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class mergetheusers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Clients",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rating = table.Column<double>(type: "float", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    UserType = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfileId = table.Column<int>(type: "int", nullable: true),
+                    Hourlysalary = table.Column<double>(type: "float", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -32,47 +39,11 @@ namespace CodeSphere.Infrastructure.Migrations
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rating = table.Column<double>(type: "float", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Freelancers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProfileId = table.Column<int>(type: "int", nullable: false),
-                    Hourlysalary = table.Column<double>(type: "float", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rating = table.Column<double>(type: "float", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Freelancers", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,9 +60,9 @@ namespace CodeSphere.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Profiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Profiles_Freelancers_FreelancerId",
+                        name: "FK_Profiles_AspNetUsers_FreelancerId",
                         column: x => x.FreelancerId,
-                        principalTable: "Freelancers",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -114,15 +85,15 @@ namespace CodeSphere.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projects_Clients_ClientId",
+                        name: "FK_Projects_AspNetUsers_ClientId",
                         column: x => x.ClientId,
-                        principalTable: "Clients",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Projects_Freelancers_SelectedFreelancerId",
+                        name: "FK_Projects_AspNetUsers_SelectedFreelancerId",
                         column: x => x.SelectedFreelancerId,
-                        principalTable: "Freelancers",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
@@ -132,7 +103,7 @@ namespace CodeSphere.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<double>(type: "float", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: false),
                     FreelancerId = table.Column<int>(type: "int", nullable: false),
@@ -142,14 +113,14 @@ namespace CodeSphere.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reviews_Clients_ClientId",
+                        name: "FK_Reviews_AspNetUsers_ClientId",
                         column: x => x.ClientId,
-                        principalTable: "Clients",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Reviews_Freelancers_FreelancerId",
+                        name: "FK_Reviews_AspNetUsers_FreelancerId",
                         column: x => x.FreelancerId,
-                        principalTable: "Freelancers",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
@@ -192,9 +163,9 @@ namespace CodeSphere.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Bids", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bids_Freelancers_FreelancerId",
+                        name: "FK_Bids_AspNetUsers_FreelancerId",
                         column: x => x.FreelancerId,
-                        principalTable: "Freelancers",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Bids_Projects_ProjectId",
@@ -304,10 +275,7 @@ namespace CodeSphere.Infrastructure.Migrations
                 name: "Projects");
 
             migrationBuilder.DropTable(
-                name: "Clients");
-
-            migrationBuilder.DropTable(
-                name: "Freelancers");
+                name: "AspNetUsers");
         }
     }
 }

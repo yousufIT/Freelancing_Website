@@ -2,7 +2,7 @@
 {
     public class ReviewForCreate
     {
-        public int Rating { get; set; }
+        public double Rating { get; set; }
         public string Comment { get; set; }
     }
 }

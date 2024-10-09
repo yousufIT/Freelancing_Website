@@ -20,6 +20,7 @@ namespace Freelancing_Website
             // Add services to the container.
             builder.Services.AddDbContext<CodeSphereContext>(options =>
                                  options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<JWTService>();
 
             builder.Services.AddControllers(options =>
             {
@@ -58,7 +59,7 @@ namespace Freelancing_Website
                 });
             });
 
-            builder.Services.AddIdentity<User, IdentityRole>(options =>
+            builder.Services.AddIdentityCore<Freelancer>(options =>
             {
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
@@ -66,9 +67,30 @@ namespace Freelancing_Website
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequiredLength = 8;
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CodeSphereContext>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddSignInManager<SignInManager<Freelancer>>()
+                .AddUserManager<UserManager<Freelancer>>()
                 .AddDefaultTokenProviders();
 
+
+
+
+            builder.Services.AddIdentityCore<Client>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredLength = 8;
+            })
+               .AddRoles<IdentityRole>()
+               .AddEntityFrameworkStores<CodeSphereContext>()
+               .AddRoleManager<RoleManager<IdentityRole>>()
+               .AddSignInManager<SignInManager<Client>>()
+               .AddUserManager<UserManager<Client>>()
+               .AddDefaultTokenProviders();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

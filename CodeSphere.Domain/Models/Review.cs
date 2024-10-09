@@ -9,7 +9,7 @@ namespace CodeSphere.Domain.Models
     public class Review : IBase
     {
         public int Id { get; set; }
-        public int Rating { get; set; }
+        public double Rating { get; set; }
         public string Comment { get; set; }
         public int ClientId { get; set; }
         public Client Client { get; set; } 

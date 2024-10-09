@@ -42,7 +42,7 @@ namespace Freelancing_Website.Controllers
         }
 
        
-        [HttpPut("portfolio")]
+        [HttpPut("portfolio/{id}")]
         public async Task<IActionResult> UpdatePortfolioItem(int id,[FromBody] PortfolioItemForCreate item)
         {
             var portfolioItem=await _profileService.GetPortfolioItemByIdAsync(id);

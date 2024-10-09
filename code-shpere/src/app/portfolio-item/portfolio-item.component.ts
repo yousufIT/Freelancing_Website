@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PortfolioService } from '../services/portfolio.service';
+import { PortfolioService } from '../services/Profile.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

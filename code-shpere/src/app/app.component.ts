@@ -20,7 +20,7 @@ import { environment } from '@env/environment';
   encapsulation: ViewEncapsulation.None,
   standalone: true,
 })
-export class App implements OnInit {
+export class AppComponent implements OnInit {
   elementRef = inject(ElementRef)
   theme = inject(ThemeService)
   renderer = inject(Renderer2)

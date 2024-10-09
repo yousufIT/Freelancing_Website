@@ -21,8 +21,8 @@ export class CreateProjectComponent {
   constructor(private projectService: ProjectService, private router: Router) {}
 
   createProject() {
-    this.projectService.createProject(this.project).subscribe(() => {
-      this.router.navigate(['/projects']);
-    });
+    // this.projectService.createProject(clientId, this.project).subscribe(() => {
+    //   this.router.navigate(['/projects']);
+    // });
   }
 }

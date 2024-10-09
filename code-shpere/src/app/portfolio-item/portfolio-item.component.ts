@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PortfolioService } from '../services/Profile.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -9,14 +8,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './portfolio-item.component.html',
   imports: [FormsModule,CommonModule]
 })
-export class PortfolioItemComponent implements OnInit {
+export class PortfolioItemComponent  {
   portfolioItems: any[] = [];
 
-  constructor(private portfolioService: PortfolioService) {}
+//   constructor(private portfolioService: PortfolioService) {}
 
-  ngOnInit(): void {
-    this.portfolioService.getPortfolioItems().subscribe((data) => {
-      this.portfolioItems = data;
-    });
-  }
+//   ngOnInit(): void {
+//     this.portfolioService.getPortfolioItems().subscribe((data) => {
+//       this.portfolioItems = data;
+//     });
+//   }
 }

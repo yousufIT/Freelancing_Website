@@ -13,8 +13,6 @@ export class FreelancerCreateComponent {
   constructor(private freelancerService: FreelancerService) {}
 
   createFreelancer(): void {
-    this.freelancerService.createFreelancer(this.freelancer).subscribe(() => {
-      // Handle success (e.g., redirect or show a message)
-    });
+    this.freelancerService.createFreelancer(this.freelancer).subscribe(() => {});
   }
 }

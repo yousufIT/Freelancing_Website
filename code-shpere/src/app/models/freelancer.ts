@@ -1,13 +1,21 @@
+import { Bid } from "./bid";
+import { Profile } from "./profile";
+import { Project } from "./project";
 import { Review } from "./review";
-import { Skill } from "./skill";
 
 export interface Freelancer {
-    id: number;
-    name: string;
-    title: string;
-    bio: string;
-    hourlyRate: number;
-    skills: Skill[];
-    reviews: Review[];
+    Id: number;
+    Name: string;
+    Rating : number;
+    UserName : string;
+    Role : string;
+    PasswordHash : string;
+    Email : string;
+    HourlyRate: number;
+    Bids: Bid[];
+    ReviewsReceived: Review[];
+    CompletedProjects : Project[];
+    ProfileId : number;
+    Profile : Profile;
   }
   

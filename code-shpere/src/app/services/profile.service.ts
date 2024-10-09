@@ -1,48 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Profile } from '../models/profile';
 import { PortfolioItem } from '../models/portfolio-item';
-import { environment } from '../../environments/environment';
-import { DataWithPagination } from '../models/data-with-pagination';
+import { PortfolioItemForCreate } from '../models/for-create/portfolio-item-for-create';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = `${environment.apiUrl}/profiles`;
+  private apiUrl = 'https://localhost:7240/api/Profiles';
 
   constructor(private http: HttpClient) {}
 
-  getProfile(profileId: number): Observable<Profile> {
-    return this.http.get<Profile>(`${this.apiUrl}/${profileId}`);
+  getPortfolioItems(ProfileId : number, pageNumber: number, pageSize: number): Observable<PortfolioItem[]> {
+    return this.http.get<any>(`${this.apiUrl}/${ProfileId}/portfolio?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
-  getPortfolioItems(profileId: number, pageNumber: number, pageSize: number): Observable<DataWithPagination<PortfolioItem>> {
-    return this.http.get<DataWithPagination<PortfolioItem>>(`${this.apiUrl}/${profileId}/portfolio-items?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  createPortfolioItem(ProfileId : number ,item: PortfolioItemForCreate): Observable<PortfolioItem> {
+    return this.http.post<any>(`${this.apiUrl}/${ProfileId}/portfolio`, item);
   }
 
-  createProfile(profile: Profile): Observable<Profile> {
-    return this.http.post<Profile>(this.apiUrl, profile);
+  updatePortfolioItem(PortfolioItemId : number ,item: PortfolioItemForCreate): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/portfolio/${PortfolioItemId}`, item);
   }
 
-  createPortfolioItem(profileId: number, item: PortfolioItem): Observable<PortfolioItem> {
-    return this.http.post<PortfolioItem>(`${this.apiUrl}/${profileId}/portfolio-items`, item);
-  }
-
-  updateProfile(profile: Profile): Observable<Profile> {
-    return this.http.put<Profile>(`${this.apiUrl}/${profile.id}`, profile);
-  }
-
-  updatePortfolioItem(item: PortfolioItem): Observable<PortfolioItem> {
-    return this.http.put<PortfolioItem>(`${this.apiUrl}/portfolio-items/${item.id}`, item);
-  }
-
-  deleteProfile(profileId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${profileId}`);
-  }
-
-  deletePortfolioItem(itemId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/portfolio-items/${itemId}`);
+  deletePortfolioItem(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/portfolio/${id}`);
   }
 }

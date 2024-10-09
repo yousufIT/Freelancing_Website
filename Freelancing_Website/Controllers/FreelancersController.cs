@@ -71,15 +71,6 @@ namespace Freelancing_Website.Controllers
             return NoContent();
         }
 
-        [HttpGet("{freelancerId}/reviews")]
-        public async Task<IActionResult> GetReviewsForFreelancer(int freelancerId, int pageNumber = 1, int pageSize = 10)
-        {
-            var reviews = await _freelancerService.GetReviewsForFreelancerAsync(freelancerId, pageNumber, pageSize);
-            var reviewViewModels = _mapper.Map<List<ReviewView>>(reviews.Items);
-            DataWithPagination<ReviewView> reviewsWithPagination = new DataWithPagination<ReviewView>();
-            reviewsWithPagination.Items = reviewViewModels;
-            reviewsWithPagination.PaginationMetaData = reviews.PaginationMetaData;
-            return Ok(reviewsWithPagination);
-        }
+        
     }
 }

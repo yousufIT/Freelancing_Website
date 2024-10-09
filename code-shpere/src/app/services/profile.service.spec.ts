@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProfileService } from './profile.service';
+import { ProfileService } from './Profile.service';
 
-describe('ProfileService', () => {
+describe('PortfolioService', () => {
   let service: ProfileService;
 
   beforeEach(() => {

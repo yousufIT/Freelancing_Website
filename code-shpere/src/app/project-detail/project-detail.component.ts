@@ -4,6 +4,7 @@ import { ProjectService } from '../services/project.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { Project } from '../models/project';
 
 @Component({
   standalone: true,
@@ -12,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [FormsModule,CommonModule, HttpClientModule]
 })
 export class ProjectDetailComponent implements OnInit {
-  project: any;
+  project!: Project;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +23,7 @@ export class ProjectDetailComponent implements OnInit {
   ngOnInit(): void {
     let id = Number(this.route.snapshot.paramMap.get('id'));
     if(isNaN(id)) id = 0;
-    this.projectService.getProject(id).subscribe((data) => {
+    this.projectService.getProjectById(id).subscribe((data) => {
       this.project = data;
     });
   }

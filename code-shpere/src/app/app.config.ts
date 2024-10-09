@@ -1,9 +1,16 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
+import { PreloadAllModules, provideRouter, withPreloading, withViewTransitions, withInMemoryScrolling } from '@angular/router';
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideHttpClient(),provideRouter(routes)]
+  providers: [
+    provideAnimations(),
+    provideHttpClient(),
+    provideRouter(routes, withViewTransitions(), withPreloading(PreloadAllModules),
+      withInMemoryScrolling({
+      scrollPositionRestoration: 'enabled',
+    })
+  )]
 };

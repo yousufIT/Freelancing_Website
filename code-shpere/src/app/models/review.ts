@@ -1,9 +1,13 @@
+import { Client } from "./client";
+import { Freelancer } from "./freelancer";
+
 export interface Review {
-    id: number;
-    rating: number;
-    comment: string;
-    dateCreated: Date;
-    freelancerId?: number;
-    clientId?: number;
+    Id: number;
+    Rating: number;
+    Comment: string;
+    FreelancerId: number;
+    Freelancer:Freelancer
+    ClientId: number;
+    Client:Client;
   }
   

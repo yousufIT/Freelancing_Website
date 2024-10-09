@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Client } from '../models/client'; // assuming you have defined Client model
-import { Review } from '../models/review';
+import { ClientForCreate } from '../models/for-create/client-for-create'; 
 import { environment } from '../../environments/environment';
+import { Client } from '../models/client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
 
-  private apiUrl = `${environment.apiUrl}/clients`;
+  private apiUrl = `${environment.apiUrl}/Clients`;
 
   constructor(private http: HttpClient) { }
 
@@ -18,19 +18,15 @@ export class ClientService {
     return this.http.get<Client>(`${this.apiUrl}/${id}`);
   }
 
-  createClient(client: Client): Observable<Client> {
+  createClient(client: ClientForCreate): Observable<Client> {
     return this.http.post<Client>(this.apiUrl, client);
   }
 
-  updateClient(client: Client): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${client.id}`, client);
+  updateClient(id:number,client: ClientForCreate): Observable<Client> {
+    return this.http.put<Client>(`${this.apiUrl}/${id}`, client);
   }
 
   deleteClient(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  getReviewsForClient(clientId: number, pageNumber: number, pageSize: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${clientId}/reviews?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 }

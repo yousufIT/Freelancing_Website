@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Review } from '../models/review';
 import { environment } from '../../environments/environment';
 import { DataWithPagination } from '../models/data-with-pagination';
+import { ReviewForCreate } from '../models/for-create/review-for-create';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReviewService {
-  private apiUrl = `${environment.apiUrl}/reviews`;
+  private apiUrl = `${environment.apiUrl}/Reviews`;
 
   constructor(private http: HttpClient) {}
 
@@ -21,12 +22,12 @@ export class ReviewService {
     return this.http.get<DataWithPagination<Review>>(`${this.apiUrl}/client/${clientId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
-  createReview(review: Review): Observable<Review> {
-    return this.http.post<Review>(this.apiUrl, review);
+  createReview(clientId:number,freelancerId:number,review: ReviewForCreate): Observable<Review> {
+    return this.http.post<Review>(`${this.apiUrl}/Client/${clientId}/Freelancer/${freelancerId}`, review);
   }
 
-  updateReview(review: Review): Observable<Review> {
-    return this.http.put<Review>(`${this.apiUrl}/${review.id}`, review);
+  updateReview(id:number,review: ReviewForCreate): Observable<Review> {
+    return this.http.put<Review>(`${this.apiUrl}/${id}`, review);
   }
 
   deleteReview(id: number): Observable<void> {

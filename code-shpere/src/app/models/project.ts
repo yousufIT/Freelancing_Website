@@ -1,16 +1,18 @@
 import { Freelancer } from './freelancer';
 import { Client } from './client';
-import { RequiredSkill } from './required-skill';
+import { Skill } from './skill';
+import { Bid } from './bid';
 
 export interface Project {
-  id: number;
-  title: string;
-  description: string;
-  clientId: number;
-  client: Client;
-  freelancerId?: number;
-  freelancer?: Freelancer;
-  requiredSkills: RequiredSkill[];
-  budget: number;
-  deadline: Date;
+  Id: number;
+  Title: string;
+  Description: string;
+  ClientId: number;
+  Client: Client;
+  SelectedFreelancerId?: number;
+  SelectedFreelancer?: Freelancer;
+  RequiredSkills: Skill[];
+  Budget: number;
+  Status:String;
+  Bids:Bid[];
 }

@@ -1,8 +1,5 @@
-import { Project } from "./project";
-import { Review } from "./review";
 
-export interface Client {
-    Id: number;
+export interface ClientForCreate {
     Name: string;
     UserName: string;
     Email: string;
@@ -11,7 +8,5 @@ export interface Client {
     Rating: number;
     CompanyName: string;
     ContactNumber: string;
-    ReviewsGiven: Review[];
-    PostedProjects:Project[];
   }
   

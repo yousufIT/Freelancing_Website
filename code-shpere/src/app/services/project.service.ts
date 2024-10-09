@@ -32,26 +32,29 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Project } from '../models/project';
 import { environment } from '../../environments/environment';
+import { ProjectForCreate } from '../models/for-create/project-for-create';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
-  private apiUrl = `${environment.apiUrl}/projects`;
+  private apiUrl = `${environment.apiUrl}/Projects`;
 
   constructor(private http: HttpClient) { }
-
+  getProjectsFilteredBySkills(Ids: string, pageNumber: number, pageSize: number):Observable<Project>{
+    return this.http.get<Project>(`${this.apiUrl}/Skill/${Ids}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  }
   getProjectById(id: number): Observable<Project> {
     return this.http.get<Project>(`${this.apiUrl}/${id}`);
   }
 
-  createProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(this.apiUrl, project);
+  createProject(clientId:number,project: ProjectForCreate): Observable<Project> {
+    return this.http.post<Project>(`${this.apiUrl}/CLient/${clientId}`, project);
   }
 
-  updateProject(project: Project): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${project.id}`, project);
+  updateProject(id:number,project: ProjectForCreate): Observable<Project> {
+    return this.http.put<Project>(`${this.apiUrl}/${id}`, project);
   }
 
   deleteProject(id: number): Observable<void> {

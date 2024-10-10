@@ -8,7 +8,7 @@ import { SkillForCreate } from '../models/for-create/skill-for-create';
 @Injectable({
   providedIn: 'root'
 })
-export class SkillService {
+export class RequiredSkillService {
 
   private apiUrl = `${environment.apiUrl}/RequiredSkills`;
 

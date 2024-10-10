@@ -23,8 +23,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/robots.txt",
-              "src/cv.pdf"
+              "src/robots.txt"
             ],
             "styles": [
               "src/styles.css"

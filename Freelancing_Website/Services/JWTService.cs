@@ -25,17 +25,6 @@ public class JWTService
             new Claim(ClaimTypes.Name, user.Name),
         };
 
-        if (user is FreelancerForCreate freelancer)
-        {
-            userClaims.Add(new Claim("Hourlysalary", freelancer.Hourlysalary.ToString()));
-            // إضافة المزيد من الخصائص هنا حسب الحاجة
-        }
-        else if (user is ClientForCreate client)
-        {
-            userClaims.Add(new Claim("CompanyName", client.CompanyName));
-            // إضافة المزيد من الخصائص هنا حسب الحاجة
-        }
-
         var credentials = new SigningCredentials(_jwtkey,
             SecurityAlgorithms.HmacSha512Signature);
 

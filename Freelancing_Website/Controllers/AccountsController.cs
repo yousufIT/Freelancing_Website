@@ -109,38 +109,19 @@ public class AccountsController : Controller
                     false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+                    
 
-                    UserForCreate model;
-
-                    if (user.Role == "Freelancer")
+                    UserForCreate model=new UserForCreate
                     {
-                        model = new FreelancerForCreate
-                        {
-                            Email = user.Email,
-                            Name = user.Name,
-                            Role = role
-                        };
-                    }
-                    else if (user.Role == "Client")
-                    {
-                        model = new ClientForCreate
-                        {
-                            Email = user.Email,
-                            Name = user.Name,
-                            Role = role
-                        };
-                    }
-                    else
-                    {
-                        return BadRequest("Invalid user role.");
-                    }
-
+                        UserName=user.UserName,
+                        Role=user.Role,
+                        Email=user.Email,
+                        Name=user.Name
+                    };
                     var token = _jwtService.CreateJWT(model);
                     return Ok(new { token });
                 }
             }
-
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         }
 

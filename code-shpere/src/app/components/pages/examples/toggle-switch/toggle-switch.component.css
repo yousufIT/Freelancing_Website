@@ -1,0 +1,9 @@
+.custom-control {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.custom-control-input {
+    margin-right: 10px;
+}

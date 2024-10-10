@@ -1,12 +1,57 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Renderer2,
+  HostListener,
+  Inject
+} from "@angular/core";
+import { CommonModule, Location } from "@angular/common";
+import { DOCUMENT } from "@angular/common";
+import { AppRoutingModule, routes } from "./app.routes";
+import { Router, RouterModule, RouterOutlet } from "@angular/router";
+import { BrowserModule } from "@angular/platform-browser";
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { PagesModule } from "./components/pages/pages.module";
 
 @Component({
-  selector: 'app',
   standalone: true,
-  imports: [],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  imports: [RouterOutlet,
+    CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule,
+    AppRoutingModule,
+    PagesModule],
+  styleUrls: ["./app.component.scss"],
 })
-export class AppComponent {
-
+export class AppComponent implements OnInit {
+  constructor(
+    private renderer: Renderer2,
+    public location: Location  ) {}
+  @HostListener("window:scroll", ["$event"])
+  onWindowScroll() {
+    if (window.pageYOffset > 100) {
+      var element = document.getElementById("navbar-top");
+      if (element) {
+        element.classList.remove("navbar-transparent");
+        element.classList.add("bg-danger");
+      }
+    } else {
+      var element = document.getElementById("navbar-top");
+      if (element) {
+        element.classList.add("navbar-transparent");
+        element.classList.remove("bg-danger");
+      }
+    }
+  }
+  ngOnInit() {
+    this.onWindowScroll();
+  }
 }
+

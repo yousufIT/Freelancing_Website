@@ -29,3 +29,4 @@ export class RequiredSkillService {
     return this.http.delete<void>(`${this.apiUrl}/project/${projectId}/skill/${skillId}`);
   }
 }
+

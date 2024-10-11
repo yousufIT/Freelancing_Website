@@ -3,7 +3,7 @@
     <form (ngSubmit)="createSkill()" #skillForm="ngForm">
       <div class="form-group">
         <label for="skillName">اسم المهارة</label>
-        <input type="text" id="skillName" class="form-control" [(ngModel)]="skill.Name" name="Name" required />
+        <input type="text" id="skillName" class="form-control" [(ngModel)]="skill.name" name="Name" required />
       </div>
       <button type="submit" class="btn btn-primary mt-3">إضافة المهارة</button>
     </form>

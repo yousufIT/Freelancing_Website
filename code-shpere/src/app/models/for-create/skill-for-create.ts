@@ -1,3 +1,3 @@
 export interface SkillForCreate {
-    Name: string;
+    name: string;
 }

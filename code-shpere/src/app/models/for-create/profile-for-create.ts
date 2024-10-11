@@ -1,4 +1,4 @@
 
 export interface ProfileForCreate {
-  Bio: string;
+  bio: string;
 }

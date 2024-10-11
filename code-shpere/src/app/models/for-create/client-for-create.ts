@@ -1,12 +1,10 @@
-
 export interface ClientForCreate {
-    Name: string;
-    UserName: string;
-    Email: string;
-    PasswordHash: string;
-    Role: string;
-    Rating: number;
-    CompanyName: string;
-    ContactNumber: string;
-  }
-  
+  name: string;
+  userName: string;
+  email: string;
+  passwordHash: string;
+  role: string;
+  rating: number;
+  companyName: string;
+  contactNumber: string;
+}

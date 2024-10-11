@@ -46,6 +46,13 @@ namespace Freelancing_Website.Controllers
             reviewsWithPagination.PaginationMetaData = reviews.PaginationMetaData;
             return Ok(reviewsWithPagination);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetReviewById(int id)
+        {
+            var review = await _reviewService.GetReviewByIdAsync(id);
+            var reviewViews = _mapper.Map<ReviewView>(review);
+            return Ok(review);
+        }
 
         [HttpPost("Client/{clientId}/Freelancer/{freelancerId}")]
         public async Task<IActionResult> CreateReview(int clientId,int freelancerId,[FromBody] ReviewForCreate reviewForCreate)

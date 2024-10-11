@@ -1,4 +1,4 @@
 export interface ReviewForCreate {
-    Rating: number;
-    Comment: string;
+    rating: number;
+    comment: string;
 }

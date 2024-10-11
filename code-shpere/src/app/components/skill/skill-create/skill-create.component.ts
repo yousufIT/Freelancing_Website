@@ -13,7 +13,7 @@ import { SkillService } from 'src/app/services/skill.service';
   styleUrl: './skill-create.component.css'
 })
 export class SkillCreateComponent {
-  skill: SkillForCreate = { Name: '' }; 
+  skill: SkillForCreate = { name: '' }; 
   private subscription!: Subscription;
 
   constructor(private skillService: SkillService, private router: Router) {}

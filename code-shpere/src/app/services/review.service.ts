@@ -21,7 +21,9 @@ export class ReviewService {
   getReviewsByClientId(clientId: number, pageNumber: number, pageSize: number): Observable<DataWithPagination<Review>> {
     return this.http.get<DataWithPagination<Review>>(`${this.apiUrl}/client/${clientId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
-
+  getReviewById(id:number):Observable<Review>{
+    return this.http.get<Review>(`${this.apiUrl}/${id}`);
+  }
   createReview(clientId:number,freelancerId:number,review: ReviewForCreate): Observable<Review> {
     return this.http.post<Review>(`${this.apiUrl}/Client/${clientId}/Freelancer/${freelancerId}`, review);
   }

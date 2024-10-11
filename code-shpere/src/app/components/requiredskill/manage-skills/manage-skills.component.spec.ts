@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReviewListComponent } from './review-list.component';
+import { ManageSkillsComponent } from './manage-skills.component';
 
-describe('ReviewListComponent', () => {
-  let component: ReviewListComponent;
-  let fixture: ComponentFixture<ReviewListComponent>;
+describe('ManageSkillsComponent', () => {
+  let component: ManageSkillsComponent;
+  let fixture: ComponentFixture<ManageSkillsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReviewListComponent]
+      imports: [ManageSkillsComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ReviewListComponent);
+    fixture = TestBed.createComponent(ManageSkillsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

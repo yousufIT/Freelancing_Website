@@ -1,15 +1,12 @@
-import { Review } from "../review";
-import { Skill } from "../skill";
 import { ProfileForCreate } from "./profile-for-create";
 
 export interface FreelancerForCreate {
-    Profile : ProfileForCreate;
-    Name: string;
-    Rating : number;
-    UserName : string;
-    Role : string;
-    PasswordHash : string;
-    Email : string;
-    HourlyRate: number;
-  }
-  
+    profile: ProfileForCreate;
+    name: string;
+    rating: number;
+    userName: string;
+    role: string;
+    passwordHash: string;
+    email: string;
+    hourlyRate: number;
+}

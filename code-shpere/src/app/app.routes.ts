@@ -12,6 +12,11 @@ import { SkillCreateComponent } from './components/skill/skill-create/skill-crea
 import { AddSkillsComponent } from './components/skill/add-skills/add-skills.component';
 import { ReviewsForFreelancerComponent } from './components/review/reviews-for-freelancer/reviews-for-freelancer.component';
 import { ReviewsForClientComponent } from './components/review/reviews-for-client/reviews-for-client.component';
+import { ReviewCreateComponent } from './components/review/review-create/review-create.component';
+import { ReviewUpdateComponent } from './components/review/review-update/review-update.component';
+import { DeleteReviewComponent } from './components/review/delete-review/delete-review.component';
+import { SkillsForProjectComponent } from './components/requiredskill/skills-for-project/skills-for-project.component';
+import { ManageSkillsComponent } from './components/requiredskill/manage-skills/manage-skills.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },
@@ -20,12 +25,57 @@ export const routes: Routes = [
   { path: 'create-project', component: CreateProjectComponent, canActivate: [AuthGuard] },
   { path: 'portfolio', component: PortfolioItemComponent },
   { path: 'reviews', component: ReviewComponent },
-  { path: 'Skills', component: SkillListComponent },
-  { path: 'Skills/Freelancer/:freelancerId', component: FreelancerSkillsComponent },
-  { path: 'Skills/create', component: SkillCreateComponent },
-  { path: 'Skills/Freelancer/:freelancerId/add', component: AddSkillsComponent },
-  { path: 'Review/freelancer/:freelancerId', component: ReviewsForFreelancerComponent },
-  { path: 'Review/client/:clientId', component: ReviewsForClientComponent },
 
 
+//skill
+  {
+    path: 'skills',
+    component: SkillListComponent 
+  },
+  {
+    path: 'skills/freelancer/:freelancerId',
+    component: FreelancerSkillsComponent 
+  },
+  {
+    path: 'skills/create',
+    component: SkillCreateComponent 
+  },
+  {
+    path: 'skills/freelancer/:freelancerId/add',
+    component: AddSkillsComponent 
+  },
+
+
+  //review
+  {
+    path: 'review/freelancer/:freelancerId',
+    component: ReviewsForFreelancerComponent 
+  },
+  {
+    path: 'review/client/:clientId',
+    component: ReviewsForClientComponent 
+  },
+  {
+    path: 'review/client/:clientId/freelancer/:freelancerId',
+    component: ReviewCreateComponent 
+  },
+  {
+    path: 'review/:reviewId/update',
+    component: ReviewUpdateComponent 
+  },
+  {
+    path: 'review/delete-review/:reviewId',
+    component: DeleteReviewComponent
+  },
+  
+
+  //project
+  { 
+    path: 'project/:projectId/skills',
+    component: SkillsForProjectComponent
+  },
+  { 
+    path: 'project/:projectId/manage-skills', 
+    component: ManageSkillsComponent 
+  },
 ];

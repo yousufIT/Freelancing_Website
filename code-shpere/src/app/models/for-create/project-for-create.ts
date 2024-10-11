@@ -1,6 +1,6 @@
 export interface ProjectForCreate {
-  Title: string;
-  Description: string;
-  Budget: number;
-  Status:String;
+  title: string;
+  description: string;
+  budget: number;
+  status: string;
 }

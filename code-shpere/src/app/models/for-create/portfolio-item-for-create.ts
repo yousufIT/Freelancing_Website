@@ -1,5 +1,5 @@
 export interface PortfolioItemForCreate {
-    Title: string;
-    Description: string;
-    ImageUrl: string;
+    title: string;
+    description: string;
+    imageUrl: string;
 }

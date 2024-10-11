@@ -1,0 +1,74 @@
+<div class="container mt-5">
+    <h2 class="mb-4">{{ clientId ? 'Update' : 'Create' }} Client</h2>
+  
+    <form (ngSubmit)="submitClient()" class="needs-validation" novalidate>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" [(ngModel)]="client.name" name="name" class="form-control" required />
+        <div class="invalid-feedback">
+          Please enter the client's name.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="userName">Username:</label>
+        <input type="text" id="userName" [(ngModel)]="client.userName" name="userName" class="form-control" required />
+        <div class="invalid-feedback">
+          Please enter the client's username.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="client.email" name="email" class="form-control" required />
+        <div class="invalid-feedback">
+          Please enter a valid email address.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="passwordHash">Password:</label>
+        <input type="password" id="passwordHash" [(ngModel)]="client.passwordHash" name="passwordHash" class="form-control" required />
+        <div class="invalid-feedback">
+          Please enter the client's password.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="role">Role:</label>
+        <input type="text" id="role" [(ngModel)]="client.role" name="role" class="form-control" required />
+        <div class="invalid-feedback">
+          Please enter the client's role.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" [(ngModel)]="client.rating" name="rating" class="form-control" min="0" max="5" required />
+        <div class="invalid-feedback">
+          Please enter a rating between 0 and 5.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" [(ngModel)]="client.companyName" name="companyName" class="form-control" required />
+        <div class="invalid-feedback">
+          Please enter the client's company name.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="contactNumber">Contact Number:</label>
+        <input type="text" id="contactNumber" [(ngModel)]="client.contactNumber" name="contactNumber" class="form-control" required />
+        <div class="invalid-feedback">
+          Please enter the client's contact number.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">{{ clientId ? 'Update' : 'Create' }} Client</button>
+  
+      <button type="button" *ngIf="clientId" class="btn btn-danger ml-2" (click)="deleteClient()">Delete Client</button>
+    </form>
+  </div>
+  

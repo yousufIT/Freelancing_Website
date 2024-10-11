@@ -78,4 +78,10 @@ export const routes: Routes = [
     path: 'project/:projectId/manage-skills', 
     component: ManageSkillsComponent 
   },
+
+//client
+  { 
+    path: 'client/:clientId/manage-client', 
+    component: ManageSkillsComponent 
+  },
 ];

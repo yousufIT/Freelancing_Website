@@ -6,6 +6,12 @@ import { CreateProjectComponent } from './create-project/create-project.componen
 import { PortfolioItemComponent } from './portfolio-item/portfolio-item.component';
 import { ReviewComponent } from './review/review.component';
 import { AuthGuard } from './guards/auth.guard';
+import { SkillListComponent } from './components/skill/skill-list/skill-list.component';
+import { FreelancerSkillsComponent } from './components/skill/freelancer-skills/freelancer-skills.component';
+import { SkillCreateComponent } from './components/skill/skill-create/skill-create.component';
+import { AddSkillsComponent } from './components/skill/add-skills/add-skills.component';
+import { ReviewsForFreelancerComponent } from './components/review/reviews-for-freelancer/reviews-for-freelancer.component';
+import { ReviewsForClientComponent } from './components/review/reviews-for-client/reviews-for-client.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },
@@ -14,11 +20,12 @@ export const routes: Routes = [
   { path: 'create-project', component: CreateProjectComponent, canActivate: [AuthGuard] },
   { path: 'portfolio', component: PortfolioItemComponent },
   { path: 'reviews', component: ReviewComponent },
+  { path: 'Skills', component: SkillListComponent },
+  { path: 'Skills/Freelancer/:freelancerId', component: FreelancerSkillsComponent },
+  { path: 'Skills/create', component: SkillCreateComponent },
+  { path: 'Skills/Freelancer/:freelancerId/add', component: AddSkillsComponent },
+  { path: 'Review/freelancer/:freelancerId', component: ReviewsForFreelancerComponent },
+  { path: 'Review/client/:clientId', component: ReviewsForClientComponent },
+
 
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {}

@@ -1,0 +1,52 @@
+import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataWithPagination, PaginationMetaData } from 'src/app/models/data-with-pagination';
+import { Review } from 'src/app/models/review';
+import { ReviewService } from 'src/app/services/review.service';
+
+@Component({
+  selector: 'app-reviews-for-client',
+  standalone: true,
+  imports: [FormsModule,CommonModule],
+  templateUrl: './reviews-for-client.component.html',
+  styleUrl: './reviews-for-client.component.css'
+})
+export class ReviewsForClientComponent implements OnInit {
+  clientId!:number;
+  reviews: Review[] = [];
+  paginationMetaData!:PaginationMetaData;
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalPageCount: number = 0;
+  
+  
+  constructor(private route: ActivatedRoute,
+    private reviewService: ReviewService) {
+      let id = route.snapshot.paramMap.get('clientId');
+      this.clientId=id?+id:0;
+    }
+
+  ngOnInit(): void {
+    this.fetchReviews();
+  }
+  fetchReviews(): void {
+    this.reviewService.getReviewsByClientId(this.clientId, this.currentPage, this.pageSize).subscribe({
+      next: (data: DataWithPagination<Review>) => {
+        this.reviews = data.items;
+        this.paginationMetaData=data.paginationMetaData;
+        this.totalPageCount = this.paginationMetaData.totalPageCount; 
+        console.log(data);
+        
+      },
+      error: (error) => {
+        console.error('Error fetching reviews:', error);
+      }
+    });
+  }
+  goToPage(page: number): void {
+    this.currentPage = page;
+    this.fetchReviews();
+  }
+}

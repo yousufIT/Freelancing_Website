@@ -4,18 +4,17 @@ import { Project } from "./project";
 import { Review } from "./review";
 
 export interface Freelancer {
-    Id: number;
-    Name: string;
-    Rating : number;
-    UserName : string;
-    Role : string;
-    PasswordHash : string;
-    Email : string;
-    HourlyRate: number;
-    Bids: Bid[];
-    ReviewsReceived: Review[];
-    CompletedProjects : Project[];
-    ProfileId : number;
-    Profile : Profile;
-  }
-  
+    id: number;
+    name: string;
+    rating: number;
+    userName: string;
+    role: string;
+    passwordHash: string;
+    email: string;
+    hourlyRate: number;
+    bids: Bid[];
+    reviewsReceived: Review[];
+    completedProjects: Project[];
+    profileId: number;
+    profile: Profile;
+}

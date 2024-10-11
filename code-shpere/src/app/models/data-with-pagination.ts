@@ -1,11 +1,11 @@
 export interface DataWithPagination<T> {
-    items: T[];
-    PaginationMetaData: PaginationMetaData;
-  }
+  items: T[];
+  paginationMetaData: PaginationMetaData;
+}
 
 export interface PaginationMetaData {
-  TotalPageCount: number;
-  PageSize: number;
-  CurrentPage: number;
-  TotalItemCount: number;
+  totalPageCount: number;
+  pageSize: number;
+  currentPage: number;
+  totalItemCount: number;
 }

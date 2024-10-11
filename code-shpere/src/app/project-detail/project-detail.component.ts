@@ -9,7 +9,7 @@ import { Project } from '../models/project';
 @Component({
   standalone: true,
   selector: 'app-project-detail',
-  templateUrl: './project-detail.component.html',
+  templateUrl:'./project-detail.component.html',
   imports: [FormsModule,CommonModule, HttpClientModule]
 })
 export class ProjectDetailComponent implements OnInit {

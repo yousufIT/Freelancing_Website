@@ -7,12 +7,9 @@ import {
 } from "@angular/core";
 import { CommonModule, Location } from "@angular/common";
 import { DOCUMENT } from "@angular/common";
-import { AppRoutingModule, routes } from "./app.routes";
+import {  routes } from "./app.routes";
 import { Router, RouterModule, RouterOutlet } from "@angular/router";
-import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { PagesModule } from "./components/pages/pages.module";
 
 @Component({
@@ -21,12 +18,8 @@ import { PagesModule } from "./components/pages/pages.module";
   templateUrl: "./app.component.html",
   imports: [RouterOutlet,
     CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule,
     RouterModule,
-    AppRoutingModule,
     PagesModule],
   styleUrls: ["./app.component.scss"],
 })

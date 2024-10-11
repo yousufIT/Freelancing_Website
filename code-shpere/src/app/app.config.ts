@@ -7,7 +7,6 @@ import { provideClientHydration } from '@angular/platform-browser';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
-    provideClientHydration(),
     provideHttpClient(),
     provideRouter(routes, withViewTransitions(), withPreloading(PreloadAllModules),
       withInMemoryScrolling({

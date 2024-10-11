@@ -26,6 +26,10 @@ export const routes: Routes = [
   { path: 'portfolio', component: PortfolioItemComponent },
   { path: 'reviews', component: ReviewComponent },
 
+];
+
+
+
 
 //skill
   {

@@ -15,7 +15,6 @@ import { ReviewsForClientComponent } from './components/review/reviews-for-clien
 import { ReviewCreateComponent } from './components/review/review-create/review-create.component';
 import { ReviewUpdateComponent } from './components/review/review-update/review-update.component';
 import { DeleteReviewComponent } from './components/review/delete-review/delete-review.component';
-import { SkillsForProjectComponent } from './components/requiredskill/skills-for-project/skills-for-project.component';
 import { ManageSkillsComponent } from './components/requiredskill/manage-skills/manage-skills.component';
 
 export const routes: Routes = [
@@ -26,7 +25,7 @@ export const routes: Routes = [
   { path: 'portfolio', component: PortfolioItemComponent },
   { path: 'reviews', component: ReviewComponent },
 
-];
+
 
 
 
@@ -74,10 +73,7 @@ export const routes: Routes = [
   
 
   //project
-  { 
-    path: 'project/:projectId/skills',
-    component: SkillsForProjectComponent
-  },
+  
   { 
     path: 'project/:projectId/manage-skills', 
     component: ManageSkillsComponent 

@@ -1,1 +1,12 @@
-<p>profile-details works!</p>
+<div class="container mt-5" *ngIf="profile">
+    <h2 class="mb-4">{{ profile?.name }}'s Profile</h2>
+    <p><strong>Email:</strong> {{ profile?.email }}</p>
+    <p><strong>Bio:</strong> {{ profile?.bio }}</p>
+    <h3>Portfolio Items</h3>
+    <ul class="list-group">
+      <li *ngFor="let item of profile.portfolioItems" class="list-group-item">
+        {{ item.title }}
+      </li>
+    </ul>
+  </div>
+  

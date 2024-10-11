@@ -42,8 +42,8 @@ export class ProjectService {
   private apiUrl = `${environment.apiUrl}/Projects`;
 
   constructor(private http: HttpClient) { }
-  getProjectsFilteredBySkills(Ids: string, pageNumber: number, pageSize: number):Observable<Project>{
-    return this.http.get<Project>(`${this.apiUrl}/Skill/${Ids}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  getProjectsFilteredBySkills(Ids: string, pageNumber: number, pageSize: number):Observable<Project[]>{
+    return this.http.get<Project[]>(`${this.apiUrl}/Skill/${Ids}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
   getProjectById(id: number): Observable<Project> {
     return this.http.get<Project>(`${this.apiUrl}/${id}`);

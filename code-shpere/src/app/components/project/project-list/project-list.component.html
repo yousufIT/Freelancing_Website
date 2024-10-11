@@ -1,1 +1,19 @@
-<p>project-list works!</p>
+<div class="container mt-5">
+    <h2 class="mb-4">Project List</h2>
+  
+    <!-- Optional input for filtering by skills -->
+    <div class="mb-3">
+      <label for="skillIds" class="form-label">Filter by Skill IDs</label>
+      <input type="text" id="skillIds" class="form-control" [(ngModel)]="skillIds" (ngModelChange)="onSkillIdsChange($event)" />
+    </div>
+  
+    <div class="list-group">
+      @for (project of projects; track $index) {
+        <a
+         class="list-group-item list-group-item-action" 
+         (click)="viewProject(project.id)">
+        {{ project.title }}
+      </a>
+      }
+    </div>
+</div>

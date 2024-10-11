@@ -24,11 +24,7 @@ export const routes: Routes = [
   { path: 'create-project', component: CreateProjectComponent, canActivate: [AuthGuard] },
   { path: 'portfolio', component: PortfolioItemComponent },
   { path: 'reviews', component: ReviewComponent },
-
-
-
-
-
+  { path: 'project/:id', component: ProjectDetailComponent },
 
 //skill
   {

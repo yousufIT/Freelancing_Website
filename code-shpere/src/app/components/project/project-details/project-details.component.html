@@ -1,1 +1,33 @@
-<p>project-details works!</p>
+<div class="container mt-4">
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Project Details -->
+    @if(project) {
+    <div>
+      <h2>{{ project.title }}</h2>
+      <p><strong>Description:</strong> {{ project.description }}</p>
+      <p><strong>Budget:</strong> {{ project.budget | currency }}</p>
+      <p><strong>Skills Required:</strong>
+        <span *ngFor="let skill of project.requiredSkills">
+          {{ skill?.name }}
+        </span>
+      </p>
+      <p><strong>Status:</strong> {{ project.status }}</p>
+      
+      <!-- User Actions -->
+      <div class="mt-4">
+        <button (click)="goBack()" class="btn btn-secondary">Go Back</button>
+        <button (click)="deleteProject()" class="btn btn-danger">Delete Project</button>
+      </div>
+    </div>
+}
+  
+    <!-- Loading Message -->
+    <div *ngIf="!project && !errorMessage" class="alert alert-info">
+      Loading project details...
+    </div>
+  </div>
+  

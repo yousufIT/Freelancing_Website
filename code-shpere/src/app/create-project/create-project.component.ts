@@ -1,28 +1,39 @@
 import { Component } from '@angular/core';
 import { ProjectService } from '../services/project.service';
-import { Router } from '@angular/router';
+import { ProjectForCreate } from '../models/for-create/project-for-create';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   standalone: true,
+  imports: [FormsModule],
   selector: 'app-create-project',
   templateUrl: './create-project.component.html',
-  imports: [FormsModule,CommonModule, HttpClientModule]
 })
 export class CreateProjectComponent {
-  project = {
+  project: ProjectForCreate = {
     title: '',
     description: '',
-    budget: 0
+    budget: 0,
+    status: ''
   };
 
-  constructor(private projectService: ProjectService, private router: Router) {}
+  clientId: number = 1; // Assuming you have the client ID from somewhere
+
+  constructor(private projectService: ProjectService) {}
+
+  onSubmit() {
+    // Call the createProject method when the form is submitted
+    this.createProject();
+  }
 
   createProject() {
-    // this.projectService.createProject(clientId, this.project).subscribe(() => {
-    //   this.router.navigate(['/projects']);
-    // });
+    this.projectService.createProject(this.clientId, this.project).subscribe(
+      (response) => {
+        console.log('Project created successfully', response);
+      },
+      (error) => {
+        console.error('Error creating project', error);
+      }
+    );
   }
 }

@@ -8,7 +8,7 @@
   <li *ngFor="let review of reviews" class="list-group-item">
     <strong>Rating:</strong> {{ review.rating }} <br> 
     <strong>Comment:</strong> {{ review.comment }} <br> 
-    <strong>Client:</strong> {{ review.client?.name }} 
+    <strong>Client:</strong> {{ review.client.name }} 
   </li>
 </ul>
 <nav aria-label="Page navigation">

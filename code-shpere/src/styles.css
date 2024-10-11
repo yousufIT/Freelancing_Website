@@ -1,6 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import 'Bootstrap';
 
+
+
+
+/* styles.css or footer.component.css */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  background-color: #f8f9fa; /* Light background */
+  padding: 1rem 0;
+  text-align: center;
+  margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.container {
+  width: 100%;
+  max-width: 960px; /* Optional: limits the width of the footer content */
+  margin: 0 auto;
+}
+
+
+
+
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */

@@ -11,12 +11,17 @@ import {  routes } from "./app.routes";
 import { Router, RouterModule, RouterOutlet } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { PagesModule } from "./components/pages/pages.module";
+import { HeaderComponent } from "./components/header/header.component";
+import { FooterComponent } from "./components/footer/footer.component";
 
 @Component({
   standalone: true,
   selector: "app-root",
   templateUrl: "./app.component.html",
-  imports: [RouterOutlet,
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    RouterOutlet,
     CommonModule,
     FormsModule,
     RouterModule,

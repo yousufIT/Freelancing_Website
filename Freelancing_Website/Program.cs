@@ -24,14 +24,14 @@ namespace Freelancing_Website
 
             builder.Services.AddControllers(options =>
             {
-                options.ReturnHttpNotAcceptable = true;
+                options.ReturnHttpNotAcceptable = true; 
             })
-             .AddJsonOptions(options =>
-             {
-                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
-             })
-             .AddXmlSerializerFormatters()
-             .AddNewtonsoftJson();
+                 .AddJsonOptions(options =>
+                 {
+                     options.JsonSerializerOptions.PropertyNamingPolicy = null; 
+                 })
+                 .AddNewtonsoftJson(); 
+
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddAuthentication().AddJwtBearer(options =>

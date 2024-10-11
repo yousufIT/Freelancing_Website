@@ -14,11 +14,11 @@ export class SkillService {
 
   constructor(private http: HttpClient) { }
 
-  getAllSkills(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}`);
+  getAllSkills(): Observable<Skill[]> {
+    return this.http.get<Skill[]>(`${this.apiUrl}`);
   }
-  getSkillsForFreelancer(freelancerId:number):Observable<any>{
-    return this.http.get<any>(`${this.apiUrl}/Freelancer/${freelancerId}`);
+  getSkillsForFreelancer(freelancerId:number):Observable<Skill[]>{
+    return this.http.get<Skill[]>(`${this.apiUrl}/Freelancer/${freelancerId}`);
   }
   getSkillById(id: number): Observable<Skill> {
     return this.http.get<Skill>(`${this.apiUrl}/${id}`);

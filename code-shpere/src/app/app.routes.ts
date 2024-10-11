@@ -6,6 +6,12 @@ import { CreateProjectComponent } from './create-project/create-project.componen
 import { PortfolioItemComponent } from './portfolio-item/portfolio-item.component';
 import { ReviewComponent } from './review/review.component';
 import { AuthGuard } from './guards/auth.guard';
+import { SkillListComponent } from './components/skill/skill-list/skill-list.component';
+import { FreelancerSkillsComponent } from './components/skill/freelancer-skills/freelancer-skills.component';
+import { SkillCreateComponent } from './components/skill/skill-create/skill-create.component';
+import { AddSkillsComponent } from './components/skill/add-skills/add-skills.component';
+import { ReviewsForFreelancerComponent } from './components/review/reviews-for-freelancer/reviews-for-freelancer.component';
+import { ReviewsForClientComponent } from './components/review/reviews-for-client/reviews-for-client.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },

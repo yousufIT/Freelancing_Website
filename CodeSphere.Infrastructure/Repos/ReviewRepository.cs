@@ -43,6 +43,7 @@ namespace CodeSphere.Infrastructure.Repos
         public async Task<DataWithPagination<Review>> GetReviewsByClientIdAsync(int clientId, int pageNumber, int pageSize)
         {
             var reviews = await _context.Reviews
+                .Include(r=>r.Freelancer)
                 .Where(r => r.ClientId == clientId && !r.IsDeleted)
                 .ToListAsync();
 
@@ -60,6 +61,7 @@ namespace CodeSphere.Infrastructure.Repos
         public async Task<DataWithPagination<Review>> GetReviewsByFreelancerIdAsync(int freelancerId, int pageNumber, int pageSize)
         {
             var reviews = await _context.Reviews
+                .Include(r=>r.Client)
                 .Where(r => r.FreelancerId == freelancerId && !r.IsDeleted)
                 .ToListAsync();
 

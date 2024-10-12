@@ -66,9 +66,9 @@
         </div>
       </div>
   
-      <button type="submit" class="btn btn-primary">{{ clientId ? 'Update' : 'Create' }} Client</button>
+      <button type="submit" class="btn btn-outline-primary">{{ clientId ? 'Update' : 'Create' }} Client</button>
   
-      <button type="button" *ngIf="clientId" class="btn btn-danger ml-2" (click)="deleteClient()">Delete Client</button>
+      <button type="button" *ngIf="clientId" class="btn btn-outline-danger ml-2" (click)="deleteClient()">Delete Client</button>
     </form>
   </div>
   

@@ -8,7 +8,9 @@ namespace Freelancing_Website.Models.Profiles
     {
         public ReviewProfile()
         {
-            CreateMap<Review, ReviewView>();
+            CreateMap<Review, ReviewView>()
+            .ForMember(dest=>dest.ClientName,opt=>opt.MapFrom(src=>src.Client.Name))
+            .ForMember(dest=>dest.FreelancerName,opt=>opt.MapFrom(src=>src.Freelancer.Name));
             CreateMap<ReviewForCreate, Review>();
         }
     }

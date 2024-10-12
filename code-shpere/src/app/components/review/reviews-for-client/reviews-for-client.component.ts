@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DataWithPagination, PaginationMetaData } from 'src/app/models/data-with-pagination';
 import { Review } from 'src/app/models/review';
 import { ReviewService } from 'src/app/services/review.service';
@@ -9,7 +9,7 @@ import { ReviewService } from 'src/app/services/review.service';
 @Component({
   selector: 'app-reviews-for-client',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './reviews-for-client.component.html',
   styleUrl: './reviews-for-client.component.css'
 })

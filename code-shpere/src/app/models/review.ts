@@ -7,6 +7,8 @@ export interface Review {
     comment: string;
     freelancerId: number;
     freelancer: Freelancer;
+    freelancerName?:string
     clientId: number;
     client: Client;
+    clientName?:string;
 }

@@ -1,149 +1,33 @@
-<!-- <div class="container mt-5">
-    <h2 class="mb-4">{{ clientId ? 'Update' : 'Create' }} Client</h2>
-  
-    <form (ngSubmit)="submitClient()" class="needs-validation" novalidate>
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" id="name" [(ngModel)]="client.name" name="name" class="form-control" required />
-        <div class="invalid-feedback">
-          Please enter the client's name.
-        </div>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                  <div class="card-body p-5 text-center">
+                      <div class="d-flex flex-column align-items-center text-center">
+                          <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Client" class="rounded-circle" width="150">
+                          <div class="mt-3">
+                              <h4>{{ client.name }}</h4>
+                              <p class="text-secondary mb-1">{{ client.role }}</p>
+                              <p class="text-muted font-size-sm">{{ client.companyName }}</p>
+                          </div>
+                      </div>
+
+                      <div class="mt-4">
+                          <h6 class="mb-0">Email</h6>
+                          <span class="text-secondary">{{ client.email }}</span>
+                          <hr>
+                          <h6 class="mb-0">Contact Number</h6>
+                          <span class="text-secondary">{{ client.contactNumber }}</span>
+                          <hr>
+                          <h6 class="mb-0">Rating</h6>
+                          <span class="text-secondary">{{ client.rating }}</span>
+                          <hr>
+                          <h6 class="mb-0"><a [routerLink]="['/review/client', client.id]" class="text-white">Reviews Given</a></h6>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-  
-      <div class="form-group">
-        <label for="userName">Username:</label>
-        <input type="text" id="userName" [(ngModel)]="client.userName" name="userName" class="form-control" required />
-        <div class="invalid-feedback">
-          Please enter the client's username.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" [(ngModel)]="client.email" name="email" class="form-control" required />
-        <div class="invalid-feedback">
-          Please enter a valid email address.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="passwordHash">Password:</label>
-        <input type="password" id="passwordHash" [(ngModel)]="client.passwordHash" name="passwordHash" class="form-control" required />
-        <div class="invalid-feedback">
-          Please enter the client's password.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="role">Role:</label>
-        <input type="text" id="role" [(ngModel)]="client.role" name="role" class="form-control" required />
-        <div class="invalid-feedback">
-          Please enter the client's role.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="rating">Rating:</label>
-        <input type="number" id="rating" [(ngModel)]="client.rating" name="rating" class="form-control" min="0" max="5" required />
-        <div class="invalid-feedback">
-          Please enter a rating between 0 and 5.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="companyName">Company Name:</label>
-        <input type="text" id="companyName" [(ngModel)]="client.companyName" name="companyName" class="form-control" required />
-        <div class="invalid-feedback">
-          Please enter the client's company name.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="contactNumber">Contact Number:</label>
-        <input type="text" id="contactNumber" [(ngModel)]="client.contactNumber" name="contactNumber" class="form-control" required />
-        <div class="invalid-feedback">
-          Please enter the client's contact number.
-        </div>
-      </div>
-  
-      <button type="submit" class="btn btn-outline-primary">{{ clientId ? 'Update' : 'Create' }} Client</button>
-  
-      <button type="button" *ngIf="clientId" class="btn btn-outline-danger ml-2" (click)="deleteClient()">Delete Client</button>
-    </form>
   </div>
-   -->
-
-
-
-
-
-   <div class="container">
-    <div class="main-body">
-        <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
-                <div class="card bg-dark text-white">
-                    <div class="card-body">
-                        <div class="d-flex flex-column align-items-center text-center">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Client" class="rounded-circle" width="150">
-                            <div class="mt-3">
-                                <h4>{{ client.name }}</h4>
-                                <p class="text-secondary mb-1">{{ client.role }}</p>
-                                <p class="text-muted font-size-sm">{{ client.companyName }}</p>
-                                <!-- <button class="btn btn-primary">Follow</button>
-                                <button class="btn btn-outline-primary">Message</button> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mt-3 bg-dark text-white">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0">Email</h6>
-                            <span class="text-secondary">{{ client.email }}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0">Contact Number</h6>
-                            <span class="text-secondary">{{ client.contactNumber }}</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-md-8">
-                <div class="card mb-3 bg-dark text-white">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Full Name</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                {{ client.name }}
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Rating</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                {{ client.rating }}
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h6 class="mb-0"><a [routerLink]="['/review/client', client.id]">Reviews Given</a></h6>
-                                <!-- <ul>
-                                    <li *ngFor="let review of client.reviewsGiven">
-                                        <a [routerLink]="['/review/client', client.id]">{{ review.comment }}</a>
-                                    </li>
-                                </ul> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</section>

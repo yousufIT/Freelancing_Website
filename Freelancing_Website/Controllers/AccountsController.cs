@@ -1,4 +1,5 @@
 ﻿using CodeSphere.Domain.Models;
+using Freelancing_Website.Models;
 using Freelancing_Website.Models.ForCreate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +50,7 @@ public class AccountsController : Controller
             {
                 await _userManager.AddToRoleAsync(freelancer, "Freelancer");
                 var token = _jwtService.CreateJWT(model);
-                return Ok(new { token });
+                return Ok(new { token,freelancerId=freelancer.Id });
             }
 
             foreach (var error in result.Errors)
@@ -127,22 +128,18 @@ public class AccountsController : Controller
 
         return BadRequest(ModelState);
     }
-    [HttpPost("ChangePassword")]
-    public async Task<IActionResult> ChangePassword(string email, string currentPassword, string newPassword, string confirmPassword)
+    [HttpPut("ChangePassword")]
+    public async Task<IActionResult> ChangePassword([FromBody] PasswordData passwordData)
     {
-        if (!ModelState.IsValid || newPassword != confirmPassword)
-        {
-            ModelState.AddModelError(string.Empty, "Passwords do not match or invalid data.");
-            return BadRequest(ModelState);
-        }
+       
 
-        var user = await _userManager.FindByEmailAsync(email);
+        var user = await _userManager.FindByEmailAsync(passwordData.Email);
         if (user == null)
         {
             return NotFound("User not found.");
         }
 
-        var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        var result = await _userManager.ChangePasswordAsync(user, passwordData.CurrenPassword, passwordData.NewPassword);
 
         if (result.Succeeded)
         {

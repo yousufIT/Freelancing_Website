@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PasswordData } from 'src/app/models/password-data';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,12 +13,16 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./change-password.component.css','../../../../assets/css/local-design.css']
 })
 export class ChangePasswordComponent {
+  passwordData!:PasswordData
   currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
   errorMessage: string = '';
   successMessage: string = '';
-
+  email:string=';';
+  currentPasswordVisible = false;
+  newPasswordVisible = false;
+  confirmPasswordVisible = false;
   constructor(private authService: AuthService, private router: Router) {}
 
   changePassword() {
@@ -25,13 +30,14 @@ export class ChangePasswordComponent {
       this.errorMessage = "New password and confirmation do not match.";
       return;
     }
+    this.passwordData ={
+      email:this.email,
+      currentPassword:this.currentPassword,
+      newPassword:this.newPassword
 
-    const credentials = {
-      currentPassword: this.currentPassword,
-      newPassword: this.newPassword
-    };
+    }
 
-    this.authService.changePassword(credentials).subscribe(
+    this.authService.changePassword(this.passwordData).subscribe(
       (response) => {
         this.successMessage = "Password changed successfully.";
         this.errorMessage = '';
@@ -42,7 +48,17 @@ export class ChangePasswordComponent {
       }
     );
   }
+  toggleCurrentPasswordVisibility() {
+    this.currentPasswordVisible = !this.currentPasswordVisible;
+}
 
+toggleNewPasswordVisibility() {
+    this.newPasswordVisible = !this.newPasswordVisible;
+}
+
+toggleConfirmPasswordVisibility() {
+    this.confirmPasswordVisible = !this.confirmPasswordVisible;
+}
   cancel() {
     this.router.navigate(['/account/login']); 
   }

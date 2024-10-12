@@ -8,7 +8,8 @@ namespace Freelancing_Website.Models.Profiles
     {
         public BidProfile()
         {
-            CreateMap<Bid, BidView>();
+            CreateMap<Bid, BidView>()
+                .ForMember(dest => dest.ProjectName,opt =>opt.MapFrom(src =>src.Project.Title));
             CreateMap<BidForCreate, Bid>();
         }
     }

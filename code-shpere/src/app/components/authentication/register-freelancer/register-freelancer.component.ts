@@ -25,14 +25,15 @@ export class RegisterFreelancerComponent {
     email: '',
     hourlyRate: 0 // Default hourly rate
   };
-
+  freelancerId!:number;
   errorMessage: string = '';
 
   constructor(private authService: AuthService) {}
 
   register() {
     this.authService.registerFreelancer(this.user).subscribe(
-      (freelancer) => {
+      (response) => {
+        this.freelancerId=response.freelancerId
         alert('Freelancer registered successfully');
       },
       (error) => {

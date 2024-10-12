@@ -26,7 +26,19 @@ export class ManageClientComponent implements OnInit {
     companyName: '',
     contactNumber: ''
   };
-  client!:Client;
+  client: Client = {
+    id: 0,
+    name: '',
+    userName: '',
+    email: '',
+    passwordHash: '',
+    role: '',
+    rating: 0,
+    companyName: '',
+    contactNumber: '',
+    reviewsGiven: [],
+    postedProjects: []
+  };
   constructor(
     private route: ActivatedRoute,
     private router: Router,

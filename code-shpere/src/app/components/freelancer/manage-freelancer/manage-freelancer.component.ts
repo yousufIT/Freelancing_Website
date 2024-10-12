@@ -27,7 +27,29 @@ export class ManageFreelancerComponent implements OnInit {
       bio: ''
     }
   };
-  freelancer!: Freelancer;
+  freelancer: Freelancer = {
+    id: 0,
+    name: '',
+    rating: 0,
+    userName: '',
+    role: '',
+    passwordHash: '',
+    email: '',
+    hourlyRate: 0,
+    bids: [],
+    reviewsReceived: [],
+    completedProjects: [],
+    profileId: 0,
+    profile: {
+        id: 0,
+        freelancerId: 0,
+        freelancer: {} as Freelancer,  
+        skills: [],
+        portfolio: [],              
+        portfolioItems: [],         
+        bio: ''
+    }
+};
 
   constructor(
     private route: ActivatedRoute,

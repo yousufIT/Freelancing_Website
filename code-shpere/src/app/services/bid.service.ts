@@ -37,4 +37,8 @@ export class BidService {
   deleteBidsForProject(projectId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/project/${projectId}`);
   }
+
+  getBidById(bidId: number): Observable<Bid> {
+    return this.http.get<Bid>(`${this.apiUrl}/${bidId}`);
+  }
 }

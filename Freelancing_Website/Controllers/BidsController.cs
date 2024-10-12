@@ -85,5 +85,13 @@ namespace Freelancing_Website.Controllers
             await _bidService.DeleteBidsForProjectAsync(projectId);
             return NoContent();
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBidById(int id)
+        {
+            var bid = await _bidService.GetByIdAsync(id);
+            var bidView = _mapper.Map<BidView>(bid);
+            return Ok(bidView);
+        }
     }
 }

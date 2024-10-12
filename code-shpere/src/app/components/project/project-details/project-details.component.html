@@ -6,23 +6,27 @@
   
     <!-- Project Details -->
     @if(project) {
-    <div>
-      <h2>{{ project.title }}</h2>
-      <p><strong>Description:</strong> {{ project.description }}</p>
-      <p><strong>Budget:</strong> {{ project.budget | currency }}</p>
-      <p><strong>Skills Required:</strong>
-        <span *ngFor="let skill of project.requiredSkills">
-          {{ skill?.name }}
-        </span>
-      </p>
-      <p><strong>Status:</strong> {{ project.status }}</p>
-      
-      <!-- User Actions -->
-      <div class="mt-4">
-        <button (click)="goBack()" class="btn btn-secondary">Go Back</button>
-        <button (click)="deleteProject()" class="btn btn-danger">Delete Project</button>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title">{{ project.title }}</h2>
+          <p class="card-text"><strong>Description:</strong> {{ project.description }}</p>
+          <p class="card-text"><strong>Budget:</strong> {{ project.budget | currency }}</p>
+          <p class="card-text"><strong>Skills Required:</strong>
+            <span *ngFor="let skill of project.requiredSkills" class="badge bg-secondary me-1">
+              {{ skill?.name }}
+            </span>
+          </p>
+          <p class="card-text"><strong>Status:</strong> {{ project.status }}</p>
+        </div>
+        <div class="card-footer bg-white">
+          <div class="d-flex justify-content-end gap-2">
+            <button (click)="goBack()" class="btn btn-secondary">Go Back</button>
+            <button (click)="edit()" class="btn btn-primary">Edit</button>
+            <button (click)="deleteProject()" class="btn btn-danger">Delete Project</button>
+          </div>
+        </div>
       </div>
-    </div>
+      
 }
   
     <!-- Loading Message -->

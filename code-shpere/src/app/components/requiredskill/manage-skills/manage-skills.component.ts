@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SkillForCreate } from 'src/app/models/for-create/skill-for-create';
 import { Skill } from 'src/app/models/skill';
 import { RequiredSkillService } from 'src/app/services/required-skill.service';
 import { SkillService } from 'src/app/services/skill.service';
+
 
 @Component({
   selector: 'app-manage-skills',
@@ -15,7 +16,7 @@ import { SkillService } from 'src/app/services/skill.service';
   styleUrl: './manage-skills.component.css'
 })
 export class ManageSkillsComponent implements OnInit {
-  projectId!: number;
+  @Input() projectId!: number;
   skills: Skill[] = [];  
   skillIds: number[] = []; 
   allskills:Skill[]=[];

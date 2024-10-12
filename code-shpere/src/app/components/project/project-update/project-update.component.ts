@@ -4,16 +4,17 @@ import { ProjectService } from 'src/app/services/project.service';
 import { ProjectForCreate } from 'src/app/models/for-create/project-for-create';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ManageSkillsComponent } from '../../requiredskill/manage-skills/manage-skills.component';
 
 @Component({
   selector: 'app-project-update',
   standalone: true,
   templateUrl: './project-update.component.html',
   styleUrls: ['./project-update.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, ManageSkillsComponent]
 })
 export class ProjectUpdateComponent implements OnInit {
-  project: ProjectForCreate = {  title: '', description: '', budget: 0, status: '' };
+  project: ProjectForCreate = { title: '', description: '', budget: 0, status: '' };
   projectId: number = 0;
 
   constructor(
@@ -23,19 +24,40 @@ export class ProjectUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.projectId = this.route.snapshot.params['id'];
-    this.loadProject(this.projectId);
+    this.projectId = +this.route.snapshot.paramMap.get('projectId')!; // Use '+' to ensure it's converted to a number
+    if (this.projectId) {
+      this.loadProject(this.projectId);
+    } else {
+      console.error("Project ID is missing.");
+    }
   }
+  
 
   loadProject(id: number): void {
-    this.projectService.getProjectById(id).subscribe((data) => {
-      this.project = data;
+    this.projectService.getProjectById(id).subscribe({
+      next: (data) => {
+        this.project = data;
+      },
+      error: (error) => {
+        console.error('Error loading project:', error);
+      }
     });
   }
+  
 
   updateProject(): void {
-    this.projectService.updateProject(this.projectId, this.project).subscribe(() => {
-      this.router.navigate(['/projects']);
-    });
+    if (this.projectId && this.project) {
+      this.projectService.updateProject(this.projectId, this.project).subscribe({
+        next: () => {
+          this.router.navigate(['/projects']); // Navigate to the projects page after update
+        },
+        error: (err) => {
+          console.error("Error updating the project:", err);
+        }
+      });
+    } else {
+      console.error("Project data or ID is missing.");
+    }
   }
+  
 }

@@ -81,7 +81,7 @@ export const routes: Routes = [
     component: ProjectListComponent 
   }, 
   { 
-    path: 'project/:projectId/update', 
+    path: 'project/update/:projectId', 
     component: ProjectUpdateComponent 
   }, 
   

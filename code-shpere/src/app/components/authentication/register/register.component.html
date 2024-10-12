@@ -1,1 +1,47 @@
-<p>register works!</p>
+
+<section class="vh-100 gradient-custom bg-dark">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <h2 class="fw-bold mb-4 text-uppercase">Choose Registration Type</h2>
+
+                        <form (ngSubmit)="onSubmit()">
+                            <div class="row justify-content-center mb-3">
+                                <div class="col-6">
+                                    <div class="form-check p-3 rounded text-center"
+                                         [ngClass]="{'bg-secondary': selectedRole !== 'client', 'selected-client': selectedRole === 'client'}">
+                                        <input class="form-check-input d-none" type="radio" name="role" id="client" value="client" [(ngModel)]="selectedRole" required>
+                                        <label class="form-check-label text-white d-block py-2 border border-light rounded" 
+                                               [class.border-primary]="selectedRole === 'client'" for="client">
+                                            <i class="fas fa-user fa-2x mb-2"></i><br>
+                                            Register as Client
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check p-3 rounded text-center"
+                                         [ngClass]="{'bg-secondary': selectedRole !== 'freelancer', 'selected-freelancer': selectedRole === 'freelancer'}">
+                                        <input class="form-check-input d-none" type="radio" name="role" id="freelancer" value="freelancer" [(ngModel)]="selectedRole" required>
+                                        <label class="form-check-label text-white d-block py-2 border border-light rounded" 
+                                               [class.border-primary]="selectedRole === 'freelancer'" for="freelancer">
+                                            <i class="fas fa-briefcase fa-2x mb-2"></i><br>
+                                            Register as Freelancer
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-outline-light btn-lg px-5">Continue</button>
+                        </form>
+
+                        <button (click)="goToLogin()" class="btn btn-light btn-lg mt-4">Back to Login</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -18,6 +18,10 @@ import { DeleteReviewComponent } from './components/review/delete-review/delete-
 import { ManageSkillsComponent } from './components/requiredskill/manage-skills/manage-skills.component';
 import { ProjectUpdateComponent } from './components/project/project-update/project-update.component';
 import { ManageClientComponent } from './components/client/manage-client/manage-client.component';
+import { LoginComponent } from './components/authentication/login/login.component';
+import { RegisterComponent } from './components/authentication/register/register.component';
+import { RegisterClientComponent } from './components/authentication/register-client/register-client.component';
+import { RegisterFreelancerComponent } from './components/authentication/register-freelancer/register-freelancer.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },
@@ -89,5 +93,25 @@ export const routes: Routes = [
   { 
     path: 'client/manage-client/:clientId', 
     component: ManageClientComponent 
+  },
+
+
+
+  //account
+  { 
+    path: 'account/login', 
+    component: LoginComponent 
+  },
+  { 
+    path: 'account/register', 
+    component: RegisterComponent 
+  },
+  { 
+    path: 'account/register/client', 
+    component: RegisterClientComponent 
+  },
+  { 
+    path: 'account/register/freelancer', 
+    component: RegisterFreelancerComponent 
   },
 ];

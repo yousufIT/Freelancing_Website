@@ -1,0 +1,37 @@
+.gradient-custom {
+    background: #6a11cb;
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+    }
+    
+    .form-outline {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            background-color: #343a40; /* Dark background */
+            border: 1px solid #ccc; /* Border color */
+            color: white; /* Text color */
+        }
+
+        .form-control:focus {
+            border-color: #ffffff; /* Change border color on focus */
+            box-shadow: none; /* Remove shadow on focus */
+        }
+
+        .form-label {
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            color: #ffffff; /* Initial label color */
+            transition: 0.2s ease all; /* Smooth transition */
+        }
+
+        .form-control:focus + .form-label,
+        .form-control:not(:placeholder-shown) + .form-label {
+            top: -12px;
+            left: 8px;
+            font-size: 12px;
+            color: #ffffff; /* Label color when focused or not empty */
+        }

@@ -1,0 +1,9 @@
+
+        /* Background colors for selected roles */
+        .selected-client {
+            background-color: rgba(106, 17, 203, 1);
+        }
+
+        .selected-freelancer {
+            background-color: rgba(37, 117, 252, 1);
+        }

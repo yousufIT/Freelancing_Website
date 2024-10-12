@@ -24,6 +24,9 @@ import { RegisterClientComponent } from './components/authentication/register-cl
 import { RegisterFreelancerComponent } from './components/authentication/register-freelancer/register-freelancer.component';
 import { ChangePasswordComponent } from './components/authentication/change-password/change-password.component';
 import { LogoutComponent } from './components/authentication/logout/logout.component';
+import { BidCreateComponent } from './components/bid/bid-create/bid-create.component';
+import { BidListComponent } from './components/bid/bid-list/bid-list.component';
+import { BidUpdateComponent } from './components/bid/bid-update/bid-update.component';
 import { ManageFreelancerComponent } from './components/freelancer/manage-freelancer/manage-freelancer.component';
 
 export const routes: Routes = [
@@ -33,7 +36,9 @@ export const routes: Routes = [
   { path: 'create-project', component: CreateProjectComponent, canActivate: [AuthGuard] },
   { path: 'portfolio', component: PortfolioItemComponent },
   { path: 'reviews', component: ReviewComponent },
-  
+  { path: 'projects/:projectId/bids/create', component: BidCreateComponent },
+  { path: 'projects/:projectId/bids', component: BidListComponent },
+  { path: 'bids/:bidId/update', component: BidUpdateComponent },
 
 //skill
   {

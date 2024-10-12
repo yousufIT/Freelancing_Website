@@ -1,13 +1,13 @@
 // project-details.component.ts
 import { Component, OnInit, Pipe } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project';
 import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   selector: 'app-project-details',
   templateUrl: './project-details.component.html',
   styleUrls: ['./project-details.component.css']

@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <!-- Skills Filter Toggle Button -->
+  <!-- Toggle Skills Filter -->
   <div class="text-end mb-3">
     <a (click)="toggleSkills()" class="btn btn-outline-primary">
       {{ open ? 'Hide Skills Filter' : 'Show Skills Filter' }}
@@ -32,6 +32,18 @@
         }
       </ul>
     </div>
+  }
+
+  <!-- Create Project Button -->
+  <div class="text-end mb-4">
+    <button class="btn btn-success" (click)="toggleCreateProject()">
+      {{ showCreateProject ? 'Hide Create Form' : 'Create New Project' }}
+    </button>
+  </div>
+
+  <!-- Project Creation Form -->
+  @if (showCreateProject) {
+    <app-project-create (projectCreated)="onProjectCreated()"></app-project-create>
   }
 
   <!-- Project List Header -->

@@ -7,13 +7,14 @@ import { Skill } from 'src/app/models/skill';
 import { SkillService } from 'src/app/services/skill.service';
 import { PaginationMetaData } from 'src/app/models/data-with-pagination';
 import { CommonModule } from '@angular/common';
+import { ProjectCreateComponent } from '../project-create/project-create.component';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css'],
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule, ProjectCreateComponent]
 })
 export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
@@ -29,6 +30,7 @@ export class ProjectListComponent implements OnInit {
     totalItemCount: 0,
     totalPageCount: 0
   };
+  showCreateProject = false;
 
   constructor(private projectService: ProjectService,private skillService:SkillService, private router: Router) {}
 
@@ -82,5 +84,17 @@ export class ProjectListComponent implements OnInit {
 
   toggleSkills(){
     this.open = !this.open;
+  }
+
+  toggleCreateProject(): void {
+    this.showCreateProject = !this.showCreateProject;
+  }
+
+  onProjectCreated(): void {
+    // Hide the create project form
+    this.showCreateProject = false;
+
+    // Reload the project list to include the new project
+    this.loadFilteredProjects();
   }
 }

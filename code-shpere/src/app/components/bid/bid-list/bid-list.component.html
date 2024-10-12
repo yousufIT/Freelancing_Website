@@ -1,1 +1,18 @@
-<p>bid-list works!</p>
+<div class="container mt-4">
+    <h2 class="mb-4">Bids for Project</h2>
+    <button [routerLink]="['/project', projectId]" class="btn btn-secondary mb-3">Back to Project Details</button>
+    
+    <div class="list-group">
+      <div *ngFor="let bid of bids" class="list-group-item">
+        <h5 class="mb-1">Bid Amount: {{ bid.amount | currency }}</h5>
+        <p class="mb-1">Proposal: {{ bid.proposal }}</p>
+        <small>Freelancer ID: {{ bid.freelancerId }}</small>
+        <button [routerLink]="['/bids', bid.id, 'update']" class="btn btn-warning btn-sm">Edit</button>
+      </div>
+    </div>
+  
+    <div *ngIf="bids.length === 0" class="alert alert-info mt-3">
+      No bids available for this project.
+    </div>
+  </div>
+  

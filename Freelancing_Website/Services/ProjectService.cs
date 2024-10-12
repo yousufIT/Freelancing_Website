@@ -19,12 +19,7 @@ namespace Freelancing_Website.Services
 
         public async Task<Project> GetProjectByIdAsync(int id)
         {
-            var project = await _projectRepository.GetByIdAsync(id);
-            if (project != null)
-            {
-                project.Bids = (await _bidRepository.GetBidsByProjectIdAsync(id, 1, int.MaxValue)).Items;
-                project.RequiredSkills = (await _requiredSkillRepository.GetSkillsForProjectAsync(id));
-            }
+            var project = await _projectRepository.GetProjectById(id);
             return project;
         }
 

@@ -12,7 +12,7 @@
         <div class="col-md-6">
             <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
                 <div>
-                    <a href="#" data-bs-toggle="modal" data-bs-target=".add-new" class="btn btn-primary"><i class="bx bx-plus me-1"></i> Add New Review</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target=".add-new" class="btn btn-outline-info"><i class="bx bx-plus me-1" [routerLink]="['/review/client/1/freelancer/10']"></i> Add New Review</a>
                 </div>
                 <div class="dropdown">
                     <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -34,12 +34,12 @@
                 <table class="table project-list-table table-nowrap align-middle table-borderless">
                     <thead>
                         <tr>
-                            <th scope="col" class="ps-4" style="width: 50px;">
+                            <!-- <th scope="col" class="ps-4" style="width: 50px;">
                                 <div class="form-check font-size-16">
                                     <input type="checkbox" class="form-check-input" id="reviewusercheck" />
                                     <label class="form-check-label" for="reviewusercheck"></label>
                                 </div>
-                            </th>
+                            </th> -->
                             <th scope="col">Freelancer name</th>
                             <th scope="col">Rating</th>
                             <th scope="col">Comment</th>
@@ -48,18 +48,18 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let review of reviews">
-                            <td>
+                            <!-- <td>
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" [id]="'review' + review.id" />
                                     <label class="form-check-label" [for]="'review' + review.id"></label>
                                 </div>
-                            </td>
-                            <td>{{ review.freelancer.name }}</td>
+                            </td> -->
+                            <td ><a class="btn btn-sm btn-outline-dark" [routerLink]="['/freelancer/manage-freelancer/',review.freelancerId]">{{ review.freelancerName }}</a></td>
                             <td>{{ review.rating }}</td>
                             <td>{{ review.comment }}</td>
                             <td>
-                                <!-- <a href="#" class="btn btn-sm btn-primary" (click)="editReview(review)">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger" (click)="deleteReview(review.id)">Delete</a> -->
+                                <a  class="btn btn-sm btn-outline-warning" [routerLink]="['/review/update/',review.id]" >Edit</a>
+                                <a href="#" class="btn btn-sm btn-outline-danger" [routerLink]="['/review/delete-review/']"  >Delete</a>
                             </td>
                         </tr>
                     </tbody>
@@ -74,25 +74,20 @@
                 <p class="mb-sm-0">Showing 1 to {{ reviews.length }} of {{ totalPageCount }} entries</p>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="float-sm-end">
-              <ul class="pagination mb-sm-0">
-                <li class="page-item" [class.disabled]="currentPage === 1">
-                  <a href="#" class="page-link" (click)="goToPage(currentPage - 1)" *ngIf="currentPage > 1">
-                    <i class="mdi mdi-chevron-left"></i>
-                  </a>
-                </li>
-                <li *ngFor="let page of [].constructor(totalPageCount); let i = index" class="page-item" [class.active]="currentPage === (i + 1)">
-                  <a href="#" class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</a>
-                </li>
-                <li class="page-item" [class.disabled]="currentPage === totalPageCount">
-                  <a href="#" class="page-link" (click)="goToPage(currentPage + 1)" *ngIf="currentPage < totalPageCount">
-                    <i class="mdi mdi-chevron-right"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+        
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="page-item btn-primary" [class.disabled]="currentPage === 1">
+                <button class="page-link  btn-primary" (click)="goToPage(currentPage - 1)">Previous</button>
+              </li>
+              <li class="page-item btn-primary" *ngFor="let page of [].constructor(totalPageCount); let i = index">
+                <button class="page-link btn-primary" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+              </li>
+              <li class="page-item btn-primary" [class.disabled]="currentPage === totalPageCount">
+                <button class="page-link btn-primary" (click)="goToPage(currentPage + 1)">Next</button>
+              </li>
+            </ul>
+          </nav>
           
     </div>
 </div>

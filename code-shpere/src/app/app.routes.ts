@@ -16,6 +16,8 @@ import { ReviewCreateComponent } from './components/review/review-create/review-
 import { ReviewUpdateComponent } from './components/review/review-update/review-update.component';
 import { DeleteReviewComponent } from './components/review/delete-review/delete-review.component';
 import { ManageSkillsComponent } from './components/requiredskill/manage-skills/manage-skills.component';
+import { ProjectUpdateComponent } from './components/project/project-update/project-update.component';
+import { ManageClientComponent } from './components/client/manage-client/manage-client.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },
@@ -24,6 +26,7 @@ export const routes: Routes = [
   { path: 'create-project', component: CreateProjectComponent, canActivate: [AuthGuard] },
   { path: 'portfolio', component: PortfolioItemComponent },
   { path: 'reviews', component: ReviewComponent },
+  
 
 //skill
   {
@@ -58,7 +61,7 @@ export const routes: Routes = [
     component: ReviewCreateComponent 
   },
   {
-    path: 'review/:reviewId/update',
+    path: 'review/update/:reviewId',
     component: ReviewUpdateComponent 
   },
   {
@@ -73,10 +76,18 @@ export const routes: Routes = [
     path: 'project/:projectId/manage-skills', 
     component: ManageSkillsComponent 
   },
-
+  { 
+    path: 'project/project-list', 
+    component: ProjectListComponent 
+  }, 
+  { 
+    path: 'project/:projectId/update', 
+    component: ProjectUpdateComponent 
+  }, 
+  
 //client
   { 
-    path: 'client/:clientId/manage-client', 
-    component: ManageSkillsComponent 
+    path: 'client/manage-client/:clientId', 
+    component: ManageClientComponent 
   },
 ];

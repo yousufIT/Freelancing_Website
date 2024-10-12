@@ -30,7 +30,7 @@ public class AccountsController : Controller
                 UserName = model.UserName,
                 Email = model.Email,
                 Name = model.Name,
-                Role=model.Role,
+                Role="Freelancer",
                 Rating=model.Rating,
                 Profile = new Profile()
                 {
@@ -74,7 +74,7 @@ public class AccountsController : Controller
                 Name = model.Name,
                 CompanyName = model.CompanyName,
                 ContactNumber = model.ContactNumber,
-                Role=model.Role,
+                Role="Client",
                 Rating=model.Rating
                 
             };

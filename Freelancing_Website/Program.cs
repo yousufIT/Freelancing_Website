@@ -231,6 +231,61 @@ namespace Freelancing_Website
 
                 context.Bids.AddRange(bid1, bid2);
 
+                var skill1 = new Skill
+                {
+                    Name = "C#",
+                };
+                var skill2 = new Skill
+                {
+                    Name = "C++",
+                };
+                var skill3 = new Skill
+                {
+                    Name = "Python",
+                };
+                var skill4 = new Skill
+                {
+                    Name = "JavaScript",
+                };
+                var skill5 = new Skill
+                {
+                    Name = "Java",
+                };
+                var skill6 = new Skill
+                {
+                    Name = "TypeScript",
+                };
+                var skill7 = new Skill
+                {
+                    Name = "Html",
+                };
+                var skill8 = new Skill
+                {
+                    Name = "Css",
+                };
+                var skill9 = new Skill
+                {
+                    Name = "Angular",
+                };
+                var skill10 = new Skill
+                {
+                    Name = "React",
+                };
+                var skill11 = new Skill
+                {
+                    Name = "Asp.net",
+                };
+                var skill12 = new Skill
+                {
+                    Name = "Laravel",
+                };
+                var skill13 = new Skill
+                {
+                    Name = "Node.js",
+                };
+
+                context.Skills.AddRange(skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10, skill11, skill12, skill13);
+
                 // Save changes to the database
                 context.SaveChanges();
             }

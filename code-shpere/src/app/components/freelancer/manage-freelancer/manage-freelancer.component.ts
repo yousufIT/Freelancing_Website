@@ -4,28 +4,30 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FreelancerForCreate } from 'src/app/models/for-create/freelancer-for-create';
 import { FreelancerService } from 'src/app/services/freelancer.service';
+import { Freelancer } from 'src/app/models/freelancer';
 
 @Component({
   selector: 'app-manage-freelancer',
   standalone: true,
-  imports: [FormsModule,CommonModule,RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './manage-freelancer.component.html',
-  styleUrl: './manage-freelancer.component.css'
+  styleUrls: ['./manage-freelancer.component.css', '../../../../assets/css/local-design.css']
 })
 export class ManageFreelancerComponent implements OnInit {
   freelancerId: number | null = null;
-  freelancer: FreelancerForCreate = {
+  freelancerForCreate: FreelancerForCreate = {
     name: '',
     userName: '',
     email: '',
     passwordHash: '',
     role: '',
     rating: 0,
-    hourlyRate:0,
-    profile:{
-      bio:''
+    hourlyRate: 0,
+    profile: {
+      bio: ''
     }
   };
+  freelancer!: Freelancer;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,14 +38,11 @@ export class ManageFreelancerComponent implements OnInit {
   ngOnInit(): void {
     this.freelancerId = +this.route.snapshot.paramMap.get('freelancerId')!;
     if (this.freelancerId) {
-      this.fetchfreelancer();
+      this.fetchFreelancer();
     }
-
-    // Form validation
-    this.setupValidation();
   }
 
-  fetchfreelancer() {
+  fetchFreelancer() {
     if (this.freelancerId) {
       this.freelancerService.getFreelancerById(this.freelancerId).subscribe(freelancer => {
         this.freelancer = freelancer;
@@ -51,38 +50,30 @@ export class ManageFreelancerComponent implements OnInit {
     }
   }
 
-  submitfreelancer() {
+  submitFreelancer() {
     if (this.freelancerId) {
-      this.freelancerService.updateFreelancer(this.freelancerId, this.freelancer).subscribe(() => {
-        // Handle successful update (e.g., navigate back or show a success message)
+      this.freelancerService.updateFreelancer(this.freelancerId, this.freelancerForCreate).subscribe(() => {
         this.router.navigate(['/freelancers']); // Adjust the path as necessary
       });
     } else {
       this.freelancerService.createFreelancer(this.freelancer).subscribe(() => {
-        // Handle successful creation
         this.router.navigate(['/freelancers']); // Adjust the path as necessary
       });
     }
   }
 
-  deletefreelancer() {
+  editFreelancer() {
+    if (this.freelancerId) {
+      this.freelancerService.updateFreelancer(this.freelancerId, this.freelancer).subscribe(() => {
+        this.router.navigate(['/freelancers']); // Adjust the path as necessary
+      });
+    }
+  }
+
+  deleteFreelancer() {
     if (this.freelancerId) {
       this.freelancerService.deleteFreelancer(this.freelancerId).subscribe(() => {
-        // Handle successful deletion
         this.router.navigate(['/freelancers']); // Adjust the path as necessary
-      });
-    }
-  }
-
-  setupValidation() {
-    const form = document.querySelector('form');
-    if (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
       });
     }
   }

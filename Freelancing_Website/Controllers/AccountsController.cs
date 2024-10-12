@@ -127,4 +127,40 @@ public class AccountsController : Controller
 
         return BadRequest(ModelState);
     }
+    [HttpPost("ChangePassword")]
+    public async Task<IActionResult> ChangePassword(string email, string currentPassword, string newPassword, string confirmPassword)
+    {
+        if (!ModelState.IsValid || newPassword != confirmPassword)
+        {
+            ModelState.AddModelError(string.Empty, "Passwords do not match or invalid data.");
+            return BadRequest(ModelState);
+        }
+
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            return NotFound("User not found.");
+        }
+
+        var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+        if (result.Succeeded)
+        {
+            return Ok(new { message = "Password changed successfully." });
+        }
+
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
+        }
+
+        return BadRequest(ModelState);
+    }
+    [HttpPost("Logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return Ok(new { message = "User logged out successfully." });
+    }
+
 }

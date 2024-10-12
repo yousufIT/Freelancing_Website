@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Skill } from 'src/app/models/skill';
 import { SkillService } from 'src/app/services/skill.service';
@@ -7,9 +9,9 @@ import { SkillService } from 'src/app/services/skill.service';
 @Component({
   selector: 'app-freelancer-skills',
   standalone: true,
-  imports: [],
+  imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './freelancer-skills.component.html',
-  styleUrl: './freelancer-skills.component.css'
+  styleUrls: ['./freelancer-skills.component.css','../../../../assets/css/local-design.css']
 })
 export class FreelancerSkillsComponent implements OnInit, OnDestroy{
 
@@ -48,5 +50,8 @@ export class FreelancerSkillsComponent implements OnInit, OnDestroy{
     });
   }
  
-
+  goToAddRoute():void{
+    this.router.navigate(['/skills/freelancer/add/',this.freelancerId]);
+  }
+  
 }

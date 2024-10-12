@@ -11,7 +11,7 @@ import { ReviewService } from 'src/app/services/review.service';
   standalone: true,
   imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './reviews-for-client.component.html',
-  styleUrl: './reviews-for-client.component.css'
+  styleUrls: ['./reviews-for-client.component.css','../../../../assets/css/local-design.css']
 })
 export class ReviewsForClientComponent implements OnInit {
   clientId!:number;

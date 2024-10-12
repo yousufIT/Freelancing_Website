@@ -1,18 +1,32 @@
-<div class="container">
-    <h2>Update Review</h2>
-    
-    <form (ngSubmit)="submitReview()">
-      <div class="mb-3">
-        <label for="rating" class="form-label">Rating</label>
-        <input type="number" id="rating" class="form-control" [(ngModel)]="review.rating" name="rating" min="1" max="5" required>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                  <div class="card-body p-5 text-center">
+
+                      <h2 class="fw-bold mb-4 text-uppercase">Update Review</h2>
+
+                      <form (ngSubmit)="submitReview()">
+                          <div class="form-outline form-white mb-4">
+                              <input type="number" id="rating" class="form-control form-control-lg" [(ngModel)]="review.rating" name="rating" min="1" max="5" required placeholder=" " />
+                              <label for="rating" class="form-label">Rating</label>
+                          </div>
+
+                          <div class="form-outline form-white mb-4">
+                              <textarea id="comment" class="form-control form-control-lg" [(ngModel)]="review.comment" name="comment" rows="4" required placeholder=" "></textarea>
+                              <label for="comment" class="form-label">Comment</label>
+                          </div>
+
+                          <div class="d-flex justify-content-center">
+                              <button type="submit" class="btn btn-outline-light btn-lg px-5">Update Review</button>
+                              <a [routerLink]="['/review/freelancer/10']" class="btn btn-outline-secondary btn-lg px-5 ms-2">Cancel</a>
+                          </div>
+                      </form>
+
+                  </div>
+              </div>
+          </div>
       </div>
-  
-      <div class="mb-3">
-        <label for="comment" class="form-label">Comment</label>
-        <textarea id="comment" class="form-control" [(ngModel)]="review.comment" name="comment" rows="4" required></textarea>
-      </div>
-  
-      <button type="submit" class="btn btn-primary">Update Review</button>
-    </form>
   </div>
-  
+</section>

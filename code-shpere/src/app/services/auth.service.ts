@@ -27,7 +27,10 @@ export class AuthService {
     return this.http.post<Freelancer>(`${this.apiUrl}/Freelancer`, user);
   }
   logout(): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/logout`, {});
+    return this.http.post<void>(`${this.apiUrl}/Logout`, {});
+  }
+  changePassword(credentials: { currentPassword: string; newPassword: string }): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/ChangePassword`, credentials);
   }
   isLoggedIn(): boolean {
     return true;

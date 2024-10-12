@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SkillForCreate } from 'src/app/models/for-create/skill-for-create';
 import { SkillService } from 'src/app/services/skill.service';
@@ -8,9 +9,9 @@ import { SkillService } from 'src/app/services/skill.service';
 @Component({
   selector: 'app-skill-create',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './skill-create.component.html',
-  styleUrl: './skill-create.component.css'
+  styleUrls: ['./skill-create.component.css','../../../../assets/css/local-design.css']
 })
 export class SkillCreateComponent {
   skill: SkillForCreate = { name: '' }; 

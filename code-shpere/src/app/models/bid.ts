@@ -5,6 +5,7 @@ export interface Bid {
     id: number;
     projectId: number;
     project: Project;
+    projectName?:string ;
     freelancerId: number;
     freelancer: Freelancer;
     amount: number;

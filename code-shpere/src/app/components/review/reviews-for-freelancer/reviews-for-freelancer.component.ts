@@ -13,7 +13,7 @@ import { ClientService } from 'src/app/services/client.service';
   standalone: true,
   imports: [FormsModule,CommonModule, RouterLink],
   templateUrl: './reviews-for-freelancer.component.html',
-  styleUrls: ['./reviews-for-freelancer.component.css'],
+  styleUrls: ['./reviews-for-freelancer.component.css','../../../../assets/css/local-design.css'],
   providers:[ClientService]
 })
 export class ReviewsForFreelancerComponent implements OnInit {

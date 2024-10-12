@@ -1,6 +1,24 @@
-<h1 class="title">Skills</h1>
-<ul class="list-group">
-    @for (skill of skills; track $index) {
-    <i class="list-group-item">{{skill.name}}</i>
-    }
-</ul>
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <h2 class="fw-bold mb-4 text-uppercase">Skill List</h2>
+
+                        <div *ngIf="skills.length > 0; else noSkills">
+                            <ul class="list-group list-group-flush">
+                                <li *ngFor="let skill of skills" class="list-group-item bg-dark text-white">
+                                    {{ skill.name }} 
+                                </li>
+                            </ul>
+                        </div>
+                        <ng-template #noSkills>
+                            <p class="text-muted">No skills found.</p>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

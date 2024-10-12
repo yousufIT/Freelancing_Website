@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ReviewForCreate } from 'src/app/models/for-create/review-for-create';
 import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
   selector: 'app-review-update',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './review-update.component.html',
-  styleUrl: './review-update.component.css'
+  styleUrls: ['./review-update.component.css','../../../../assets/css/local-design.css']
 })
 export class ReviewUpdateComponent  implements OnInit {
   reviewId!: number;

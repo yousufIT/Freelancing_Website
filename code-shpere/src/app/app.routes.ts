@@ -22,6 +22,9 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { RegisterComponent } from './components/authentication/register/register.component';
 import { RegisterClientComponent } from './components/authentication/register-client/register-client.component';
 import { RegisterFreelancerComponent } from './components/authentication/register-freelancer/register-freelancer.component';
+import { ChangePasswordComponent } from './components/authentication/change-password/change-password.component';
+import { LogoutComponent } from './components/authentication/logout/logout.component';
+import { ManageFreelancerComponent } from './components/freelancer/manage-freelancer/manage-freelancer.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },
@@ -46,7 +49,7 @@ export const routes: Routes = [
     component: SkillCreateComponent 
   },
   {
-    path: 'skills/freelancer/:freelancerId/add',
+    path: 'skills/freelancer/add/:freelancerId',
     component: AddSkillsComponent 
   },
 
@@ -114,4 +117,21 @@ export const routes: Routes = [
     path: 'account/register/freelancer', 
     component: RegisterFreelancerComponent 
   },
+  { 
+    path: 'account/change-password', 
+    component: ChangePasswordComponent 
+  },
+  { 
+    path: 'account/logout', 
+    component: LogoutComponent 
+  },
+
+
+
+  //freelancer
+  { 
+    path: 'freelancer/manage-freelancer/:freelancerId', 
+    component: ManageFreelancerComponent 
+  },
+
 ];

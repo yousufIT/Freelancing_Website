@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SkillService } from 'src/app/services/skill.service';
 
 @Component({
   selector: 'app-add-skills',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './add-skills.component.html',
-  styleUrl: './add-skills.component.css'
+  styleUrls: ['./add-skills.component.css','../../../../assets/css/local-design.css']
 })
 export class AddSkillsComponent {
   freelancerId!: number;
@@ -49,5 +49,14 @@ fetchAvailableSkills(): void {
     }
   });
 }
+onSkillChange(skillId: number, event: Event): void {
+  const target = event.target as HTMLInputElement;
+  const isChecked = target.checked; 
 
+  if (isChecked) {
+    this.skillIds.push(skillId)
+  } else {
+    
+  }
+}
 }

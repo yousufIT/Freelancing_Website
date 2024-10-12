@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports:[CommonModule],
   templateUrl: './skill-list.component.html',
-  styleUrls: ['./skill-list.component.css'],
+  styleUrls: ['./skill-list.component.css','../../../../assets/css/local-design.css'],
   providers: [SkillService] 
 })
 export class SkillListComponent implements OnInit, OnDestroy {

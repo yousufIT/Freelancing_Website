@@ -31,6 +31,22 @@ html, body {
 
 
 
+.list-group-item img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.img-thumbnail {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+
 
 /* @tailwind base;
 @tailwind components;

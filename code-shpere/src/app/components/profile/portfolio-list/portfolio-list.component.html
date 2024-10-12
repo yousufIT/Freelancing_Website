@@ -1,0 +1,23 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Portfolio Items</h2>
+    @if (portfolioItems.length > 0) {
+        <div  class="list-group">
+            @for (item of portfolioItems; track $index) {
+              <div  class="list-group-item">
+                  <h5>{{ item.title }}</h5>
+                  <p>{{ item.description }}</p>
+                  <img [src]="item.imageUrl" alt="{{ item.title }}" class="img-thumbnail mb-2">
+                  <button (click)="onDelete(item.id)" class="btn btn-danger btn-sm">Delete</button>
+                  <button [routerLink]="['/portfolio', item.id, 'edit']" class="btn btn-primary btn-sm">Edit</button>
+                </div>
+            }
+          </div>
+    }
+  
+    @if (portfolioItems.length === 0) {
+        <div  class="alert alert-info">No portfolio items available.</div>
+    }
+  
+    <button [routerLink]="['/portfolio', profileId, 'create']" class="btn btn-success mt-3">Add New Portfolio Item</button>
+  </div>
+  

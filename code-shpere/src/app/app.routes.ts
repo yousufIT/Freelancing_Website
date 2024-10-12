@@ -28,6 +28,8 @@ import { BidCreateComponent } from './components/bid/bid-create/bid-create.compo
 import { BidListComponent } from './components/bid/bid-list/bid-list.component';
 import { BidUpdateComponent } from './components/bid/bid-update/bid-update.component';
 import { ManageFreelancerComponent } from './components/freelancer/manage-freelancer/manage-freelancer.component';
+import { PortfolioListComponent } from './components/profile/portfolio-list/portfolio-list.component';
+import { PortfolioCreateComponent } from './components/profile/portfolio-create/portfolio-create.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },
@@ -39,6 +41,9 @@ export const routes: Routes = [
   { path: 'projects/:projectId/bids/create', component: BidCreateComponent },
   { path: 'projects/:projectId/bids', component: BidListComponent },
   { path: 'bids/:bidId/update', component: BidUpdateComponent },
+  { path: 'profiles/:profileId/portfolio', component: PortfolioListComponent },
+  { path: 'portfolio/:profileId/create', component: PortfolioCreateComponent },
+  { path: 'portfolio/:portfolioItemId/edit', component: PortfolioCreateComponent },
 
 //skill
   {

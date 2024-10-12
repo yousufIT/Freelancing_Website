@@ -13,6 +13,7 @@ namespace CodeSphere.Domain.Interfaces.Repos
         Task DeleteProjectsByClientIdAsync(int clientId);
         Task AddProjectToClient(int clientId, Project project);
         Task<DataWithPagination<Project>> GetProjectsBySkillsAsync(List<int> skillsIds, int pageSize, int pageNumber);
+        Task<Project> GetProjectById(int id);
     }
 
 

@@ -37,6 +37,11 @@ namespace CodeSphere.Infrastructure.Repos
             }
         }
 
+        public async Task<Project> GetProjectById(int id)
+        {
+            return await _context.Projects.Include(p => p.RequiredSkills).Include(p => p.Bids).FirstOrDefaultAsync(p => p.Id == id);
+        }
+
         public async Task<DataWithPagination<Project>> GetProjectsByClientIdAsync(int clientId, int pageNumber, int pageSize)
         {
             var projects = await _context.Projects.Where(p => p.ClientId == clientId && !p.IsDeleted).ToListAsync();
@@ -80,6 +85,8 @@ namespace CodeSphere.Infrastructure.Repos
             result.Items = projectItems;
             return result;
         }
+
+        
 
     }
 

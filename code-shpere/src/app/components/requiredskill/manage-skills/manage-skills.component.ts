@@ -37,8 +37,6 @@ export class ManageSkillsComponent implements OnInit {
     this.skillService.getAllSkills().subscribe({
       next: (data) => {
         this.allskills = data;
-        console.log(data);
-        
       },
       error: (error) => {
         console.error('Error fetching skills:', error);

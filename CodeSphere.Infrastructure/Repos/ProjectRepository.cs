@@ -52,20 +52,32 @@ namespace CodeSphere.Infrastructure.Repos
             return result;
         }
 
-        public async Task<DataWithPagination<Project>> GetProjectsBySkillsAsync(List<int> skillsIds,int pageSize, int pageNumber)
+        public async Task<DataWithPagination<Project>> GetProjectsBySkillsAsync(List<int> skillsIds, int pageNumber, int pageSize)
         {
-            var projects = await _context.Projects
+            skillsIds.Remove(0);
+            IQueryable<Project> projects ;
+            if (skillsIds.Count == 0)
+            {
+                projects = _context.Projects
                 .Include(p => p.RequiredSkills)
-                .Where(p => !p.IsDeleted && p.RequiredSkills.Any(s => skillsIds.Contains(s.Id))).ToListAsync();
+                .Where(p => !p.IsDeleted);
+            }
+            else
+            {
+                projects = _context.Projects
+                .Include(p => p.RequiredSkills)
+                .Where(p => !p.IsDeleted && p.RequiredSkills.Any(s => skillsIds.Contains(s.Id)));
+            }
+
 
             var totalItemCount = projects.Count();
 
             var paginationData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-            projects=projects.Skip((pageNumber - 1) * pageSize)
-                       .Take(pageSize).ToList();
+            var projectItems= await projects.Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize).ToListAsync();
             DataWithPagination<Project> result = new DataWithPagination<Project>();
             result.PaginationMetaData = paginationData;
-            result.Items = projects;
+            result.Items = projectItems;
             return result;
         }
 

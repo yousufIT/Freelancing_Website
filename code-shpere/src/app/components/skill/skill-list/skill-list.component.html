@@ -1,1 +1,6 @@
-<p>skill-list works!</p>
+<h1 class="title">Skills</h1>
+<ul class="list-group">
+    @for (skill of skills; track $index) {
+    <i class="list-group-item">{{skill.name}}</i>
+    }
+</ul>

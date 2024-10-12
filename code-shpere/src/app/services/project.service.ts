@@ -33,6 +33,7 @@ import { Observable } from 'rxjs';
 import { Project } from '../models/project';
 import { environment } from '../../environments/environment';
 import { ProjectForCreate } from '../models/for-create/project-for-create';
+import { DataWithPagination } from '../models/data-with-pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +43,9 @@ export class ProjectService {
   private apiUrl = `${environment.apiUrl}/Projects`;
 
   constructor(private http: HttpClient) { }
-  getProjectsFilteredBySkills(Ids: string, pageNumber: number, pageSize: number):Observable<Project[]>{
-    return this.http.get<Project[]>(`${this.apiUrl}/Skill/${Ids}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  getProjectsFilteredBySkills(Ids: string, pageNumber: number, pageSize: number):Observable<DataWithPagination<Project>>{
+    if(Ids == '') Ids = '0';
+    return this.http.get<DataWithPagination<Project>>(`${this.apiUrl}/Skill/${Ids}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
   getProjectById(id: number): Observable<Project> {
     return this.http.get<Project>(`${this.apiUrl}/${id}`);

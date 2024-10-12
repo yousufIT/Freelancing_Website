@@ -46,6 +46,10 @@ export class ProjectDetailsComponent implements OnInit {
     this.router.navigate(['/projects']); // Adjust the path as necessary
   }
 
+  edit(): void {
+    this.router.navigate(['/project/update',this.project?.id])
+  }
+
   deleteProject(): void {
     if (this.project) {
       this.projectService.deleteProject(this.project.id).subscribe(

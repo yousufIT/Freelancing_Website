@@ -18,9 +18,9 @@ html, body {
 
 .footer {
   background-color: #f8f9fa; /* Light background */
-  padding: 1rem 0;
   text-align: center;
   margin-top: auto; /* Pushes footer to the bottom */
+  padding-top: 1rem;
 }
 
 .container {

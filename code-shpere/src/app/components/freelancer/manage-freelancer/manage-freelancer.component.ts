@@ -86,4 +86,10 @@ export class ManageFreelancerComponent implements OnInit {
     this.router.navigate(['/account/login']); 
   }
 
+  addSkills():void {
+    if(this.freelancerId){
+      this.router.navigate(['/skills/freelancer/add',this.freelancerId]);
+    }
+  }
+
 }

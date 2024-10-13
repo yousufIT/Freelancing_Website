@@ -50,11 +50,11 @@
                             </ul>
                             <hr>
                             <h6 class="mb-0">Skills</h6>
-                            <ul class="list-group list-group-flush">
-                                <li *ngFor="let skill of freelancer.profile.skills" class="list-group-item text-secondary bg-dark">
+                            <p>
+                                <span *ngFor="let skill of freelancer.profile.skills" class="badge bg-secondary me-1">
                                     {{ skill.name }}
-                                </li>
-                            </ul>
+                                </span>
+                            </p>
                             <hr>
                             <h6 class="mb-0">Bio</h6>
                             <p class="text-secondary">{{ freelancer.profile.bio }}</p>

@@ -1,50 +1,30 @@
 <section class="min-vh-100 gradient-custom">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                    <div class="card-body p-5 text-center">
-                        <h2 class="fw-bold mb-4 text-uppercase">Add Skills</h2>
+    <div class="container py-5">
+        <h2 class="mb-4 text-white">Add Skills for Freelancer ID: {{ freelancerId }}</h2>
+        
+        <div class="card bg-dark text-white p-4 mb-4">
+            <h3 class="mb-3">Select Skills to Add:</h3>
+            <ul class="list-group">
+                <li *ngFor="let skill of availableSkills" class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white">
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            class="form-check-input"
+                            (change)="onSkillChange(skill.id, $event)"
+                        />
+                        {{ skill.name }}
+                    </label>
+                </li>
+            </ul>            
+            <button class="btn btn-primary mt-3" type="submit" (click)="addSkills()">Add Selected Skills</button>
+        </div>
 
-                        <form (ngSubmit)="addSkills()">
-                            <div class="mb-4">
-                                <label class="form-label">Select Skills:</label>
-                                <div class="d-flex flex-column align-items-start">
-                                    <div *ngFor="let skill of availableSkills">
-                                        <input
-                                            type="checkbox"
-                                            class="btn-check"
-                                            [id]="'btn-check-' + skill.id"
-                                            [(ngModel)]="skillIds[skill.id]"
-                                            [value]="skill.id"
-                                            (change)="onSkillChange(skill.id, $event)"
-                                            autocomplete="off"
-                                        />
-                                        <label
-                                            class="btn btn-primary mb-2"
-                                            [for]="'btn-check-' + skill.id"
-                                            data-mdb-button-init
-                                            data-mdb-ripple-init
-                                        >
-                                            {{ skill.name }}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+        <div *ngIf="availableSkills.length === 0" class="text-white-50 mt-4">
+            <p>No available skills to add.</p>
+        </div>
 
-                            <button class="btn btn-outline-light btn-lg px-5" type="submit" [routerLink]="['/skills/freelancer/',freelancerId]" >Add Skills</button>
-                        </form>
-
-                        <div *ngIf="availableSkills.length === 0" class="text-white-50 mt-4">
-                            <p>No available skills to add.</p>
-                        </div>
-
-                        <div class="mt-4">
-                            <p class="mb-0">Want to go back? <a [routerLink]="['/skills/freelancer/',freelancerId]" class="text-white-50 fw-bold">View All Skills</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="mt-4">
+            <p class="mb-0">Want to go back? <a [routerLink]="['/skills/freelancer/', freelancerId]" class="text-white-50 fw-bold">View All Skills</a></p>
         </div>
     </div>
 </section>

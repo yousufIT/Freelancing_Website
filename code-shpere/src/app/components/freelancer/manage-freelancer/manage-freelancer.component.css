@@ -1,0 +1,27 @@
+/* Button styles for better aesthetics */
+.btn {
+    border-radius: 0.5rem; /* Rounded corners */
+    padding: 0.5rem 1.5rem; /* Padding */
+    transition: background-color 0.3s, color 0.3s; /* Transition effects */
+}
+
+.btn-outline-light:hover {
+    background-color: #ffffff; /* Light background on hover */
+    color: #343a40; /* Dark text on hover */
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: #ffffff; /* White text on hover */
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545; /* Red background on hover */
+    color: #ffffff; /* White text on hover */
+}
+
+/* Skill badge styling */
+.badge {
+    font-size: 0.9rem; /* Slightly larger font size */
+    padding: 0.5rem; /* Padding */
+}

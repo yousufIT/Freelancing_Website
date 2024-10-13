@@ -16,7 +16,6 @@
         }
 
         .form-control:focus {
-            border-color: #ffffff; /* Change border color on focus */
             box-shadow: none; /* Remove shadow on focus */
         }
 

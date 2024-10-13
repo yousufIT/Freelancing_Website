@@ -74,13 +74,6 @@ export class ManageFreelancerComponent implements OnInit {
     }
   }
 
-  submitFreelancer() {
-    if (this.freelancerId) {
-      this.freelancerService.updateFreelancer(this.freelancerId, this.freelancerForCreate).subscribe(() => {
-        this.router.navigate(['/']); // Adjust the path as necessary
-      });
-    } 
-  }
 
   editFreelancer() {
     if (this.freelancerId) {
@@ -89,8 +82,8 @@ export class ManageFreelancerComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout(); // Call your AuthService to handle logout
-    this.router.navigate(['/account/login']); // Redirect to the login page
+    this.authService.logout(); 
+    this.router.navigate(['/account/login']); 
   }
 
 }

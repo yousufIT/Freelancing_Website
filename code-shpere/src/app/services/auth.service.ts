@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { User } from '../models/user';
 import { environment } from '../../environments/environment';
 import { ClientForCreate } from '../models/for-create/client-for-create';
 import { FreelancerForCreate } from '../models/for-create/freelancer-for-create';
@@ -23,18 +22,17 @@ export class AuthService {
     );
   }
 
-  registerClient(user: ClientForCreate): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/Client`, user);
+  registerClient(user: ClientForCreate): Observable<AuthenticationData> {
+    return this.http.post<AuthenticationData>(`${this.apiUrl}/Client`, user);
   }
   registerFreelancer(user: FreelancerForCreate): Observable<AuthenticationData> {
     return this.http.post<AuthenticationData>(`${this.apiUrl}/Freelancer`, user);
   } 
-  logout(): Observable<void> {
-    return new Observable(observer => {
-      localStorage.clear();
-      observer.next();
-      observer.complete();
-    });
+  logout():Observable<void> {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      localStorage.removeItem('User-Id');
+      return this.http.post<void>(`${this.apiUrl}/Logout`,{});
   }
   
   getUserRole(): string {

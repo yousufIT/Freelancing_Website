@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProjectListComponent } from './components/project/project-list/project-list.component';
 import { ProjectDetailsComponent } from './components/project/project-details/project-details.component';
-import { PortfolioItemComponent } from './portfolio-item/portfolio-item.component';
-import { ReviewComponent } from './review/review.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SkillListComponent } from './components/skill/skill-list/skill-list.component';
 import { FreelancerSkillsComponent } from './components/skill/freelancer-skills/freelancer-skills.component';
@@ -40,8 +38,6 @@ export const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },
   { path: 'projects', component: ProjectListComponent },
   { path: 'project/:id', component: ProjectDetailsComponent },
-  { path: 'portfolio', component: PortfolioItemComponent },
-  { path: 'reviews', component: ReviewComponent },
   { path: 'projects/:projectId/bids/create', component: BidCreateComponent },
   { path: 'projects/:projectId/bids', component: BidListComponent },
   { path: 'bids/:bidId/update', component: BidUpdateComponent },
@@ -178,4 +174,5 @@ export const routes: Routes = [
     component: FreelancerUpdateComponent ,
     canActivate:[ProfileEditForFreelancerGuard]
   },
+  
 ];

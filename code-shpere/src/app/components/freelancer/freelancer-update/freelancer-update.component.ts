@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FreelancerService } from '../../../services/freelancer.service';
 import { Freelancer } from '../../../models/freelancer';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-freelancer-update',
@@ -17,19 +18,23 @@ export class FreelancerUpdateComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private freelancerService: FreelancerService
+    private freelancerService: FreelancerService,
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
-    this.freelancerService.getFreelancerById(id).subscribe(data => {
-      this.freelancer = data;
-    });
+    const id = +this.route.snapshot.paramMap.get('Id')!;
+    if(id){
+      this.freelancerService.getFreelancerById(id).subscribe(data => {
+        this.freelancer = data;
+      });
+    }
   }
 
   updateFreelancer(): void {
     this.freelancerService.updateFreelancer(this.freelancer.id,this.freelancer).subscribe(() => {
-      // Handle success (e.g., redirect or show a message)
+      this.router.navigate([`/${this.authService.getUserRole().toLowerCase()}`,this.freelancer.id]);
     });
   }
 }

@@ -30,7 +30,8 @@
       </div>
     }
 
-    <!-- Create Project Button -->
+    @if (auth.getUserRole() === 'Client') {
+      <!-- Create Project Button -->
     <div class="text-end mb-4">
       <button class="btn btn-success" (click)="toggleCreateProject()">
         {{ showCreateProject ? 'Hide Create Form' : 'Create New Project' }}
@@ -40,6 +41,7 @@
     <!-- Project Creation Form -->
     @if (showCreateProject) {
       <app-project-create (projectCreated)="onProjectCreated()"></app-project-create>
+    }
     }
 
     <!-- Project Cards Grid -->

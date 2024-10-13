@@ -8,6 +8,7 @@ import { SkillService } from 'src/app/services/skill.service';
 import { PaginationMetaData } from 'src/app/models/data-with-pagination';
 import { CommonModule } from '@angular/common';
 import { ProjectCreateComponent } from '../project-create/project-create.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-project-list',
@@ -31,8 +32,11 @@ export class ProjectListComponent implements OnInit {
     totalPageCount: 0
   };
   showCreateProject = false;
+  auth: AuthService;
 
-  constructor(private projectService: ProjectService,private skillService:SkillService, private router: Router) {}
+  constructor(private projectService: ProjectService,private skillService:SkillService, private authService: AuthService, private router: Router) {
+    this.auth = this.authService;
+  }
 
   ngOnInit(): void {
     this.loadFilteredProjects();

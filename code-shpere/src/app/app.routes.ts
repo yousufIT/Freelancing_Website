@@ -12,7 +12,6 @@ import { ReviewsForClientComponent } from './components/review/reviews-for-clien
 import { ReviewCreateComponent } from './components/review/review-create/review-create.component';
 import { ReviewUpdateComponent } from './components/review/review-update/review-update.component';
 import { DeleteReviewComponent } from './components/review/delete-review/delete-review.component';
-import { ManageSkillsComponent } from './components/requiredskill/manage-skills/manage-skills.component';
 import { ProjectUpdateComponent } from './components/project/project-update/project-update.component';
 import { ManageClientComponent } from './components/client/manage-client/manage-client.component';
 import { LoginComponent } from './components/authentication/login/login.component';
@@ -44,7 +43,7 @@ export const routes: Routes = [
   { path: 'profiles/:profileId/portfolio', component: PortfolioListComponent },
   { path: 'portfolio/:profileId/create', component: PortfolioCreateComponent },
   { path: 'profiles/:profileId/portfolio/:portfolioItemId/edit', component: PortfolioCreateComponent },
-
+  { path: 'project/update/:projectId', component: ProjectUpdateComponent },
 //skill
   {
     path: 'skills',

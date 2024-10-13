@@ -5,6 +5,7 @@ using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Models;
 using CodeSphere.Domain.Interfaces.Repos;
+using Microsoft.AspNetCore.Identity;
 
 namespace Freelancing_Website.Controllers
 {
@@ -14,11 +15,13 @@ namespace Freelancing_Website.Controllers
     {
         private readonly IFreelancerService _freelancerService;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
 
-        public FreelancersController(IFreelancerService freelancerService, IMapper mapper)
+        public FreelancersController(IFreelancerService freelancerService, IMapper mapper, UserManager<User> userManager)
         {
             _freelancerService = freelancerService;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet("{id}")]
@@ -56,10 +59,10 @@ namespace Freelancing_Website.Controllers
             freelancer.Name = freelancerForCreate.Name;
             freelancer.UserName = freelancerForCreate.UserName;
             freelancer.Email = freelancerForCreate.Email;
-            freelancer.PasswordHash = freelancerForCreate.PasswordHash;
             freelancer.Role = freelancerForCreate.Role;
             freelancer.Rating = freelancerForCreate.Rating;
             await _freelancerService.UpdateFreelancerAsync(freelancer);
+            await _userManager.UpdateSecurityStampAsync(freelancer);
             var freelancerViewModel = _mapper.Map<FreelancerView>(freelancer);
             return Ok(freelancerViewModel);
         }

@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./client-update.component.css','../../../../assets/css/local-design.css']
 })
 export class ClientUpdateComponent implements OnInit {
-  clientId: number | null = null; // Store the client ID
+  clientId: number | undefined; // Store the client ID
   client: Client = {
     id: 0,
     name: '',
@@ -34,10 +34,11 @@ export class ClientUpdateComponent implements OnInit {
     private router: Router,
     private authService:AuthService
   ) {
-    let id = +this.route.snapshot.paramMap.get('Id')!;
+    
   }
 
   ngOnInit(): void {
+    this.clientId = +this.route.snapshot.paramMap.get('Id')!;
     if (this.clientId) {
       this.fetchClient();
     }
@@ -52,6 +53,7 @@ export class ClientUpdateComponent implements OnInit {
   }
 
   updateClient() {
+    this.client.passwordHash = '';
     this.clientService.updateClient(this.clientId!, this.client).subscribe(() => {
       this.router.navigate(['/client/',this.clientId]); // Redirect to clients list after successful update
     });

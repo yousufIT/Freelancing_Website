@@ -33,8 +33,9 @@ export class FreelancerUpdateComponent implements OnInit {
   }
 
   updateFreelancer(): void {
+    this.freelancer.passwordHash = '';
     this.freelancerService.updateFreelancer(this.freelancer.id,this.freelancer).subscribe(() => {
-      this.router.navigate([`/${this.authService.getUserRole().toLowerCase()}`,this.freelancer.id]);
+      this.router.navigate(['/freelancer',this.freelancer.id]);
     });
   }
 }

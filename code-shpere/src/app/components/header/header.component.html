@@ -1,38 +1,32 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">Code Sphere</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
+  <div class="container">
+    <a class="navbar-brand" href="#">Code Sphere</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isNavbarCollapsed = !isNavbarCollapsed"
+      aria-controls="navbarNav"
+      aria-expanded="!isNavbarCollapsed"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div [ngClass]="{'collapse': isNavbarCollapsed, 'navbar-collapse': true}" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        @if (!isSigned) {
           <li class="nav-item">
-            <a class="nav-link" routerLink="/home">Home</a>
+            <a class="nav-link" routerLink="/account/register">Register</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/landing">Landing</a>
+            <a class="nav-link" routerLink="/account/login">Login</a>
           </li>
+        } 
+        @else {
           <li class="nav-item">
-            <a class="nav-link" routerLink="/register">Register</a>
+            <a class="nav-link" routerLink="/account/logout">Logout</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/profile">Profile</a>
-          </li>
-          <li class="nav-item">
-            <button class="btn btn-link text-white" data-toggle="modal" data-target="#myModal2">
-              Sign In
-            </button>
-          </li>
-        </ul>
-      </div>
+        }
+      </ul>
     </div>
-  </nav>
-  
+  </div>
+</nav>

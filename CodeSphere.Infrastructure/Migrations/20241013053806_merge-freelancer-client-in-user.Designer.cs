@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(CodeSphereContext))]
-    [Migration("20241009182958_use-identitydbcontext")]
-    partial class useidentitydbcontext
+    [Migration("20241013053806_merge-freelancer-client-in-user")]
+    partial class mergefreelancerclientinuser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,7 +204,7 @@ namespace CodeSphere.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("ProfileId")
                         .HasColumnType("int");
@@ -213,6 +213,9 @@ namespace CodeSphere.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.HasIndex("ProfileId");
 
@@ -236,7 +239,7 @@ namespace CodeSphere.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -291,6 +294,10 @@ namespace CodeSphere.Infrastructure.Migrations
                         .HasColumnType("nvarchar(13)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
 

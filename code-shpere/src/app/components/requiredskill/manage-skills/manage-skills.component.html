@@ -1,14 +1,16 @@
-<div class="container mt-4">
-    <h2 class="mb-4">Manage Skills for Project ID: {{ projectId }}</h2>
+<div>
+  <div class="container py-5">
+    <h2 class="mb-4 text-white">Manage Skills for Project ID: {{ projectId }}</h2>
     
-    <div class="mb-4">
-      <h3>Select Skills to Add:</h3>
+    <div class="card bg-dark text-white p-4 mb-4">
+      <h3 class="mb-3">Select Skills to Add:</h3>
       <ul class="list-group">
-        <li *ngFor="let skill of allskills" class="list-group-item d-flex justify-content-between align-items-center">
+        <li *ngFor="let skill of allskills" class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white">
           <label>
             <input 
               type="checkbox" 
               (change)="onSkillChange(skill.id, $event)" 
+              class="form-check-input"
             />
             {{ skill.name }}
           </label>
@@ -16,13 +18,15 @@
       </ul>
       <button class="btn btn-primary mt-3" (click)="addSkills()">Add Selected Skills</button>
     </div>
-  
-    <h3>Existing Skills:</h3>
-    <ul class="list-group">
-      <li *ngFor="let skill of skills" class="list-group-item d-flex justify-content-between align-items-center">
-        {{ skill.name }}
-        <button class="btn btn-danger btn-sm" (click)="removeSkill(skill.id)">Remove</button>
-      </li>
-    </ul>
+
+    <div class="card bg-dark text-white p-4">
+      <h3 class="mb-3">Existing Skills:</h3>
+      <ul class="list-group">
+        <li *ngFor="let skill of skills" class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white">
+          {{ skill.name }}
+          <button class="btn btn-danger btn-sm" (click)="removeSkill(skill.id)">Remove</button>
+        </li>
+      </ul>
+    </div>
   </div>
-  
+</div>

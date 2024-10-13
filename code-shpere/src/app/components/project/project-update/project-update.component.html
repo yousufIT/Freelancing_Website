@@ -1,36 +1,38 @@
-<div class="container mt-5">
-  <div class="card shadow p-4">
-    <h2 class="mb-4 text-center">Update Project</h2>
+<div class="min-vh-100 gradient-custom">
+  <div class="container py-5">
+    <div class="card bg-dark text-white p-4">
+      <h2 class="mb-4 text-center">Update Project</h2>
 
-    <form (ngSubmit)="updateProject()">
-      <div class="form-group mb-4">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" id="title" class="form-control" [(ngModel)]="project.title" name="title" required />
-      </div>
+      <form (ngSubmit)="updateProject()">
+        <div class="form-outline mb-4">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" id="title" class="form-control" [(ngModel)]="project.title" name="title" required />
+        </div>
 
-      <div class="form-group mb-4">
-        <label for="description" class="form-label">Description</label>
-        <textarea id="description" class="form-control" [(ngModel)]="project.description" name="description" rows="4" required></textarea>
-      </div>
+        <div class="form-outline mb-4">
+          <label for="description" class="form-label">Description</label>
+          <textarea id="description" class="form-control" [(ngModel)]="project.description" name="description" rows="4" required></textarea>
+        </div>
 
-      <div class="form-group mb-4">
-        <label for="budget" class="form-label">Budget</label>
-        <input type="number" id="budget" class="form-control" [(ngModel)]="project.budget" name="budget" required />
-      </div>
+        <div class="form-outline mb-4">
+          <label for="budget" class="form-label">Budget</label>
+          <input type="number" id="budget" class="form-control" [(ngModel)]="project.budget" name="budget" required />
+        </div>
 
-      <div class="form-group mb-4">
-        <label for="status" class="form-label">Status</label>
-        <input type="text" id="status" class="form-control" [(ngModel)]="project.status" name="status" required />
-      </div>
+        <div class="form-outline mb-4">
+          <label for="status" class="form-label">Status</label>
+          <input type="text" id="status" class="form-control" [(ngModel)]="project.status" name="status" required />
+        </div>
 
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary btn-lg">Update Project</button>
-      </div>
-    </form>
-  </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-lg">Update Project</button>
+        </div>
+      </form>
+    </div>
 
-  <!-- Manage Skills Section -->
-  <div class="card shadow mt-5 p-4">
-    <app-manage-skills [projectId]="projectId"></app-manage-skills>
+    <!-- Manage Skills Section -->
+    <div class="card bg-dark text-white mt-5 p-4">
+      <app-manage-skills [projectId]="projectId"></app-manage-skills>
+    </div>
   </div>
 </div>

@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import noUiSlider from "nouislider";
-import { routes } from 'src/app/app.routes';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 @Component({
   selector: 'app-header',
@@ -11,20 +8,18 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
   imports: [
     RouterOutlet,
     RouterModule,
-    CommonModule,
-    CollapseModule
+    CommonModule
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   isSigned: boolean = false;
+  isNavbarCollapsed: boolean = true; // Initial state for the navbar
 
   constructor() {}
+
   ngOnInit(): void {
-    this.isSigned = Number.isInteger(localStorage.getItem('User-Id'));
+    this.isSigned = !!localStorage.getItem('User-Id');
   }
-
-  
-
 }

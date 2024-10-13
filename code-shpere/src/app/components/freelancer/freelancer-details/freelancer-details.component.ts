@@ -5,6 +5,8 @@ import { Freelancer } from '../../../models/freelancer';
 import { FreelancerForCreate } from 'src/app/models/for-create/freelancer-for-create';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProfileService } from 'src/app/services/profile.service';
+import { PortfolioItem } from 'src/app/models/portfolio-item';
 
 @Component({
   selector: 'app-freelancer-details',
@@ -15,7 +17,7 @@ import { CommonModule } from '@angular/common';
 })
 export class FreelancerDetailsComponent implements OnInit {
   freelancerId: number | null = null;
-  
+  portfolioItems: PortfolioItem[] = [];
   freelancer: Freelancer = {
     id: 0,
     name: '',
@@ -43,7 +45,8 @@ export class FreelancerDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private freelancerService: FreelancerService
+    private freelancerService: FreelancerService,
+    private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {
@@ -60,4 +63,13 @@ export class FreelancerDetailsComponent implements OnInit {
       });
     }
   }
+
+  loadPortfolioItems(): void {
+    if(this.freelancerId){
+      this.profileService.getPortfolioItems(this.freelancerId, 1, 10).subscribe(data => {
+        this.portfolioItems = data.items;
+      });
+    }
+  }
+
 }

@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule]
 })
 export class PortfolioCreateComponent implements OnInit {
-  @Input() profileId!: number;
+  profileId!: number;
   portfolioItem: PortfolioItemForCreate = { title: '', description: '', imageUrl: '' };
   isEdit = false;
   portfolioItemId: number | undefined;

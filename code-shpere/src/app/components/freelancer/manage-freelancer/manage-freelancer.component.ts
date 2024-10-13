@@ -6,6 +6,8 @@ import { FreelancerForCreate } from 'src/app/models/for-create/freelancer-for-cr
 import { FreelancerService } from 'src/app/services/freelancer.service';
 import { Freelancer } from 'src/app/models/freelancer';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { PortfolioItem } from 'src/app/models/portfolio-item';
 
 @Component({
   selector: 'app-manage-freelancer',
@@ -16,6 +18,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ManageFreelancerComponent implements OnInit {
   freelancerId: number | null = null;
+  portfolioItems: PortfolioItem[] = [];
   freelancerForCreate: FreelancerForCreate = {
     name: '',
     userName: '',
@@ -56,7 +59,8 @@ export class ManageFreelancerComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private freelancerService: FreelancerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +94,30 @@ export class ManageFreelancerComponent implements OnInit {
     if(this.freelancerId){
       this.router.navigate(['/skills/freelancer/add',this.freelancerId]);
     }
+  }
+
+
+  
+  loadPortfolioItems(): void {
+    if(this.freelancerId){
+      this.profileService.getPortfolioItems(this.freelancerId, 1, 10).subscribe(data => {
+        this.portfolioItems = data.items;
+      });
+    }
+  }
+
+  onCreatePortfolioItem(): void {
+    this.router.navigate([`/profiles/${this.freelancerId}/portfolio`]);
+  }
+
+  onEditPortfolioItem(portfolioItemId: number): void {
+    this.router.navigate([`/profiles/${this.freelancerId}/portfolio/${portfolioItemId}/edit`]);
+  }
+
+  onDeletePortfolioItem(portfolioItemId: number): void {
+    this.profileService.deletePortfolioItem(portfolioItemId).subscribe(() => {
+      this.loadPortfolioItems(); // Reload the list after deletion
+    });
   }
 
 }

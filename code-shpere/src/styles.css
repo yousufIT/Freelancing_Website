@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import 'Bootstrap';
-@import './assets/css/local-design.css';
+/* @import './assets/css/local-design.css'; */
 
 
 
@@ -47,6 +47,13 @@ html, body {
   height: 150px;
   object-fit: cover;
 }
+
+
+.gradient-custom {
+  background: #6a11cb;
+  background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+  background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+  }
 
 
 

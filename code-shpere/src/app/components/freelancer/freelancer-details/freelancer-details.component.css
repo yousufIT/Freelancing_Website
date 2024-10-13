@@ -10,18 +10,4 @@
     padding: 0.5rem; /* Padding */
 }
 
-/* Similar hover styles as in manage-freelancer.component.css */
-.btn-outline-light:hover {
-    background-color: #ffffff; /* Light background on hover */
-    color: #343a40; /* Dark text on hover */
-}
 
-.btn-outline-primary:hover {
-    background-color: #007bff; /* Blue background on hover */
-    color: #ffffff; /* White text on hover */
-}
-
-.btn-outline-danger:hover {
-    background-color: #dc3545; /* Red background on hover */
-    color: #ffffff; /* White text on hover */
-}

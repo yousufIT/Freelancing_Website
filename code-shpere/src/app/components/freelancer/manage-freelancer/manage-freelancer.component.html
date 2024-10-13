@@ -66,13 +66,25 @@
                 <hr>
   
                 <!-- Portfolio Section -->
-                <h6 class="mb-0">Portfolio</h6>
-                <ul class="list-group list-group-flush">
-                  <li *ngFor="let item of freelancer.profile.portfolio" class="list-group-item text-secondary bg-dark">
-                    {{ item.title }} - <a [href]="item.imageUrl" target="_blank" class="text-light">View</a>
-                  </li>
-                </ul>
-                <hr>
+                <div class="portfolio-section">
+                    <h2>Portfolio</h2>
+                    <button (click)="onCreatePortfolioItem()" class="btn btn-primary">Add Portfolio Item</button>
+                  
+                    <div *ngIf="portfolioItems && portfolioItems.length > 0" class="portfolio-list">
+                      <div *ngFor="let item of portfolioItems" class="portfolio-item">
+                        <h3>{{ item.title }}</h3>
+                        <p>{{ item.description }}</p>
+                        <img [src]="item.imageUrl" alt="{{ item.title }}" class="portfolio-image" />
+                        <button (click)="onEditPortfolioItem(item.id)" class="btn btn-warning">Edit</button>
+                        <button (click)="onDeletePortfolioItem(item.id)" class="btn btn-danger">Delete</button>
+                      </div>
+                    </div>
+                  
+                    <div *ngIf="!portfolioItems || portfolioItems.length === 0">
+                      <p>No portfolio items found.</p>
+                    </div>
+                  </div>
+                  
   
                 <!-- Skills Section -->
                 <h6 class="mb-0">Skills</h6>

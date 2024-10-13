@@ -102,21 +102,6 @@ export const routes: Routes = [
     }
   },
   
-
-  //project
-  
-  { 
-    path: 'project/:projectId/manage-skills', 
-    component: ManageSkillsComponent 
-  },
-  { 
-    path: 'project/project-list', 
-    component: ProjectListComponent 
-  }, 
-  { 
-    path: 'project/update/:projectId', 
-    component: ProjectUpdateComponent 
-  }, 
   
 //client
   { 

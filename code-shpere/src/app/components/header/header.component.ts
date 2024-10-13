@@ -17,10 +17,13 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
-  
+export class HeaderComponent implements OnInit {
+  isSigned: boolean = false;
 
   constructor() {}
+  ngOnInit(): void {
+    this.isSigned = Number.isInteger(localStorage.getItem('User-Id'));
+  }
 
   
 

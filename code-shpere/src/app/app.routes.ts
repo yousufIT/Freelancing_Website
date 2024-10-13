@@ -43,7 +43,7 @@ export const routes: Routes = [
   { path: 'bids/:bidId/update', component: BidUpdateComponent },
   { path: 'profiles/:profileId/portfolio', component: PortfolioListComponent },
   { path: 'portfolio/:profileId/create', component: PortfolioCreateComponent },
-  { path: 'portfolio/:portfolioItemId/edit', component: PortfolioCreateComponent },
+  { path: 'profiles/:profileId/portfolio/:portfolioItemId/edit', component: PortfolioCreateComponent },
 
 //skill
   {

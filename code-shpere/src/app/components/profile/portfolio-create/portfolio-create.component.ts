@@ -31,17 +31,18 @@ export class PortfolioCreateComponent implements OnInit {
   }
 
   loadPortfolioItem(id: number): void {
-    // Ideally, you would have a getPortfolioItemById service method here to load the item
-    // You could create that in ProfileService based on the item ID.
+    this.profileService.getPortfolioItemById(id).subscribe((data)=>{
+      this.portfolioItem = data;
+    });
   }
 
   onSubmit(): void {
     if (this.isEdit && this.portfolioItemId) {
       this.profileService.updatePortfolioItem(this.portfolioItemId, this.portfolioItem)
-        .subscribe(() => this.router.navigate(['/profiles', this.profileId]));
+        .subscribe(() => this.router.navigate(['/profiles', this.profileId,'portfolio']));
     } else {
       this.profileService.createPortfolioItem(this.profileId, this.portfolioItem)
-        .subscribe(() => this.router.navigate(['/profiles', this.profileId]));
+        .subscribe(() => this.router.navigate(['/profiles', this.profileId, 'portfolio']));
     }
   }
 }

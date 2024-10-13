@@ -1,13 +1,14 @@
-<div class="container mt-4">
-    <h2 class="mb-4">Bids for Project</h2>
+<div class="min-vh-100 gradient-custom">
+  <div class="container py-5">
+    <h2 class="text-center mb-4 text-white">Bids for Project</h2>
     <button [routerLink]="['/project', projectId]" class="btn btn-secondary mb-3">Back to Project Details</button>
     
     <div class="list-group">
-      <div *ngFor="let bid of bids" class="list-group-item">
+      <div *ngFor="let bid of bids" class="list-group-item bg-dark text-white">
         <h5 class="mb-1">Bid Amount: {{ bid.amount | currency }}</h5>
         <p class="mb-1">Proposal: {{ bid.proposal }}</p>
         <small>Freelancer ID: {{ bid.freelancerId }}</small>
-        <button [routerLink]="['/bids', bid.id, 'update']" class="btn btn-warning btn-sm">Edit</button>
+        <button [routerLink]="['/bids', bid.id, 'update']" class="btn btn-warning btn-sm mt-2">Edit</button>
       </div>
     </div>
   
@@ -15,4 +16,4 @@
       No bids available for this project.
     </div>
   </div>
-  
+</div>

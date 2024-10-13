@@ -5,6 +5,7 @@ using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Models;
 using Profile = CodeSphere.Domain.Models.Profile;
+using CodeSphere.Domain.Interfaces.Repos;
 
 namespace Freelancing_Website.Controllers
 {
@@ -26,8 +27,11 @@ namespace Freelancing_Website.Controllers
         public async Task<IActionResult> GetPortfolioItems(int profileId, int pageNumber = 1, int pageSize = 10)
         {
             var items = await _profileService.GetPortfolioItemsAsync(profileId, pageNumber, pageSize);
-            var itemsView = _mapper.Map<List<PortfolioItemView>>(items.Items); 
-            return Ok(new { items = itemsView,count = items.Items.Count() });
+            var itemsView = _mapper.Map<List<PortfolioItemView>>(items.Items);
+            DataWithPagination<PortfolioItemView> data = new DataWithPagination<PortfolioItemView>();
+            data.Items = itemsView;
+            data.PaginationMetaData = items.PaginationMetaData;
+            return Ok(data);
         }
 
        
@@ -64,6 +68,14 @@ namespace Freelancing_Website.Controllers
         {
             await _profileService.DeletePortfolioItemAsync(itemId);
             return NoContent();
+        }
+
+        [HttpGet("{portfolioItemId}")]
+        public async Task<ActionResult> GetPortfolioItemById(int portfolioItemId)
+        {
+            var portfolioItem = await _profileService.GetPortfolioItemByIdAsync(portfolioItemId);
+            var portfolioItemView = _mapper.Map<PortfolioItemView>(portfolioItem);
+            return Ok(portfolioItemView);
         }
     }
 }

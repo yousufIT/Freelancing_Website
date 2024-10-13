@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { PortfolioItem } from 'src/app/models/portfolio-item';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { PaginationMetaData } from 'src/app/models/data-with-pagination';
 
 @Component({
   standalone: true,
@@ -15,6 +16,7 @@ export class PortfolioListComponent implements OnInit {
   portfolioItems: PortfolioItem[] = [];
   pageNumber = 1;
   pageSize = 5; // Items per page
+  paginationMetaData: PaginationMetaData | undefined;
 
   constructor(private profileService: ProfileService, private route: ActivatedRoute) {}
 
@@ -31,7 +33,10 @@ export class PortfolioListComponent implements OnInit {
 
   loadPortfolioItems(): void {
     this.profileService.getPortfolioItems(this.profileId, this.pageNumber, this.pageSize)
-      .subscribe(items => this.portfolioItems = items);
+      .subscribe(data => {
+        this.portfolioItems = data.items;
+        this.paginationMetaData = data.paginationMetaData;
+      });
   }
 
   onDelete(id: number): void {

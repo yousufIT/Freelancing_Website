@@ -1,70 +1,64 @@
-<div class="container mt-5">
-  <!-- Toggle Skills Filter -->
-  <div class="text-end mb-3">
-    <a (click)="toggleSkills()" class="btn btn-outline-primary">
-      {{ open ? 'Hide Skills Filter' : 'Show Skills Filter' }}
-    </a>
-  </div>
+<div class="min-vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <h1 class="mb-4 text-center text-white">Project List</h1>
 
-  <!-- Skills Filter Section (Collapsible) -->
-  @if (open) {
-    <div class="card shadow-sm p-3 mb-4">
-      <h3 class="mb-3">Select Skills to Filter Projects:</h3>
-      <ul class="list-group">
-        @for (skill of skills; track $index) {
-          <li class="list-group-item">
-            <label class="d-flex justify-content-between align-items-center">
-              @if (skillsIds.includes(skill.id)) {
-                <input 
-                  type="checkbox" 
-                  checked 
-                  (change)="onSkillChange(skill.id, $event)" 
-                />
-              } @else {
-                <input 
-                  type="checkbox" 
-                  (change)="onSkillChange(skill.id, $event)" 
-                />
-              }
-              {{ skill.name }}
-            </label>
-          </li>
-        }
-      </ul>
+    <!-- Toggle Skills Filter -->
+    <div class="text-end mb-3">
+      <a (click)="toggleSkills()" class="btn btn-outline-light">
+        {{ open ? 'Hide Skills Filter' : 'Show Skills Filter' }}
+      </a>
     </div>
-  }
 
-  <!-- Create Project Button -->
-  <div class="text-end mb-4">
-    <button class="btn btn-success" (click)="toggleCreateProject()">
-      {{ showCreateProject ? 'Hide Create Form' : 'Create New Project' }}
-    </button>
-  </div>
-
-  <!-- Project Creation Form -->
-  @if (showCreateProject) {
-    <app-project-create (projectCreated)="onProjectCreated()"></app-project-create>
-  }
-
-  <!-- Project List Header -->
-  <h1 class="mb-4 text-center">Project List</h1>
-
-  <!-- Project Cards Grid -->
-  <div class="row g-3">
-    @for (project of projects; track $index) {
-      <div class="col-lg-4 col-md-6">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">{{ project?.title }}</h5>
-            <p class="card-text flex-grow-1">
-              {{ project?.description | slice: 0:100 }}...
-            </p>
-            <a (click)="viewProject(project.id)" class="btn btn-primary mt-auto">
-              View Details
-            </a>
-          </div>
-        </div>
+    <!-- Skills Filter Section (Collapsible) -->
+    @if (open) {
+      <div class="card bg-dark text-white shadow-sm p-3 mb-4">
+        <h3 class="mb-3">Select Skills to Filter Projects:</h3>
+        <ul class="list-group">
+          @for (skill of skills; track $index) {
+            <li class="list-group-item bg-dark text-white">
+              <label class="d-flex justify-content-between align-items-center">
+                <input 
+                  type="checkbox" 
+                  [checked]="skillsIds.includes(skill.id)" 
+                  (change)="onSkillChange(skill.id, $event)" 
+                />
+                {{ skill.name }}
+              </label>
+            </li>
+          }
+        </ul>
       </div>
     }
+
+    <!-- Create Project Button -->
+    <div class="text-end mb-4">
+      <button class="btn btn-success" (click)="toggleCreateProject()">
+        {{ showCreateProject ? 'Hide Create Form' : 'Create New Project' }}
+      </button>
+    </div>
+
+    <!-- Project Creation Form -->
+    @if (showCreateProject) {
+      <app-project-create (projectCreated)="onProjectCreated()"></app-project-create>
+    }
+
+    <!-- Project Cards Grid -->
+    <div class="row g-3">
+      @for (project of projects; track $index) {
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 bg-dark text-white shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ project?.title }}</h5>
+              <p class="card-text flex-grow-1">
+                {{ project?.description | slice: 0:100 }}...
+              </p>
+              <a (click)="viewProject(project.id)" class="btn btn-primary mt-auto">
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
   </div>
 </div>

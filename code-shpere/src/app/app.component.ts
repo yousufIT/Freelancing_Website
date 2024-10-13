@@ -10,7 +10,6 @@ import { DOCUMENT } from "@angular/common";
 import {  routes } from "./app.routes";
 import { Router, RouterModule, RouterOutlet } from "@angular/router";
 import { FormsModule } from "@angular/forms";
-import { PagesModule } from "./components/pages/pages.module";
 import { HeaderComponent } from "./components/header/header.component";
 import { FooterComponent } from "./components/footer/footer.component";
 
@@ -25,7 +24,7 @@ import { FooterComponent } from "./components/footer/footer.component";
     CommonModule,
     FormsModule,
     RouterModule,
-    PagesModule],
+],
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit {

@@ -20,6 +20,7 @@ export class ManageSkillsComponent implements OnInit {
   skills: Skill[] = [];  
   skillIds: number[] = []; 
   allskills:Skill[]=[];
+  checkBoxes: HTMLInputElement[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -58,9 +59,10 @@ export class ManageSkillsComponent implements OnInit {
     
     this.requiredSkillService.addSkillsToProject(this.projectId, this.skillIds).subscribe({
       next: () => {
-        console.log('Skills added successfully');
         this.fetchSkills(); 
         this.skillIds = []; 
+        this.checkBoxes.map(el => el.checked = false);
+        this.checkBoxes = [];
       },
       error: (error) => {
         console.error('Error adding skills:', error);
@@ -71,7 +73,6 @@ export class ManageSkillsComponent implements OnInit {
   removeSkill(skillId: number): void {
     this.requiredSkillService.removeSkillFromProject(this.projectId, skillId).subscribe({
       next: () => {
-        console.log('Skill removed successfully');
         this.fetchSkills(); 
       },
       error: (error) => {
@@ -86,8 +87,10 @@ export class ManageSkillsComponent implements OnInit {
   
     if (isChecked) {
       this.skillIds.push(skillId);
+      this.checkBoxes.push(target);
     } else {
       this.skillIds = this.skillIds.filter(id => id !== skillId);
+      this.checkBoxes = this.checkBoxes.filter(el => el !== target);
     }
   }
   

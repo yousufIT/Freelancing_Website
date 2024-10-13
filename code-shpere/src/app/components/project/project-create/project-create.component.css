@@ -1,0 +1,11 @@
+.form-control {
+    background-color: #343a40; /* Dark background for inputs */
+    border: 1px solid #ccc; /* Light border color */
+    color: white; /* Text color */
+  }
+  
+  .form-control:focus {
+    border-color: #ffffff; /* Change border color on focus */
+    box-shadow: none; /* Remove shadow on focus */
+  }
+  

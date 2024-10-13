@@ -1,7 +1,33 @@
+/* Full viewport height */
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+/* Gradient background */
+.gradient-custom {
+  background: #6a11cb;
+  background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+  background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+}
+
+/* Dark-themed bid list items */
 .list-group-item {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
+  border: 1px solid #343a40; /* Match the main style's dark theme */
+  border-radius: 8px;
+  background-color: #343a40;
+  color: white;
+  padding: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styling */
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}

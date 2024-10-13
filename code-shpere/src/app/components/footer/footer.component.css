@@ -1,25 +1,26 @@
-/* styles.css or footer.component.css */
-html, body {
-    height: 100%;
-    margin: 0;
-  }
-  
-  .wrapper {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .footer {
-    background-color: #f8f9fa; /* Light background */
-    padding: 1rem 0;
-    text-align: center;
-    margin-top: auto; /* Pushes footer to the bottom */
-  }
-  
-  .container {
-    width: 100%;
-    max-width: 960px; /* Optional: limits the width of the footer content */
-    margin: 0 auto;
-  }
+.footer {
+  width: 100%;
+  background: #343a40; /* Dark background */
+  color: white; /* Text color */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Shadow for elevation */
+}
 
+.footer a {
+  color: #ffffff; /* White text for links */
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #dddddd; /* Lighter hover effect for links */
+}
+
+.footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.footer .text-muted {
+  color: #adb5bd !important; 
+}

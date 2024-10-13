@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FreelancerService } from '../../../services/freelancer.service';
 import { Freelancer } from '../../../models/freelancer';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-freelancer-update',
+  standalone:true,
+  imports:[FormsModule,CommonModule,RouterLink],
   templateUrl: './freelancer-update.component.html',
-  styleUrls: ['./freelancer-update.component.css']
+  styleUrls: ['./freelancer-update.component.css','../../../../assets/css/local-design.css']
 })
 export class FreelancerUpdateComponent implements OnInit {
   freelancer!: Freelancer;

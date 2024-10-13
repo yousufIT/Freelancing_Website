@@ -84,7 +84,7 @@ export class ManageFreelancerComponent implements OnInit {
 
   editFreelancer() {
     if (this.freelancerId) {
-      this.router.navigate(['/freelancer/update/', this.authService.getUserId()]);
+      this.router.navigate(['/freelancer/update/', this.freelancerId]);
     }
   }
 

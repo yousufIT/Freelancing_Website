@@ -54,7 +54,7 @@ namespace Freelancing_Website.Controllers
             {
                 return NotFound();
             }
-            freelancer.Hourlysalary = freelancerForCreate.Hourlysalary;
+            freelancer.HourlyRate = freelancerForCreate.HourlyRate;
             freelancer.Profile.Bio = freelancerForCreate.Profile.Bio;
             freelancer.Name = freelancerForCreate.Name;
             freelancer.UserName = freelancerForCreate.UserName;

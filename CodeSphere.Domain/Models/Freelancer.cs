@@ -13,7 +13,7 @@ namespace CodeSphere.Domain.Models
         public List<Review> ReviewsReceived { get; set; }
         public int ProfileId { get; set; }
         public Profile Profile { get; set; }
-        public double Hourlysalary { get; set; }
+        public double HourlyRate { get; set; }
 
         public Freelancer()
         {

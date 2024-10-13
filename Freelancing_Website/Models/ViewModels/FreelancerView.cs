@@ -9,7 +9,7 @@ namespace Freelancing_Website.Models.ViewModels
         public List<ReviewView> ReviewsReceived { get; set; }
         public int ProfileId { get; set; }
         public ProfileView Profile { get; set; }
-        public double Hourlysalary { get; set; }
+        public double HourlyRate { get; set; }
 
         public FreelancerView()
         {

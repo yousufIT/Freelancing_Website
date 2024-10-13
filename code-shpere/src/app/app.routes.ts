@@ -34,33 +34,63 @@ import { ClientUpdateComponent } from './components/client/client-update/client-
 import { FreelancerUpdateComponent } from './components/freelancer/freelancer-update/freelancer-update.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/projects', pathMatch: 'full' },
-  { path: 'projects', component: ProjectListComponent },
-  { path: 'project/:id', component: ProjectDetailsComponent },
-  { path: 'projects/:projectId/bids/create', component: BidCreateComponent },
-  { path: 'projects/:projectId/bids', component: BidListComponent },
-  { path: 'bids/:bidId/update', component: BidUpdateComponent },
-  { path: 'profiles/:profileId/portfolio', component: PortfolioListComponent },
-  { path: 'portfolio/:profileId/create', component: PortfolioCreateComponent },
-  { path: 'profiles/:profileId/portfolio/:portfolioItemId/edit', component: PortfolioCreateComponent },
-  { path: 'project/update/:projectId', component: ProjectUpdateComponent },
+  { path: '',
+     redirectTo: '/projects', 
+     pathMatch: 'full' 
+    },
+  { path: 'projects',
+     component: ProjectListComponent ,
+     canActivate: [AuthGuard] 
+    },
+  { path: 'project/:id'
+    , component: ProjectDetailsComponent,
+    canActivate: [AuthGuard] 
+  },
+  { path: 'projects/:projectId/bids/create',
+     component: BidCreateComponent,
+     canActivate: [AuthGuard]  
+    },
+  { path: 'projects/:projectId/bids', 
+    component: BidListComponent ,
+    canActivate: [AuthGuard] 
+  },
+  { path: 'bids/:bidId/update', 
+    component: BidUpdateComponent ,
+    canActivate: [AuthGuard] 
+  },
+  { path: 'profiles/:profileId/portfolio', 
+    component: PortfolioListComponent ,
+    canActivate: [AuthGuard] 
+  },
+  { path: 'portfolio/:profileId/create', 
+    component: PortfolioCreateComponent ,
+    canActivate: [AuthGuard] 
+  },
+  { path: 'profiles/:profileId/portfolio/:portfolioItemId/edit', 
+    component: PortfolioCreateComponent ,
+    canActivate: [AuthGuard] 
+  },
+
 //skill
   {
     path: 'skills',
-    component: SkillListComponent 
+    component: SkillListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'skills/freelancer/:freelancerId',
-    component: FreelancerSkillsComponent 
+    component: FreelancerSkillsComponent,
+    canActivate: [AuthGuard] 
   },
   {
     path: 'skills/create',
-    component: SkillCreateComponent 
+    component: SkillCreateComponent ,
+    canActivate: [AuthGuard]
   },
   {
     path: 'skills/freelancer/add/:freelancerId',
     component: AddSkillsComponent ,
-    canActivate: [AuthRoleGuard],
+    canActivate: [AuthRoleGuard,AuthGuard],
     data: {
       roles: ['Freelancer']
     }
@@ -70,16 +100,18 @@ export const routes: Routes = [
   //review
   {
     path: 'review/freelancer/:freelancerId',
-    component: ReviewsForFreelancerComponent 
+    component: ReviewsForFreelancerComponent,
+    canActivate: [AuthGuard] 
   },
   {
     path: 'review/client/:clientId',
-    component: ReviewsForClientComponent 
+    component: ReviewsForClientComponent,
+    canActivate: [AuthGuard] 
   },
   {
     path: 'review/client/:clientId/freelancer/:freelancerId',
     component: ReviewCreateComponent ,
-    canActivate: [AuthRoleGuard],
+    canActivate: [AuthRoleGuard,AuthGuard],
     data: {
       roles: ['Client']
     }
@@ -87,7 +119,7 @@ export const routes: Routes = [
   {
     path: 'review/update/:reviewId',
     component: ReviewUpdateComponent ,
-    canActivate: [AuthRoleGuard],
+    canActivate: [AuthRoleGuard,AuthGuard],
     data: {
       roles: ['Client']
     }
@@ -95,13 +127,14 @@ export const routes: Routes = [
   {
     path: 'review/delete-review/:reviewId',
     component: DeleteReviewComponent,
-    canActivate: [AuthRoleGuard],
+    canActivate: [AuthRoleGuard,AuthGuard],
     data: {
       roles: ['Client']
     }
   },
   
-  
+
+
 //client
   { 
     path: 'client/:Id', 
@@ -115,7 +148,8 @@ export const routes: Routes = [
   },
   { 
     path: 'client-details/:Id', 
-    component: ClientDetailsComponent 
+    component: ClientDetailsComponent ,
+    canActivate: [AuthGuard]
   },
 
 
@@ -138,7 +172,8 @@ export const routes: Routes = [
   },
   { 
     path: 'account/logout', 
-    component: LogoutComponent 
+    component: LogoutComponent ,
+    canActivate: [AuthGuard]
   },
 
 
@@ -151,12 +186,16 @@ export const routes: Routes = [
   },
   { 
     path: 'freelancer-details/:Id', 
-    component: FreelancerDetailsComponent 
+    component: FreelancerDetailsComponent ,
+    canActivate: [AuthGuard]
   },
   { 
     path: 'freelancer/update/:Id', 
     component: FreelancerUpdateComponent ,
     canActivate:[ProfileEditForFreelancerGuard]
   },
-  
+  { path: '**',
+    component: ProjectListComponent ,
+    canActivate: [AuthGuard] 
+   },
 ];

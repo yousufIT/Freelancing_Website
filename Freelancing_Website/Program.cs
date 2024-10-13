@@ -293,22 +293,26 @@ namespace Freelancing_Website
                 var portfolioItem1 = new PortfolioItem
                 {
                     Title = "Book1",
-                    Description = "book about programming"
+                    Description = "book about programming",
+                    ImageUrl = "https://cdn.pixabay.com/photo/2013/07/12/12/38/number-146030_1280.png"
                 };
                 var portfolioItem2 = new PortfolioItem
                 {
                     Title = "Website1",
-                    Description = "a good website for books"
+                    Description = "a good website for books",
+                    ImageUrl = "https://cdn.pixabay.com/photo/2015/11/03/08/46/number-1019717_640.jpg"
                 };
                 var portfolioItem3 = new PortfolioItem
                 {
                     Title = "App1",
-                    Description = "an app that show gold prices"
+                    Description = "an app that show gold prices",
+                    ImageUrl = "https://cdn.pixabay.com/photo/2015/11/03/08/47/number-1019719_640.jpg"
                 };
                 var portfolioItem4 = new PortfolioItem
                 {
                     Title = "Documentry",
-                    Description = "a documentry about AI"
+                    Description = "a documentry about AI",
+                    ImageUrl = "https://cdn.pixabay.com/photo/2013/07/12/12/37/number-146023_640.png"
                 };
 
                 context.PortfolioItems.AddRange(portfolioItem1,portfolioItem2,portfolioItem3,portfolioItem4 );
@@ -319,7 +323,6 @@ namespace Freelancing_Website
                 {
                     Bio = "I am a good coder",
                     Freelancer = freelancer1,
-                    FreelancerId = freelancer1.Id,
                     Skills = new List<Skill>() { skill1, skill4, skill8, skill13 },
                     Portfolio = new List<PortfolioItem> { portfolioItem1, portfolioItem2}
                 };
@@ -328,16 +331,28 @@ namespace Freelancing_Website
                 {
                     Bio = "I am a good programmer :)",
                     Freelancer = freelancer2,
-                    FreelancerId = freelancer2.Id,
                     Skills = new List<Skill>() { skill2, skill4, skill7, skill10,skill11 },
                     Portfolio = new List<PortfolioItem> { portfolioItem3, portfolioItem4 }
                 };
 
                 context.Profiles.AddRange(profile1, profile2);
 
+                freelancer1.Profile = profile1;
+
+                freelancer2.Profile = profile2;
+
 
                 // Save changes to the database
-                context.SaveChanges();
+                try
+                {
+                    context.SaveChanges();
+                    Console.WriteLine("Data saved successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
+
             }
         }
     }

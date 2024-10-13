@@ -50,7 +50,7 @@ public class AccountsController : Controller
             {
                 await _userManager.AddToRoleAsync(freelancer, "Freelancer");
                 var token = _jwtService.CreateJWT(model);
-                return Ok(new { token,freelancerId=freelancer.Id });
+                return Ok(new { token,freelancer.Id,freelancer.Role });
             }
 
             foreach (var error in result.Errors)
@@ -86,7 +86,7 @@ public class AccountsController : Controller
             {
                 await _userManager.AddToRoleAsync(client, "Client");
                 var token = _jwtService.CreateJWT(model);
-                return Ok(new { token });
+                return Ok(new { token,client.Id,client.Role });
             }
 
             foreach (var error in result.Errors)
@@ -99,14 +99,14 @@ public class AccountsController : Controller
     }
 
     [HttpPost("Login")]
-    public async Task<IActionResult> Login(string email, string password)
+    public async Task<IActionResult> Login(LoginData loginData)
     {
         if (ModelState.IsValid)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(loginData.Email);
             if (user != null)
             {
-                var result = await _signInManager.PasswordSignInAsync(user, password,
+                var result = await _signInManager.PasswordSignInAsync(user,loginData.Password,
                     false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
@@ -120,7 +120,7 @@ public class AccountsController : Controller
                         Name=user.Name
                     };
                     var token = _jwtService.CreateJWT(model);
-                    return Ok(new { token });
+                    return Ok(new { token,user.Id,user.Role });
                 }
             }
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -128,31 +128,7 @@ public class AccountsController : Controller
 
         return BadRequest(ModelState);
     }
-    [HttpPut("ChangePassword")]
-    public async Task<IActionResult> ChangePassword([FromBody] PasswordData passwordData)
-    {
-       
-
-        var user = await _userManager.FindByEmailAsync(passwordData.Email);
-        if (user == null)
-        {
-            return NotFound("User not found.");
-        }
-
-        var result = await _userManager.ChangePasswordAsync(user, passwordData.CurrenPassword, passwordData.NewPassword);
-
-        if (result.Succeeded)
-        {
-            return Ok(new { message = "Password changed successfully." });
-        }
-
-        foreach (var error in result.Errors)
-        {
-            ModelState.AddModelError(string.Empty, error.Description);
-        }
-
-        return BadRequest(ModelState);
-    }
+   
     [HttpPost("Logout")]
     public async Task<IActionResult> Logout()
     {

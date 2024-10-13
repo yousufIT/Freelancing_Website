@@ -38,7 +38,7 @@
                                 <textarea id="bio" [(ngModel)]="user.profile.bio" name="bio" class="form-control form-control-lg" rows="3"></textarea>
                                 <label class="form-label" for="bio">Bio</label>
                             </div>
-                            <button class="btn btn-outline-light btn-lg px-5" type="submit"[routerLink]="['/freelancer/manage-freelancer/',freelancerId]" routerLinkActive="router-link-active"  >Register</button>
+                            <button class="btn btn-outline-light btn-lg px-5" type="submit" >Register</button>
 
                             <div *ngIf="errorMessage" class="text-danger mt-3">{{ errorMessage }}</div>
                         </div>

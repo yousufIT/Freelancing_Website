@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientForCreate } from 'src/app/models/for-create/client-for-create';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -26,12 +26,21 @@ export class RegisterClientComponent {
 
   errorMessage: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService) {}
 
   register() {
     this.authService.registerClient(this.user).subscribe(
-      (client) => {
-        alert('Client registered successfully');
+      (response) => {
+        const token = response.token;
+        const role=response.role;
+        const id=response.id
+        localStorage.setItem('token',token);
+        localStorage.setItem('role',role);
+        localStorage.setItem('User-Id',id.toString());
+        this.router.navigate(['/client/',id])
       },
       (error) => {
         this.errorMessage = 'Registration failed';

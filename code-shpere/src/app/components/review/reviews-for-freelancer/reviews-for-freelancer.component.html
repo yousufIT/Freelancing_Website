@@ -38,7 +38,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let review of reviews">
-                                <td><a class="btn btn-sm btn-outline-light" [routerLink]="['/client/manage-client/',review.clientId]">{{ review.clientName }}</a></td>
+                                <td><a class="btn btn-sm btn-outline-light" [routerLink]="['/client/',review.clientId]">{{ review.clientName }}</a></td>
                                 <td>{{ review.rating }}</td>
                                 <td>{{ review.comment }}</td>
                                 <td>

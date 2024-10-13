@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FreelancerForCreate } from 'src/app/models/for-create/freelancer-for-create';
 import { FreelancerService } from 'src/app/services/freelancer.service';
 import { Freelancer } from 'src/app/models/freelancer';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-manage-freelancer',
@@ -41,24 +42,25 @@ export class ManageFreelancerComponent implements OnInit {
     completedProjects: [],
     profileId: 0,
     profile: {
-        id: 0,
-        freelancerId: 0,
-        freelancer: {} as Freelancer,  
-        skills: [],
-        portfolio: [],              
-        portfolioItems: [],         
-        bio: ''
+      id: 0,
+      freelancerId: 0,
+      freelancer: {} as Freelancer,
+      skills: [],
+      portfolio: [],
+      portfolioItems: [],
+      bio: ''
     }
-};
+  };
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private freelancerService: FreelancerService
+    private freelancerService: FreelancerService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.freelancerId = +this.route.snapshot.paramMap.get('freelancerId')!;
+    this.freelancerId = +this.route.snapshot.paramMap.get('Id')!;
     if (this.freelancerId) {
       this.fetchFreelancer();
     }
@@ -75,28 +77,20 @@ export class ManageFreelancerComponent implements OnInit {
   submitFreelancer() {
     if (this.freelancerId) {
       this.freelancerService.updateFreelancer(this.freelancerId, this.freelancerForCreate).subscribe(() => {
-        this.router.navigate(['/freelancers']); // Adjust the path as necessary
+        this.router.navigate(['/']); // Adjust the path as necessary
       });
-    } else {
-      this.freelancerService.createFreelancer(this.freelancer).subscribe(() => {
-        this.router.navigate(['/freelancers']); // Adjust the path as necessary
-      });
-    }
+    } 
   }
 
   editFreelancer() {
     if (this.freelancerId) {
-      this.freelancerService.updateFreelancer(this.freelancerId, this.freelancer).subscribe(() => {
-        this.router.navigate(['/freelancers']); // Adjust the path as necessary
-      });
+      this.router.navigate(['/freelancer/update/', this.authService.getUserId()]);
     }
   }
 
-  deleteFreelancer() {
-    if (this.freelancerId) {
-      this.freelancerService.deleteFreelancer(this.freelancerId).subscribe(() => {
-        this.router.navigate(['/freelancers']); // Adjust the path as necessary
-      });
-    }
+  logout() {
+    this.authService.logout(); // Call your AuthService to handle logout
+    this.router.navigate(['/account/login']); // Redirect to the login page
   }
+
 }

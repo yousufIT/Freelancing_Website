@@ -20,14 +20,23 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    const credentials = { email: this.email, password: this.password };
-    this.authService.login(credentials).subscribe(
-      (user) => {
-        // Handle successful login
-        this.router.navigate(['/']);
+    const loginData = { email: this.email, password: this.password };
+    this.authService.login(loginData).subscribe(
+      (response) => {
+        const token = response.token;
+        const role=response.role;
+        const id=response.id
+        localStorage.setItem('token',token);
+        localStorage.setItem('role',role);
+        localStorage.setItem('User-Id',id.toString());
+        if(response.role=='Freelancer')
+        this.router.navigate(['/freelancer/',id])
+      else 
+      this.router.navigate(['/client/',id])
+
+
       },
       (error) => {
-        // Handle login error
         this.errorMessage = 'Invalid email or password';
       }
     );

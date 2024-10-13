@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { ClientForCreate } from 'src/app/models/for-create/client-for-create';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
 declare var bootstrap: any; // Import bootstrap for modal control
 
@@ -42,11 +43,12 @@ export class ManageClientComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
-    this.clientId = +this.route.snapshot.paramMap.get('clientId')!;
+    this.clientId = +this.route.snapshot.paramMap.get('Id')!;
     if (this.clientId) {
       this.fetchClient();
     }
@@ -77,17 +79,11 @@ export class ManageClientComponent implements OnInit {
     }
   }
   editClient() {
-    if (this.clientId) {
-      this.clientService.updateClient(this.clientId,this.client).subscribe(() => {
-        this.router.navigate(['/clients']); // Adjust the path as necessary
-      });
-    }
+        this.router.navigate(['/client/update/',this.authService.getUserId()]); 
   }
-  deleteClient() {
-    if (this.clientId) {
-      this.clientService.deleteClient(this.clientId).subscribe(() => {
-        this.router.navigate(['/clients']); // Adjust the path as necessary
-      });
-    }
-  }
+  logout() {
+    this.authService.logout(); // Call your AuthService to handle logout
+    this.router.navigate(['/account/login']); // Redirect to the login page
+}
+
 }

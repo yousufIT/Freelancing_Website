@@ -16,8 +16,7 @@ export class LogoutComponent {
   logout() {
     this.authService.logout().subscribe(
       () => {
-        // On successful logout, redirect to login page
-        this.router.navigate(['/login']);
+        this.router.navigate(['/account/login']);
       },
       (error) => {
         console.error('Logout failed', error);

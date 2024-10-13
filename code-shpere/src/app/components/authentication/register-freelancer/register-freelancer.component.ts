@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FreelancerForCreate } from 'src/app/models/for-create/freelancer-for-create';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -18,23 +18,31 @@ export class RegisterFreelancerComponent {
       bio: ''
     },
     name: '',
-    rating: 0, // Default rating
+    rating: 0, 
     userName: '',
-    role: 'freelancer', // Default role
+    role: 'freelancer', 
     passwordHash: '',
     email: '',
-    hourlyRate: 0 // Default hourly rate
+    hourlyRate: 0 
   };
-  freelancerId!:number;
   errorMessage: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService) {}
 
   register() {
     this.authService.registerFreelancer(this.user).subscribe(
       (response) => {
-        this.freelancerId=response.freelancerId
-        alert('Freelancer registered successfully');
+        const token = response.token;
+        const role=response.role;
+        const id=response.id
+        localStorage.setItem('token',token);
+        localStorage.setItem('role',role);
+        localStorage.setItem('User-Id',id.toString());
+        this.router.navigate(['/freelancer/',id])
+
       },
       (error) => {
         this.errorMessage = 'Registration failed';

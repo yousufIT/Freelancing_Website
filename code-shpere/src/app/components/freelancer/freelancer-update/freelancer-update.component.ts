@@ -24,7 +24,7 @@ export class FreelancerUpdateComponent implements OnInit {
   }
 
   updateFreelancer(): void {
-    this.freelancerService.updateFreelancer(this.freelancer).subscribe(() => {
+    this.freelancerService.updateFreelancer(this.freelancer.id,this.freelancer).subscribe(() => {
       // Handle success (e.g., redirect or show a message)
     });
   }

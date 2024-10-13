@@ -52,6 +52,7 @@ namespace CodeSphere.Infrastructure.Context
             modelBuilder.Entity<Skill>()
                 .HasIndex(s => s.Name)
                 .IsUnique();
+
             modelBuilder.Entity<IdentityUserLogin<string>>()
                 .HasKey(login => new { login.LoginProvider, login.ProviderKey });
 

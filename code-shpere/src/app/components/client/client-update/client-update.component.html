@@ -1,1 +1,49 @@
-<p>client-update works!</p>
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <h2 class="fw-bold mb-4 text-uppercase">Update Client</h2>
+
+                        <form (ngSubmit)="updateClient()">
+                            <div class="form-outline form-white mb-4">
+                                <input type="text" id="name" [(ngModel)]="client.name" name="name" required class="form-control form-control-lg" />
+                                <label class="form-label" for="name">Name</label>
+                            </div>
+
+                            <div class="form-outline form-white mb-4">
+                                <input type="text" id="userName" [(ngModel)]="client.userName" name="userName" required class="form-control form-control-lg" />
+                                <label class="form-label" for="userName">Username</label>
+                            </div>
+
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="email" [(ngModel)]="client.email" name="email" required class="form-control form-control-lg" />
+                                <label class="form-label" for="email">Email</label>
+                            </div>
+
+                            <div class="form-outline form-white mb-4">
+                                <input type="password" id="password" [(ngModel)]="client.passwordHash" name="passwordHash" class="form-control form-control-lg" />
+                                <label class="form-label" for="password">Password</label>
+                            </div>
+
+                            <div class="form-outline form-white mb-4">
+                                <input type="text" id="companyName" [(ngModel)]="client.companyName" name="companyName" class="form-control form-control-lg" />
+                                <label class="form-label" for="companyName">Company Name</label>
+                            </div>
+
+                            <div class="form-outline form-white mb-4">
+                                <input type="text" id="contactNumber" [(ngModel)]="client.contactNumber" name="contactNumber" class="form-control form-control-lg" />
+                                <label class="form-label" for="contactNumber">Contact Number</label>
+                            </div>
+
+                            <button class="btn btn-outline-light btn-lg px-5" type="submit">Update</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

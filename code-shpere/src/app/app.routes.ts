@@ -22,7 +22,6 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { RegisterComponent } from './components/authentication/register/register.component';
 import { RegisterClientComponent } from './components/authentication/register-client/register-client.component';
 import { RegisterFreelancerComponent } from './components/authentication/register-freelancer/register-freelancer.component';
-import { ChangePasswordComponent } from './components/authentication/change-password/change-password.component';
 import { LogoutComponent } from './components/authentication/logout/logout.component';
 import { BidCreateComponent } from './components/bid/bid-create/bid-create.component';
 import { BidListComponent } from './components/bid/bid-list/bid-list.component';
@@ -30,6 +29,13 @@ import { BidUpdateComponent } from './components/bid/bid-update/bid-update.compo
 import { ManageFreelancerComponent } from './components/freelancer/manage-freelancer/manage-freelancer.component';
 import { PortfolioListComponent } from './components/profile/portfolio-list/portfolio-list.component';
 import { PortfolioCreateComponent } from './components/profile/portfolio-create/portfolio-create.component';
+import { AuthRoleGuard } from './guards/auth-role.guard';
+import { FreelancerDetailsComponent } from './components/freelancer/freelancer-details/freelancer-details.component';
+import { ClientDetailsComponent } from './components/client/client-details/client-details.component';
+import { ProfileEditForClientGuard } from './guards/profile-edit-for-client.guard';
+import { ProfileEditForFreelancerGuard } from './guards/profile-edit-for-freelancer.guard';
+import { ClientUpdateComponent } from './components/client/client-update/client-update.component';
+import { FreelancerUpdateComponent } from './components/freelancer/freelancer-update/freelancer-update.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },
@@ -60,7 +66,11 @@ export const routes: Routes = [
   },
   {
     path: 'skills/freelancer/add/:freelancerId',
-    component: AddSkillsComponent 
+    component: AddSkillsComponent ,
+    canActivate: [AuthRoleGuard],
+    data: {
+      roles: ['Freelancer']
+    }
   },
 
 
@@ -75,15 +85,27 @@ export const routes: Routes = [
   },
   {
     path: 'review/client/:clientId/freelancer/:freelancerId',
-    component: ReviewCreateComponent 
+    component: ReviewCreateComponent ,
+    canActivate: [AuthRoleGuard],
+    data: {
+      roles: ['Client']
+    }
   },
   {
     path: 'review/update/:reviewId',
-    component: ReviewUpdateComponent 
+    component: ReviewUpdateComponent ,
+    canActivate: [AuthRoleGuard],
+    data: {
+      roles: ['Client']
+    }
   },
   {
     path: 'review/delete-review/:reviewId',
-    component: DeleteReviewComponent
+    component: DeleteReviewComponent,
+    canActivate: [AuthRoleGuard],
+    data: {
+      roles: ['Client']
+    }
   },
   
 
@@ -104,10 +126,19 @@ export const routes: Routes = [
   
 //client
   { 
-    path: 'client/manage-client/:clientId', 
-    component: ManageClientComponent 
+    path: 'client/:Id', 
+    component: ManageClientComponent ,
+    canActivate:[ProfileEditForClientGuard]
   },
-
+  { 
+    path: 'client/update/:Id', 
+    component: ClientUpdateComponent ,
+    canActivate:[ProfileEditForClientGuard]
+  },
+  { 
+    path: 'client-details/:Id', 
+    component: ClientDetailsComponent 
+  },
 
 
   //account
@@ -128,10 +159,6 @@ export const routes: Routes = [
     component: RegisterFreelancerComponent 
   },
   { 
-    path: 'account/change-password', 
-    component: ChangePasswordComponent 
-  },
-  { 
     path: 'account/logout', 
     component: LogoutComponent 
   },
@@ -140,8 +167,17 @@ export const routes: Routes = [
 
   //freelancer
   { 
-    path: 'freelancer/manage-freelancer/:freelancerId', 
-    component: ManageFreelancerComponent 
+    path: 'freelancer/:Id', 
+    component: ManageFreelancerComponent ,
+    canActivate:[ProfileEditForFreelancerGuard]
   },
-
+  { 
+    path: 'freelancer-details/:Id', 
+    component: FreelancerDetailsComponent 
+  },
+  { 
+    path: 'freelancer/update/:Id', 
+    component: FreelancerUpdateComponent ,
+    canActivate:[ProfileEditForFreelancerGuard]
+  },
 ];

@@ -5,7 +5,7 @@ namespace Freelancing_Website.Models.ForCreate
     public class FreelancerForCreate : UserForCreate
     {
         public ProfileForCreate Profile { get; set; }
-        public double Hourlysalary { get; set; }
+        public double HourlyRate { get; set; }
 
     }
 }

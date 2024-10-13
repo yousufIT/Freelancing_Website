@@ -30,9 +30,9 @@ export class LoginComponent {
         localStorage.setItem('role',role);
         localStorage.setItem('User-Id',id.toString());
         if(response.role=='Freelancer')
-        this.router.navigate(['/freelancer/',id])
-      else 
-      this.router.navigate(['/client/',id])
+          this.router.navigate(['/freelancer/',id])
+        else 
+          this.router.navigate(['/client/',id])
 
 
       },

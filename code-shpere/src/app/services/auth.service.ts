@@ -46,9 +46,10 @@ export class AuthService {
 
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-  }
+  // isLoggedIn(): boolean {
+  //   const token = localStorage.getItem('authToken');
+  //   return !!token;
+  // }
   private handleError(error: any): Observable<never> {
     console.error('An error occurred:', error);
     return throwError(() => new Error('Something went wrong; please try again later.'));

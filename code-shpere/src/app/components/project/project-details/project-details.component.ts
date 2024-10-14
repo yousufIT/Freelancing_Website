@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project';
 import { CommonModule } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   standalone: true,
@@ -15,12 +16,18 @@ import { CommonModule } from '@angular/common';
 export class ProjectDetailsComponent implements OnInit {
   project: Project | null = null; // Initialized to null
   errorMessage: string = ''; // To store error messages
+  auth:AuthService;
+  clientId:number=0;
+
 
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private authService:AuthService
+  ) {
+    this.auth=authService;
+  }
 
   ngOnInit(): void {
     const projectId = Number(this.route.snapshot.paramMap.get('id')); // Assuming you're using route parameters
@@ -35,6 +42,9 @@ export class ProjectDetailsComponent implements OnInit {
     this.projectService.getProjectById(id).subscribe(
       (project) => {
         this.project = project;
+        this.clientId=project.clientId;
+        console.log(this.clientId);
+        
       },
       (error) => {
         this.errorMessage = 'Error fetching project details: ' + error.message;

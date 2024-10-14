@@ -14,7 +14,7 @@ import { ManageSkillsComponent } from '../../requiredskill/manage-skills/manage-
   imports: [CommonModule, FormsModule, ManageSkillsComponent]
 })
 export class ProjectUpdateComponent implements OnInit {
-  project: ProjectForCreate = { title: '', description: '', budget: 0, status: '' };
+  project: ProjectForCreate = { title: '', description: '', budget: 0, status: '',clientId:0 };
   projectId: number = 0;
 
   constructor(

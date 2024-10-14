@@ -62,8 +62,13 @@ auth:AuthService;
 
   fetchFreelancer() {
     if (this.freelancerId) {
-      this.freelancerService.getFreelancerById(this.freelancerId).subscribe(freelancer => {
-        this.freelancer = freelancer;
+      this.freelancerService.getFreelancerById(this.freelancerId).subscribe({
+        next:(freelancer)=>{
+          this.freelancer = freelancer;
+        },
+        error:()=>{
+          this.router.navigate(['/'])
+        }
       });
     }
   }

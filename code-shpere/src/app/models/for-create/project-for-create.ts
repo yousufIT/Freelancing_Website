@@ -3,4 +3,5 @@ export interface ProjectForCreate {
   description: string;
   budget: number;
   status: string;
+  clientId:number;
 }

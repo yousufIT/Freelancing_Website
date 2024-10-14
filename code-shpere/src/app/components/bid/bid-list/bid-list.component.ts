@@ -4,6 +4,7 @@ import { Bid } from 'src/app/models/bid';
 import { DataWithPagination, PaginationMetaData } from 'src/app/models/data-with-pagination';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   standalone: true,
@@ -15,11 +16,16 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 export class BidListComponent implements OnInit {
   projectId!: number; // Expecting the project ID to be passed from the parent
   bids: Bid[] = [];
-  pageNumber = 1;
-  pageSize = 5; // Number of bids per page
   paginationMetaData: PaginationMetaData | undefined;
-
-  constructor(private bidService: BidService, private route: ActivatedRoute) {}
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalPageCount: number = 0;
+  auth:AuthService;
+  constructor(private bidService: BidService,
+    private authService:AuthService,
+    private route: ActivatedRoute) {
+      this.auth=authService;
+    }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -29,9 +35,14 @@ export class BidListComponent implements OnInit {
   }
 
   loadBids(): void {
-    this.bidService.getBidsByProjectId(this.projectId, this.pageNumber, this.pageSize).subscribe(data => {
+    this.bidService.getBidsByProjectId(this.projectId, this.currentPage, this.pageSize).subscribe(data => {
       this.bids = data.items; 
       this.paginationMetaData = data.paginationMetaData;
+      this.totalPageCount=this.paginationMetaData.totalPageCount;
     });
+  }
+  goToPage(page: number): void {
+    this.currentPage = page;
+    this.loadBids();
   }
 }

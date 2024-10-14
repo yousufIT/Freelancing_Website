@@ -13,6 +13,9 @@
     </button>
     <div [ngClass]="{'collapse': isNavbarCollapsed, 'navbar-collapse': true}" id="navbarNav">
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link btn" routerLink="/projects">projects</a>
+        </li>
         @if (isSigned) {
           <li class="nav-item">
             <a class="nav-link btn" routerLink="/{{auth.getUserRole() | lowercase}}/{{auth.getUserId()}}">Profile</a>

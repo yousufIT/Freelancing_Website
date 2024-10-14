@@ -42,9 +42,14 @@ export class ClientDetailsComponent implements OnInit {
 
   fetchClient() {
     if (this.clientId) {
-      this.clientService.getClientById(this.clientId).subscribe(client => {
+      this.clientService.getClientById(this.clientId).subscribe( {
+      next:(client)=>{
         this.client = client;
-      });
+      },
+      error:()=>{
+        this.router.navigate(['/'])
+      }
+    });
     }
   }
 

@@ -16,7 +16,9 @@ export class ReviewUpdateComponent  implements OnInit {
   reviewId!: number;
   review: ReviewForCreate = {
     rating: 0,
-    comment: ''
+    comment: '',
+    clientId: 0,
+    freelancerId: 0
   };
   freelancerId: number = 0;
 

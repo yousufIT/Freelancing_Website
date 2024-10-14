@@ -7,4 +7,5 @@ export interface ClientForCreate {
   rating: number;
   companyName: string;
   contactNumber: string;
+  
 }

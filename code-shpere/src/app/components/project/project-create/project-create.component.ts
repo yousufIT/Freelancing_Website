@@ -5,6 +5,7 @@ import { ProjectForCreate } from 'src/app/models/for-create/project-for-create';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Skill } from 'src/app/models/skill';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-project-create',
@@ -14,20 +15,25 @@ import { Skill } from 'src/app/models/skill';
   imports: [CommonModule, FormsModule]
 })
 export class ProjectCreateComponent {
-  project: ProjectForCreate = { title: '', description: '', budget: 0, status: '' };
+  project: ProjectForCreate = { title: '', description: '', budget: 0, status: '',clientId:0  };
   @Output() projectCreated = new EventEmitter<void>();
   skills: Skill[] = [];
   selectedSkills: number[] = [];
 
-  constructor(private projectService: ProjectService, private router: Router) {}
+  constructor(private projectService: ProjectService,
+    private authService:AuthService,
+     private router: Router) {}
 
   createProject(): void {
-    this.projectService.createProject(1,this.project).subscribe(() => {
+    this.project.clientId = this.authService.getUserId();
+    this.projectService.createProject(this.authService.getUserId(),this.project).subscribe(() => {
       // Emit an event to notify the parent that the project was created
       this.projectCreated.emit();
+      
+      
 
       // Optionally, reset the form after submission
-      this.project = { title: '', description: '', budget: 0, status: '' };
+      this.project = { title: '', description: '', budget: 0, status: '',clientId:0 };
     });
   }
 

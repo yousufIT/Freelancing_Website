@@ -42,7 +42,7 @@ export class FreelancerSkillsComponent implements OnInit, OnDestroy{
         console.log('Fetched skills for freelancer:', data);
       },
       error: (error) => {
-        console.error('Error fetching skills for freelancer:', error);
+        this.router.navigate(['/'])
       },
       complete: () => {
         console.log('Fetching freelancer skills completed.');

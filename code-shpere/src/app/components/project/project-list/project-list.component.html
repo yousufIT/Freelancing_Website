@@ -2,65 +2,98 @@
   <div class="container py-5 h-100">
     <h1 class="mb-4 text-center text-white">Project List</h1>
 
-    <!-- Toggle Skills Filter -->
-    <div class="text-end mb-3">
-      <a (click)="toggleSkills()" class="btn btn-outline-light">
-        {{ open ? 'Hide Skills Filter' : 'Show Skills Filter' }}
-      </a>
-    </div>
-
-    <!-- Skills Filter Section (Collapsible) -->
-    @if (open) {
-      <div class="card bg-dark text-white shadow-sm p-3 mb-4">
-        <h3 class="mb-3">Select Skills to Filter Projects:</h3>
-        <ul class="list-group">
-          @for (skill of skills; track $index) {
-            <li class="list-group-item bg-dark text-white">
-              <label class="d-flex justify-content-between align-items-center">
-                <input 
-                  type="checkbox" 
-                  [checked]="skillsIds.includes(skill.id)" 
-                  (change)="onSkillChange(skill.id, $event)" 
-                />
-                {{ skill.name }}
-              </label>
-            </li>
-          }
-        </ul>
-      </div>
-    }
-
-    @if (auth.getUserRole() === 'Client') {
-      <!-- Create Project Button -->
-    <div class="text-end mb-4">
-      <button class="btn btn-success" (click)="toggleCreateProject()">
-        {{ showCreateProject ? 'Hide Create Form' : 'Create New Project' }}
-      </button>
-    </div>
-
-    <!-- Project Creation Form -->
-    @if (showCreateProject) {
-      <app-project-create (projectCreated)="onProjectCreated()"></app-project-create>
-    }
-    }
-
-    <!-- Project Cards Grid -->
-    <div class="row g-3">
-      @for (project of projects; track $index) {
-        <div class="col-lg-4 col-md-6">
-          <div class="card h-100 bg-dark text-white shadow-sm">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">{{ project?.title }}</h5>
-              <p class="card-text flex-grow-1">
-                {{ project?.description | slice: 0:100 }}...
-              </p>
-              <a (click)="viewProject(project.id)" class="btn btn-primary mt-auto">
-                View Details
-              </a>
-            </div>
-          </div>
+    <!-- Two-column layout -->
+    <div class="row">
+      
+      <!-- Left Section: Filters or Create Project Form -->
+      <div class="col-md-4">
+        <!-- Toggle Skills Filter -->
+        <div class="text-start mb-3">
+          <a (click)="toggleSkills()" class="btn btn-outline-light">
+            {{ open ? 'Hide Skills Filter' : 'Show Skills Filter' }}
+          </a>
         </div>
-      }
+
+        <!-- Skills Filter Section (Collapsible) -->
+        @if (open) {
+          <div class="card bg-dark text-white shadow-sm p-3 mb-4">
+            <h3 class="mb-3">Select Skills to Filter Projects:</h3>
+            <ul class="list-group">
+              @for (skill of skills; track $index) {
+                <li class="list-group-item bg-dark text-white">
+                  <label class="d-flex justify-content-between align-items-center">
+                    <input 
+                      type="checkbox" 
+                      [checked]="skillsIds.includes(skill.id)" 
+                      (change)="onSkillChange(skill.id, $event)" 
+                    />
+                    {{ skill.name }}
+                  </label>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+
+        @if (auth.getUserRole() === 'Client') {
+          <!-- Create Project Button -->
+          <div class="text-start mb-4">
+            <button class="btn btn-success" (click)="toggleCreateProject()">
+              {{ showCreateProject ? 'Hide Create Form' : 'Create New Project' }}
+            </button>
+          </div>
+
+          <!-- Project Creation Form -->
+          @if (showCreateProject) {
+            <app-project-create (projectCreated)="onProjectCreated()"></app-project-create>
+          }
+        }
+      </div>
+      <div class="col-md-8">
+        <!-- Project Cards Grid -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+          @for (project of projects; track $index) {
+            <div class="col">
+              <div class="card h-100 bg-dark text-white shadow-lg border-0 rounded">
+                
+                <div class="card-body d-flex flex-column">
+                  <!-- Project Title -->
+                  <h5 class="card-title text-truncate">{{ project?.title }}</h5>
+      
+                  <!-- Project Description -->
+                  <p class="card-text text-truncate" style="max-height: 60px;">
+                    {{ project?.description | slice: 0:100 }}...
+                  </p>
+      
+                  <!-- View Details Button -->
+                  <a (click)="viewProject(project.id)" class="btn btn-outline-primary mt-auto">
+                    View Details
+                  </a>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+      
+
     </div>
   </div>
+  <div class="row g-0 align-items-center pb-4">
+    <div class="col-sm-6 ">
+        <nav aria-label="Page navigation ">
+            <ul class="pagination justify-content-end">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <button class="page-link btn btn-outline-dark bg-dark text-white" (click)="goToPage(currentPage - 1)">Previous</button>
+                </li>
+                <li class="page-item" *ngFor="let page of [].constructor(totalPageCount); let i = index">
+                    <button class="page-link btn btn-outline-dark bg-dark text-white" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPageCount">
+                    <button class="page-link btn btn-outline-dark bg-dark text-white" (click)="goToPage(currentPage + 1)">Next</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 </div>

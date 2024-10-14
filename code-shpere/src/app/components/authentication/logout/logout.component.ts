@@ -15,8 +15,17 @@ export class LogoutComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   logout() {
-    this.authService.logout()
-    this.router.navigate(['/account/login']);
+    this.authService.logout().subscribe({
+      next:() =>{
+        this.router.navigate(['/account/login']);
+      },
+      error(err) {
+          console.log(err);
+          
+      },
+    }
+      
+    )
     
   }
 }

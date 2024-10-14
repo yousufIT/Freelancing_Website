@@ -14,7 +14,6 @@ export class ProfileEditForClientGuard implements CanActivate {
     if (routeUserId !== null && +routeUserId === userId) {
       return true;
     }
-    alert('you are unautherized')
     this.router.navigate(['/client-details/',routeUserId])
 
     return false;

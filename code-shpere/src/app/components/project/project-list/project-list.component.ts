@@ -20,9 +20,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   open: boolean = false;
-  skillIds: string = ''; // The skill IDs to filter by
-  pageNumber: number = 1; // Current page number
-  pageSize: number = 10;  // Number of projects per page
+  skillIds: string = ''; 
   skills: Skill[] = [];
   skillsIds: number[] = [];
   paginationMetaData: PaginationMetaData = {
@@ -31,6 +29,9 @@ export class ProjectListComponent implements OnInit {
     totalItemCount: 0,
     totalPageCount: 0
   };
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalPageCount: number = 0;
   showCreateProject = false;
   auth: AuthService;
 
@@ -44,10 +45,11 @@ export class ProjectListComponent implements OnInit {
   }
 
   loadFilteredProjects(): void {
-      this.projectService.getProjectsFilteredBySkills(this.skillIds, this.pageNumber, this.pageSize)
+      this.projectService.getProjectsFilteredBySkills(this.skillIds, this.currentPage, this.pageSize)
         .subscribe((data) => {
           this.projects = data.items;
           this.paginationMetaData = data.paginationMetaData;
+          this.totalPageCount=this.paginationMetaData.totalPageCount;
         });
   }
 
@@ -99,6 +101,10 @@ export class ProjectListComponent implements OnInit {
     this.showCreateProject = false;
 
     // Reload the project list to include the new project
+    this.loadFilteredProjects();
+  }
+  goToPage(page: number): void {
+    this.currentPage = page;
     this.loadFilteredProjects();
   }
 }

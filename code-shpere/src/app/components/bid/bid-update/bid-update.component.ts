@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class BidUpdateComponent implements OnInit {
   bidId!: number; // Expecting the bid ID to be passed from the parent
-  bid: BidForCreate = { amount: 0, proposal: '' };
+  bid: BidForCreate = { amount: 0, proposal: '',freelancerId: 0, projectId: 0 };
   projectId: number = 0;
 
   constructor(private bidService: BidService, private router: Router, private route: ActivatedRoute) {}

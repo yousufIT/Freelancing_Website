@@ -17,7 +17,9 @@ export class ReviewCreateComponent implements OnInit {
   freelancerId!: number;
   review: ReviewForCreate = {
     rating: 0,
-    comment: ''
+    comment: '',
+    clientId: 0,
+    freelancerId: 0
   };
 
   constructor(

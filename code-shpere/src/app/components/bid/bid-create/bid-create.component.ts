@@ -3,6 +3,7 @@ import { BidService } from 'src/app/services/bid.service';
 import { BidForCreate } from 'src/app/models/for-create/bid-for-create';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   standalone: true,
@@ -13,9 +14,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class BidCreateComponent implements OnInit {
   projectId!: number; // Expecting the project ID to be passed from the parent
-  bid: BidForCreate = { amount: 0, proposal: '' };
+  bid: BidForCreate = { amount: 0, proposal: '',freelancerId: 0, projectId: 0 };
 
-  constructor(private bidService: BidService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private bidService: BidService, private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -24,7 +25,9 @@ export class BidCreateComponent implements OnInit {
   }
 
   createBid(): void {
-    this.bidService.createBid(3, this.projectId, this.bid).subscribe(() => {
+    this.bid.freelancerId = this.authService.getUserId();
+    this.bid.projectId = this.projectId;
+    this.bidService.createBid(this.authService.getUserId(), this.projectId, this.bid).subscribe(() => {
       // Redirect to project details or bid list after successful creation
       this.router.navigate(['/project', this.projectId]);
     });

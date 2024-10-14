@@ -14,7 +14,6 @@ export class ProfileEditForFreelancerGuard implements CanActivate {
     if (routeUserId !== null && +routeUserId === userId) {
       return true;
     }
-    alert('you are unautherized')
     this.router.navigate(['/freelancer-details/',routeUserId])
     return false;
     

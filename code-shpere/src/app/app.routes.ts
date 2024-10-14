@@ -117,7 +117,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'review/update/:reviewId',
+    path: 'freelancer/:freelancerId/review/update/:reviewId',
     component: ReviewUpdateComponent ,
     canActivate: [AuthRoleGuard,AuthGuard],
     data: {
@@ -125,7 +125,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'review/delete-review/:reviewId',
+    path: 'freelancer/:freelancerId/review/delete-review/:reviewId',
     component: DeleteReviewComponent,
     canActivate: [AuthRoleGuard,AuthGuard],
     data: {

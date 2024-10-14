@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProfileService } from 'src/app/services/profile.service';
 import { PortfolioItem } from 'src/app/models/portfolio-item';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-freelancer-details',
@@ -41,13 +42,16 @@ export class FreelancerDetailsComponent implements OnInit {
         bio: ''
     }
 };
-
+auth:AuthService;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private freelancerService: FreelancerService,
-    private profileService: ProfileService
-  ) {}
+    private profileService: ProfileService,
+    private authService: AuthService
+  ) {
+    this.auth = authService;
+  }
 
   ngOnInit(): void {
     this.freelancerId = +this.route.snapshot.paramMap.get('Id')!;
@@ -71,5 +75,7 @@ export class FreelancerDetailsComponent implements OnInit {
       });
     }
   }
-
+  onCreateReviewFromCLient():void{
+    this.router.navigate([`/review/client`,this.auth.getUserId(),`freelancer`,this.freelancerId]);
+  }
 }

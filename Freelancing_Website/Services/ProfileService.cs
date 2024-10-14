@@ -25,7 +25,7 @@ namespace Freelancing_Website.Services
       
         public async Task<PortfolioItem> CreatePortfolioItemAsync(int profileId, PortfolioItem item)
         {
-            item.ProfileId = profileId; // Set the profile ID for the portfolio item
+            item.ProfileId = profileId; 
             await _portfolioItemRepository.AddAsync(item);
             return item;
         }

@@ -34,8 +34,7 @@ export class ReviewCreateComponent implements OnInit {
   submitReview(): void {
     this.reviewService.createReview(this.clientId, this.freelancerId, this.review).subscribe({
       next: (data) => {
-        console.log('Review created successfully', data);
-        this.router.navigate(['/review/freelancer/10']); 
+        this.router.navigate(['/review/freelancer',this.freelancerId]); 
       },
       error: (error) => {
         console.error('Error creating review:', error);

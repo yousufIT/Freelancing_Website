@@ -18,6 +18,7 @@ export class ReviewUpdateComponent  implements OnInit {
     rating: 0,
     comment: ''
   };
+  freelancerId: number = 0;
 
   constructor(
     private reviewService: ReviewService,
@@ -34,6 +35,7 @@ export class ReviewUpdateComponent  implements OnInit {
     this.reviewService.getReviewById(this.reviewId).subscribe({
       next: (data) => {
         this.review = data;  // Load the fetched review data into the form
+        this.freelancerId = data.freelancerId;
       },
       error: (error) => {
         console.error('Error fetching review:', error);
@@ -45,11 +47,14 @@ export class ReviewUpdateComponent  implements OnInit {
     this.reviewService.updateReview(this.reviewId, this.review).subscribe({
       next: (data) => {
         console.log('Review updated successfully', data);
-        this.router.navigate(['/review/freelancer/10']);  
+        this.router.navigate(['/review','freelancer',this.freelancerId]);  
       },
       error: (error) => {
         console.error('Error updating review:', error);
       }
     });
+  }
+  goToList():void{
+    this.router.navigate(['/review','freelancer',this.freelancerId]);  
   }
 }

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SkillService } from 'src/app/services/skill.service';
 
 @Component({
@@ -15,7 +15,9 @@ export class AddSkillsComponent {
   freelancerId!: number;
   skillIds: number[] = []; 
   availableSkills: { id: number; name: string }[] = [];
-  constructor(private route: ActivatedRoute, private skillService: SkillService) {
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private skillService: SkillService) {
     const id = this.route.snapshot.paramMap.get('freelancerId');
     this.freelancerId = id ? +id : 0; 
   }
@@ -27,10 +29,12 @@ export class AddSkillsComponent {
   addSkills(): void {
     this.skillService.addSkillsForFreelancer(this.freelancerId, this.skillIds).subscribe({
       next: () => {
-        console.log('add is done');
       },
       error: (error) => {
         console.error('the was problem:', error);
+      },
+      complete:() =>{
+        this.router.navigate([`/skills/freelancer`,this.freelancerId])
       }
     });
   }

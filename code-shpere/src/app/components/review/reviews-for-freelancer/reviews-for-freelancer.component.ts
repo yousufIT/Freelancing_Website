@@ -4,9 +4,10 @@ import { Review } from 'src/app/models/review';
 import { DataWithPagination, PaginationMetaData } from 'src/app/models/data-with-pagination';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-reviews-for-freelancer',
@@ -24,12 +25,14 @@ export class ReviewsForFreelancerComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 10;
   totalPageCount: number = 0;
-  
+  auth:AuthService;
   constructor(private route: ActivatedRoute,
+    private router:Router,
     private reviewService: ReviewService,
+    private authService:AuthService,
     private clientService:ClientService) {
-      let id = route.snapshot.paramMap.get('freelancerId');
-      this.freelancerId=id?+id:0;
+      this.freelancerId = +route.snapshot.paramMap.get('freelancerId')!;
+      this.auth=authService
     }
 
   ngOnInit(): void {
@@ -42,7 +45,6 @@ export class ReviewsForFreelancerComponent implements OnInit {
         this.reviews = data.items;
         this.paginationMetaData=data.paginationMetaData;
         this.totalPageCount = this.paginationMetaData.totalPageCount; 
-        console.log(data);
         
       },
       error: (error) => {
@@ -55,17 +57,10 @@ export class ReviewsForFreelancerComponent implements OnInit {
     this.currentPage = page;
     this.fetchReviews();
   }
-
-  // getClientName(clientId:number):string{
-  //   let name: string = '';
-  //   this.clientService.getClientById(clientId).subscribe({
-  //     next:(data:Client)=>{
-  //       name=data.name
-  //     },
-  //     error: (error) => {
-  //       console.error('Error fetching client:', error);
-  //     }
-  //   });
-  //   return name;
-  // }
+editReview(reviewId:number):void{
+  this.router.navigate(['/freelancer',this.freelancerId,'review','update',reviewId])
+}
+deleteReview(reviewId:number):void{
+  this.router.navigate(['/freelancer',this.freelancerId,'review','delete-review',reviewId])
+}
 }

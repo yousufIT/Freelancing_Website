@@ -23,6 +23,7 @@ export class ReviewsForClientComponent implements OnInit {
   
   
   constructor(private route: ActivatedRoute,
+    private router:Router,
     private reviewService: ReviewService) {
       let id = route.snapshot.paramMap.get('clientId');
       this.clientId=id?+id:0;
@@ -48,5 +49,11 @@ export class ReviewsForClientComponent implements OnInit {
   goToPage(page: number): void {
     this.currentPage = page;
     this.fetchReviews();
+  }
+  editReview(reviewId:number,freelancerId:number):void{
+    this.router.navigate(['/freelancer',freelancerId,'review','update',reviewId])
+  }
+  deleteReview(reviewId:number,freelancerId:number):void{
+    this.router.navigate(['/freelancer',freelancerId,'review','delete-review',reviewId])
   }
 }

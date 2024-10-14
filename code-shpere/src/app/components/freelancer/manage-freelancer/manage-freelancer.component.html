@@ -32,14 +32,16 @@
   
             <!-- Buttons Section: Edit, Logout, Add Skills -->
             <div class="card mt-3 bg-dark text-white">
-              <div class="card-body text-center">
-                <button type="button" class="btn btn-outline-primary btn-lg mb-2" (click)="editFreelancer()">
+              <div class="card-body text-center  d-flex gap-1 flex-column">
+               <div class="d-flex justify-content-around">
+                <button type="button" class="btn btn-outline-primary btn-lg  " (click)="editFreelancer()">
                   Edit
                 </button>
-                <button type="button" class="btn btn-outline-danger btn-lg mb-2" (click)="logout()">
+                <button type="button" class="btn btn-outline-danger btn-lg" (click)="logout()">
                   Logout
                 </button>
-                <button type="button" class="btn btn-outline-light btn-lg" (click)="addSkills()">
+               </div>
+                <button type="button" class="btn btn-outline-light btn-lg " (click)="addSkills()">
                   Add Skills
                 </button>
               </div>
@@ -66,25 +68,10 @@
                 <hr>
   
                 <!-- Portfolio Section -->
-                <div class="portfolio-section">
+                <div class="portfolio-section  d-flex gap-2 justify-content-between">
                     <h2>Portfolio</h2>
-                    <button (click)="onCreatePortfolioItem()" class="btn btn-primary">Add Portfolio Item</button>
-                  
-                    <div *ngIf="portfolioItems && portfolioItems.length > 0" class="portfolio-list">
-                      <div *ngFor="let item of portfolioItems" class="portfolio-item">
-                        <h3>{{ item.title }}</h3>
-                        <p>{{ item.description }}</p>
-                        <img [src]="item.imageUrl" alt="{{ item.title }}" class="portfolio-image" />
-                        <button (click)="onEditPortfolioItem(item.id)" class="btn btn-warning">Edit</button>
-                        <button (click)="onDeletePortfolioItem(item.id)" class="btn btn-danger">Delete</button>
-                      </div>
-                    </div>
-                  
-                    <div *ngIf="!portfolioItems || portfolioItems.length === 0">
-                      <p>No portfolio items found.</p>
-                    </div>
+                    <button (click)="onCreatePortfolioItem()" class="btn btn-outline-light ms-3">Show Portfolio Item</button>
                   </div>
-                  
   
                 <!-- Skills Section -->
                 <h6 class="mb-0">Skills</h6>

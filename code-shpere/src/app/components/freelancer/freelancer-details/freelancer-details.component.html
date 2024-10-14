@@ -32,8 +32,15 @@
 
                 <div class="col-md-8">
                     <div class="card mb-3 bg-dark text-white">
-                        <div class="card-body">
-                            <h6 class="mb-0"><a [routerLink]="['/review/freelancer', freelancer.id]" class="text-secondary">Reviews Received</a></h6>
+                        <div class="card-body ">
+                            <div class="d-flex gap-2 justify-content-between">
+                            <h6 class="mb-0"><a [routerLink]="['/review/freelancer', freelancer.id]" class="text-secondary">Reviews Received</a>
+                            </h6>
+                            @if (this.auth.getUserRole()==='Client') {
+                                <button (click)="onCreateReviewFromCLient()" class="btn btn-outline-light ms-3">Add review</button>
+                            }
+                            
+                        </div>
                             <hr>
                             <h6 class="mb-0">Bids</h6>
                             <ul class="list-group list-group-flush">

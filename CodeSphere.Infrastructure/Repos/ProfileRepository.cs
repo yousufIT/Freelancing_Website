@@ -22,6 +22,7 @@ namespace CodeSphere.Infrastructure.Repos
         {
             return await _context.Profiles
                 .Include(p => p.Skills)
+                .Include(p =>p.Portfolio)
                 .FirstOrDefaultAsync(profile => profile.FreelancerId == freelancerId && !profile.IsDeleted);
         }
 

@@ -13,7 +13,7 @@ import { ReviewService } from 'src/app/services/review.service';
 })
 export class DeleteReviewComponent implements OnInit {
   reviewId!: number;
-
+  freelancerId:number=0;
   constructor(
     private reviewService: ReviewService,
     private route: ActivatedRoute,
@@ -22,18 +22,22 @@ export class DeleteReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.reviewId = +this.route.snapshot.paramMap.get('reviewId')!;
+    this.freelancerId = +this.route.snapshot.paramMap.get('freelancerId')!;
   }
 
   deleteReview(): void {
     if (confirm('Are you sure you want to delete this review?')) {
       this.reviewService.deleteReview(this.reviewId).subscribe({
         next: () => {
-          console.log('Review deleted successfully');
-          this.router.navigate(['/review/freelancer/10']);  
+          
         },
         error: (error) => {
           console.error('Error deleting review:', error);
+        },
+        complete:() =>{
+          this.router.navigate(['/review/freelancer',this.freelancerId]);  
         }
+
       });
     }
   }

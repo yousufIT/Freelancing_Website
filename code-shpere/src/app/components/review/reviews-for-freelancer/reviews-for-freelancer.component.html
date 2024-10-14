@@ -5,23 +5,6 @@
             <div class="col-md-6">
                 <h5 class="text-uppercase text-white">Freelancer Reviews <span class="text-muted fw-normal ms-2">({{ reviews.length }})</span></h5>
             </div>
-            <div class="col-md-6">
-                <div class="d-flex justify-content-end gap-2">
-                    <a href="#" data-bs-toggle="modal" data-bs-target=".add-new" class="btn btn-outline-light">
-                        <i class="bx bx-plus me-1" [routerLink]="['/review/client/1/freelancer/10']"></i> Add New Review
-                    </a>
-                    <div class="dropdown">
-                        <a class="btn btn-link text-white py-1 font-size-16 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-horizontal-rounded"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="row">
@@ -41,10 +24,13 @@
                                 <td><a class="btn btn-sm btn-outline-light" [routerLink]="['/client/',review.clientId]">{{ review.clientName }}</a></td>
                                 <td>{{ review.rating }}</td>
                                 <td>{{ review.comment }}</td>
-                                <td>
-                                    <a class="btn btn-sm btn-outline-primary" [routerLink]="['/review/update/',review.id]">Edit</a>
-                                    <a href="#" class="btn btn-sm btn-outline-info ms-2" [routerLink]="['/review/delete-review/',review.id]">Delete</a>
-                                </td>
+                                @if(auth.getUserId()===review.clientId){
+                                    <td>
+                                        <a class="btn btn-sm btn-outline-primary" (click)="editReview(review.id)">Edit</a>
+                                        <a href="#" class="btn btn-sm btn-outline-info ms-2" (click)="deleteReview(review.id)">Delete</a>
+                                    </td>
+                                }
+                                
                             </tr>
                         </tbody>
                     </table>

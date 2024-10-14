@@ -3,10 +3,12 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { PortfolioItem } from 'src/app/models/portfolio-item';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PaginationMetaData } from 'src/app/models/data-with-pagination';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink,FormsModule,CommonModule],
   selector: 'app-portfolio-list',
   templateUrl: './portfolio-list.component.html',
   styleUrls: ['./portfolio-list.component.css']

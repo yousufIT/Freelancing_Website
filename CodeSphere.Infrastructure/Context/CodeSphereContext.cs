@@ -53,6 +53,16 @@ namespace CodeSphere.Infrastructure.Context
                 .HasIndex(s => s.Name)
                 .IsUnique();
 
+            modelBuilder.Entity<Bid>()
+                     .HasIndex(b => new { b.ProjectId, b.FreelancerId })
+                     .IsUnique();
+
+            modelBuilder.Entity<Review>()
+                     .HasIndex(r => new { r.ClientId, r.FreelancerId })
+                     .IsUnique();
+
+
+
             modelBuilder.Entity<IdentityUserLogin<string>>()
                 .HasKey(login => new { login.LoginProvider, login.ProviderKey });
 

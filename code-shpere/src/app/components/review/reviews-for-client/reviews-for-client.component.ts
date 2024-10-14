@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DataWithPagination, PaginationMetaData } from 'src/app/models/data-with-pagination';
 import { Review } from 'src/app/models/review';
+import { AuthService } from 'src/app/services/auth.service';
 import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
@@ -23,6 +24,7 @@ export class ReviewsForClientComponent implements OnInit {
   
   
   constructor(private route: ActivatedRoute,
+    public auth : AuthService,
     private router:Router,
     private reviewService: ReviewService) {
       let id = route.snapshot.paramMap.get('clientId');

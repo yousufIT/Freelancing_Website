@@ -49,21 +49,11 @@
                                 </li>
                             </ul>
                             <hr>
-                            <div class="portfolio-section">
-                                <h2>Portfolio</h2>
                               
-                                <div *ngIf="portfolioItems && portfolioItems.length > 0" class="portfolio-list">
-                                  <div *ngFor="let item of portfolioItems" class="portfolio-item">
-                                    <h3>{{ item.title }}</h3>
-                                    <p>{{ item.description }}</p>
-                                    <img [src]="item.imageUrl" alt="{{ item.title }}" class="portfolio-image" />
+                                <div class="portfolio-section  d-flex gap-2 justify-content-between">
+                                    <h2>Portfolio</h2>
+                                    <button (click)="onCreatePortfolioItem()" class="btn btn-outline-light ms-3">Show Portfolio Item</button>
                                   </div>
-                                </div>
-                              
-                                <div *ngIf="!portfolioItems || portfolioItems.length === 0">
-                                  <p>No portfolio items found.</p>
-                                </div>
-                              </div>
                               
                             <hr>
                             <h6 class="mb-0">Skills</h6>

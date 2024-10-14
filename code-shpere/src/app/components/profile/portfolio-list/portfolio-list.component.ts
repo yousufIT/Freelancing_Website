@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PaginationMetaData } from 'src/app/models/data-with-pagination';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   standalone: true,
@@ -14,19 +15,21 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./portfolio-list.component.css']
 })
 export class PortfolioListComponent implements OnInit {
-  @Input() profileId!: number; // Profile ID to be passed from parent or route
+  profileId!: number; 
+  freelancerId!: number;
   portfolioItems: PortfolioItem[] = [];
   pageNumber = 1;
   pageSize = 5; // Items per page
   paginationMetaData: PaginationMetaData | undefined;
 
-  constructor(private profileService: ProfileService, private route: ActivatedRoute) {}
+  constructor(private profileService: ProfileService, private route: ActivatedRoute, public authService: AuthService) {}
 
   ngOnInit(): void {
     // Get Profile ID from parent or route params
     if (!this.profileId) {
       this.route.params.subscribe(params => {
         this.profileId = +params['profileId'];
+        this.freelancerId = +params['freelancerId'];
       });
     }
 

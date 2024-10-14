@@ -15,7 +15,9 @@
                                 <th scope="col">Freelancer name</th>
                                 <th scope="col">Rating</th>
                                 <th scope="col">Comment</th>
-                                <th scope="col" style="width: 200px;">Action</th>
+                                @if(auth.getUserRole()==='Client'){
+                                    <th scope="col" style="width: 200px;">Action</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>
@@ -25,10 +27,17 @@
                                 </td>
                                 <td>{{ review.rating }}</td>
                                 <td>{{ review.comment }}</td>
-                                <td >
-                                    <a class="btn btn-sm btn-outline-primary" (click)="editReview(review.id,review.freelancerId)">Edit</a>
-                                    <a  class="btn btn-sm btn-outline-info ms-2" (click)="deleteReview(review.id,review.freelancerId)">Delete</a>
-                                </td>
+                                @if(auth.getUserRole()==='Client'){
+                                    @if (auth.getUserId()===review.clientId) {
+                                    <td>
+                                        <a class="btn btn-sm btn-outline-primary" (click)="editReview(review.id,review.freelancerId)">Edit</a>
+                                        <a href="#" class="btn btn-sm btn-outline-info ms-2" (click)="deleteReview(review.id,review.freelancerId)">Delete</a>
+                                    </td>
+                                }
+                                    @else {
+                                        <td></td>
+                                }
+                                }
                             </tr>
                         </tbody>
                     </table>
@@ -36,9 +45,9 @@
             </div>
         </div>
 
-        <div class="row g-0 align-items-center pb-4 bg-dark text-white-50">
+        <div class="row g-0 align-items-center pb-4 ">
             
-            <div class="col-sm-6 bg-dark text-white-50">
+            <div class="col-sm-6 ">
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-end">
                         <li class="page-item" [class.disabled]="currentPage === 1">

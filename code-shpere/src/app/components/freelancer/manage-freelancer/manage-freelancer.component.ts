@@ -107,7 +107,7 @@ export class ManageFreelancerComponent implements OnInit {
   }
 
   onCreatePortfolioItem(): void {
-    this.router.navigate([`/profiles/${this.freelancer.profileId}/portfolio`]);
+    this.router.navigate([`/freelancer/${this.freelancerId}/profiles/${this.freelancer.profileId}/portfolio`]);
   }
 
   onEditPortfolioItem(portfolioItemId: number): void {

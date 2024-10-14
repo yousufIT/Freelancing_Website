@@ -21,5 +21,9 @@ namespace CodeSphere.Domain.Models
         public int? SelectedFreelancerId { get; set; }
         public Freelancer SelectedFreelancer { get; set; }
         public bool IsDeleted { get; set; }
+        public Project() {
+            Bids = new List<Bid>();
+            RequiredSkills = new List<Skill>();
+        }
     }
 }

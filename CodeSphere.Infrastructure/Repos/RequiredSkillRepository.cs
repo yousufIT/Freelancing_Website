@@ -43,8 +43,8 @@ namespace CodeSphere.Infrastructure.Repos
         public async Task<List<Skill>> GetSkillsForProjectAsync(int projectId)
         {
             var project = await _context.Projects.Include(p => p.RequiredSkills).FirstOrDefaultAsync(p => p.Id == projectId && !p.IsDeleted);
-
-            return project.RequiredSkills;
+            var requiredskills = project.RequiredSkills;
+            return requiredskills;
         }
 
         public async Task DeleteSkillForProjectAsync(int projectId, int skillId)

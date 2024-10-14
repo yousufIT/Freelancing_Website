@@ -16,5 +16,9 @@ namespace CodeSphere.Domain.Models
         public int FreelancerId { get; set; }
         public Freelancer Freelancer { get; set; }
         public bool IsDeleted { get; set; }
+        public Profile() { 
+            Skills = new List<Skill>();
+            Portfolio = new List<PortfolioItem>();
+        }
     }
 }

@@ -5,6 +5,7 @@ using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Models;
 using CodeSphere.Domain.Interfaces.Repos;
+using Microsoft.EntityFrameworkCore;
 
 namespace Freelancing_Website.Controllers
 {
@@ -50,11 +51,25 @@ namespace Freelancing_Website.Controllers
         [HttpPost("freelancer/{freelancerId}/project/{projectId}")]
         public async Task<IActionResult> CreateBid(int freelancerId, int projectId, [FromBody] BidForCreate bidForCreate)
         {
-            var bid = _mapper.Map<Bid>(bidForCreate);
-            await _bidService.CreateBidAsync( freelancerId, projectId, bid);
-            var bidViewModel = _mapper.Map<BidView>(bid);
-            return CreatedAtAction(nameof(GetBidsByProjectId), new { projectId = bid.ProjectId }, bidViewModel);
+            try
+            {
+                var bid = _mapper.Map<Bid>(bidForCreate);
+                await _bidService.CreateBidAsync(freelancerId, projectId, bid);
+
+                var bidViewModel = _mapper.Map<BidView>(bid);
+                return CreatedAtAction(nameof(GetBidsByProjectId), new { projectId = bid.ProjectId }, bidViewModel);
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("IX_Bids_ProjectId_FreelancerId") == true)
+                {
+                    return BadRequest(new { message = "You have already placed a bid on this project." });
+                }
+
+                return StatusCode(500, "An error occurred while creating the bid.");
+            }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBid(int id, [FromBody] BidForCreate bidForCreate)

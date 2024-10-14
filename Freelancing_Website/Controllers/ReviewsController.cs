@@ -7,6 +7,7 @@ using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Interfaces.Repos;
 using Freelancing_Website.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Freelancing_Website.Controllers
 {
@@ -55,13 +56,26 @@ namespace Freelancing_Website.Controllers
         }
 
         [HttpPost("Client/{clientId}/Freelancer/{freelancerId}")]
-        public async Task<IActionResult> CreateReview(int clientId,int freelancerId,[FromBody] ReviewForCreate reviewForCreate)
+        public async Task<IActionResult> CreateReview(int clientId, int freelancerId, [FromBody] ReviewForCreate reviewForCreate)
         {
-            var review = _mapper.Map<Review>(reviewForCreate);
-            await _reviewService.CreateReviewAsync(clientId,freelancerId,review);
-            var reviewView = _mapper.Map<ReviewView>(review);
-            return Ok(reviewView);
+            try
+            {
+                var review = _mapper.Map<Review>(reviewForCreate);
+                await _reviewService.CreateReviewAsync(clientId, freelancerId, review);
+
+                var reviewView = _mapper.Map<ReviewView>(review);
+                return Ok(reviewView);
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("IX_Reviews_ClientId_FreelancerId") == true)
+                {
+                    return BadRequest(new { message = "You have already left a review for this freelancer." });
+                }
+                return StatusCode(500, "An error occurred while creating the review.");
+            }
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReview(int id,[FromBody] ReviewForCreate reviewForCreate)
         {

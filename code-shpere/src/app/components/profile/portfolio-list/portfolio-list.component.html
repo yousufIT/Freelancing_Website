@@ -22,8 +22,10 @@
                             </p>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
-                            <button (click)="onDelete(item.id)" class="btn btn-outline-danger btn-sm">Delete</button>
-                            <button [routerLink]="['/profiles', profileId, 'portfolio', item.id, 'edit']" class="btn btn-outline-primary btn-sm">Edit</button>
+                            @if(authService.getUserRole()==='Freelancer' && authService.getUserId() ===freelancerId ){
+                                <button (click)="onDelete(item.id)" class="btn btn-outline-danger btn-sm">Delete</button>
+                                <button [routerLink]="['/profiles', profileId, 'portfolio', item.id, 'edit']" class="btn btn-outline-primary btn-sm">Edit</button>
+                        }
                         </div>
                     </div>
                 </div>
@@ -34,8 +36,9 @@
     @if (portfolioItems.length === 0) {
         <div class="alert alert-info mt-3">No portfolio items available.</div>
     }
-  
-    <button [routerLink]="['/portfolio', profileId, 'create']" class="btn btn-success mt-3">Add New Portfolio Item</button>
+    @if(authService.getUserRole()==='Freelancer' && authService.getUserId() ===freelancerId ){
+        <button [routerLink]="['/portfolio', profileId, 'create']" class="btn btn-success mt-3">Add New Portfolio Item</button>
+    }
   </div>
   
 </div>

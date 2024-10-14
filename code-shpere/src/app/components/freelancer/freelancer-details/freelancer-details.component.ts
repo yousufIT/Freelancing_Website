@@ -83,4 +83,7 @@ auth:AuthService;
   onCreateReviewFromCLient():void{
     this.router.navigate([`/review/client`,this.auth.getUserId(),`freelancer`,this.freelancerId]);
   }
+  onCreatePortfolioItem(): void {
+    this.router.navigate([`/freelancer/${this.freelancerId}/profiles/${this.freelancer.profileId}/portfolio`]);
+  }
 }

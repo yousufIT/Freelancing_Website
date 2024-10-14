@@ -39,16 +39,25 @@ export const routes: Routes = [
      pathMatch: 'full' 
     },
   { path: 'projects',
-     component: ProjectListComponent ,
-     canActivate: [AuthGuard] 
-    },
+     component: ProjectListComponent 
+  },
+     
+  { path: 'project/update/:id',
+    component: ProjectUpdateComponent,
+    canActivate: [AuthGuard,AuthRoleGuard],
+    data:{
+     roles:['Client']
+    }
+  },
   { path: 'project/:id'
-    , component: ProjectDetailsComponent,
-    canActivate: [AuthGuard] 
+    , component: ProjectDetailsComponent
   },
   { path: 'projects/:projectId/bids/create',
      component: BidCreateComponent,
-     canActivate: [AuthGuard]  
+     canActivate: [AuthGuard,AuthRoleGuard] ,
+     data:{
+      roles:['Freelancer']
+     }
     },
   { path: 'projects/:projectId/bids', 
     component: BidListComponent ,
@@ -58,7 +67,7 @@ export const routes: Routes = [
     component: BidUpdateComponent ,
     canActivate: [AuthGuard] 
   },
-  { path: 'profiles/:profileId/portfolio', 
+  { path: 'freelancer/:freelancerId/profiles/:profileId/portfolio', 
     component: PortfolioListComponent ,
     canActivate: [AuthGuard] 
   },
@@ -74,8 +83,7 @@ export const routes: Routes = [
 //skill
   {
     path: 'skills',
-    component: SkillListComponent,
-    canActivate: [AuthGuard]
+    component: SkillListComponent
   },
   {
     path: 'skills/freelancer/:freelancerId',
@@ -85,7 +93,10 @@ export const routes: Routes = [
   {
     path: 'skills/create',
     component: SkillCreateComponent ,
-    canActivate: [AuthGuard]
+    canActivate: [AuthRoleGuard,AuthGuard],
+    data: {
+      roles: []
+    }
   },
   {
     path: 'skills/freelancer/add/:freelancerId',

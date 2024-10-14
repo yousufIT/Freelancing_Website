@@ -27,9 +27,18 @@ export class BidCreateComponent implements OnInit {
   createBid(): void {
     this.bid.freelancerId = this.authService.getUserId();
     this.bid.projectId = this.projectId;
-    this.bidService.createBid(this.authService.getUserId(), this.projectId, this.bid).subscribe(() => {
-      // Redirect to project details or bid list after successful creation
+    this.bidService.createBid(this.authService.getUserId(), this.projectId, this.bid).subscribe( {
+      next:() =>{
       this.router.navigate(['/project', this.projectId]);
+    },
+    error: (err) => {
+      if (err.status === 400 && err.error.message === "You have already placed a bid on this project.") {
+        alert("Error: You have already placed a bid on this project.");
+        this.router.navigate(['/projects',this.projectId,'bids']);
+      } else {
+        console.log("An error occurred. Please try again.");
+      }
+    }
     });
   }
 }

@@ -32,7 +32,9 @@
 
     <!-- Manage Skills Section -->
     <div class="card bg-dark text-white mt-5 p-4">
-      <app-manage-skills [projectId]="projectId"></app-manage-skills>
+      @if (projectId) {
+        <app-manage-skills [projectId]="projectId"></app-manage-skills>
+      }
     </div>
   </div>
 </div>

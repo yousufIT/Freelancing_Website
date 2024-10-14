@@ -5,6 +5,7 @@ import { ProjectForCreate } from 'src/app/models/for-create/project-for-create';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ManageSkillsComponent } from '../../requiredskill/manage-skills/manage-skills.component';
+import { Unsubscribable } from 'rxjs';
 
 @Component({
   selector: 'app-project-update',
@@ -15,7 +16,7 @@ import { ManageSkillsComponent } from '../../requiredskill/manage-skills/manage-
 })
 export class ProjectUpdateComponent implements OnInit {
   project: ProjectForCreate = { title: '', description: '', budget: 0, status: '',clientId:0 };
-  projectId: number = 0;
+  projectId: number | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,7 +25,7 @@ export class ProjectUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.projectId = +this.route.snapshot.paramMap.get('projectId')!; // Use '+' to ensure it's converted to a number
+    this.projectId = +this.route.snapshot.paramMap.get('id')!; 
     if (this.projectId) {
       this.loadProject(this.projectId);
     } else {

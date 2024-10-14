@@ -38,8 +38,13 @@ export class ReviewCreateComponent implements OnInit {
       next: (data) => {
         this.router.navigate(['/review/freelancer',this.freelancerId]); 
       },
-      error: (error) => {
-        console.error('Error creating review:', error);
+      error: (err) => {
+        if (err.status === 400 && err.error.message === "You have already left a review for this freelancer.") {
+          alert("Error: You have already left a review for this freelancer.");
+          this.router.navigate(['/review/freelancer',this.freelancerId]); 
+        } else {
+          console.log("An error occurred. Please try again.");
+        }
       }
     });
   }

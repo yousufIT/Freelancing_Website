@@ -16,7 +16,9 @@
                                 <th scope="col">Client name</th>
                                 <th scope="col">Rating</th>
                                 <th scope="col">Comment</th>
-                                <th scope="col" style="width: 200px;">Action</th>
+                                @if(auth.getUserRole()==='Client'){
+                                    <th scope="col" style="width: 200px;">Action</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>
@@ -24,12 +26,18 @@
                                 <td><a class="btn btn-sm btn-outline-light" [routerLink]="['/client/',review.clientId]">{{ review.clientName }}</a></td>
                                 <td>{{ review.rating }}</td>
                                 <td>{{ review.comment }}</td>
-                                @if(auth.getUserId()===review.clientId){
+                                @if(auth.getUserRole()==='Client'){
+                                    @if (auth.getUserId()===review.clientId) {
                                     <td>
                                         <a class="btn btn-sm btn-outline-primary" (click)="editReview(review.id)">Edit</a>
                                         <a href="#" class="btn btn-sm btn-outline-info ms-2" (click)="deleteReview(review.id)">Delete</a>
                                     </td>
                                 }
+                                    @else {
+                                        <td></td>
+                                }
+                                }
+                                
                                 
                             </tr>
                         </tbody>

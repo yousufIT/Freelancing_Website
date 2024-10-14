@@ -30,7 +30,7 @@ export class ManageSkillsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.projectId = +this.route.snapshot.paramMap.get('projectId')!; 
+    this.projectId = +this.route.snapshot.paramMap.get('id')!; 
     this.fetchSkills();
     this.fetchAllSkills();
   }

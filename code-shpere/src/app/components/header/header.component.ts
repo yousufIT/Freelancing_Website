@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private storageListener!: () => void;
   auth: AuthService;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,private router : Router) {
     this.auth = authService;
   }
 
@@ -51,7 +51,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.authService.logout().subscribe(() => {
-    });
+    this.router.navigate(['/account/logout']) 
   }
 }

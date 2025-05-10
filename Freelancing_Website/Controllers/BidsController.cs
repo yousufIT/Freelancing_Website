@@ -6,9 +6,11 @@ using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Models;
 using CodeSphere.Domain.Interfaces.Repos;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Freelancing_Website.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     public class BidsController : ControllerBase
@@ -48,6 +50,7 @@ namespace Freelancing_Website.Controllers
             return Ok(bidsWithPagination);
         }
 
+        [Authorize(Roles = "Freelancer")]
         [HttpPost("freelancer/{freelancerId}/project/{projectId}")]
         public async Task<IActionResult> CreateBid(int freelancerId, int projectId, [FromBody] BidForCreate bidForCreate)
         {
@@ -70,8 +73,8 @@ namespace Freelancing_Website.Controllers
             }
         }
 
-
-        [HttpPut("{id}")]
+		[Authorize(Roles = "Freelancer")]
+		[HttpPut("{id}")]
         public async Task<IActionResult> UpdateBid(int id, [FromBody] BidForCreate bidForCreate)
         {
             
@@ -87,14 +90,16 @@ namespace Freelancing_Website.Controllers
             return Ok(bidViewModel);
         }
 
-        [HttpDelete("{id}")]
+		[Authorize(Roles = "Freelancer")]
+		[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBid(int id)
         {
             await _bidService.DeleteBidAsync(id);
             return NoContent();
         }
 
-        [HttpDelete("project/{projectId}")]
+		[Authorize(Roles = "Freelancer")]
+		[HttpDelete("project/{projectId}")]
         public async Task<IActionResult> DeleteBidsForProject(int projectId)
         {
             await _bidService.DeleteBidsForProjectAsync(projectId);

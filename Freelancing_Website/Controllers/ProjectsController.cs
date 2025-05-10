@@ -6,6 +6,7 @@ using Freelancing_Website.Models;
 using CodeSphere.Domain.Models;
 using Freelancing_Website.Models.ViewModels;
 using CodeSphere.Domain.Interfaces.Repos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Freelancing_Website.Controllers
 {
@@ -48,6 +49,7 @@ namespace Freelancing_Website.Controllers
             return Ok(projectView);
         }
 
+        [Authorize(Roles = "Client")]
         [HttpPost("Client/{clientId}")]
         public async Task<IActionResult> CreateProject(int clientId,[FromBody] ProjectForCreate projectForCreate)
         {
@@ -57,7 +59,8 @@ namespace Freelancing_Website.Controllers
             return CreatedAtAction(nameof(GetProjectById), new { id = project.Id }, projectView);
         }
 
-        [HttpPut("{id}")]
+		[Authorize(Roles = "Client")]
+		[HttpPut("{id}")]
         public async Task<IActionResult> UpdateProject(int id, [FromBody] ProjectForCreate projectForCreate)
         {
             var project = await _projectService.GetProjectByIdAsync(id);
@@ -74,7 +77,8 @@ namespace Freelancing_Website.Controllers
             return Ok(projectView);
         }
 
-        [HttpDelete("{id}")]
+		[Authorize(Roles = "Client")]
+		[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProject(int id)
         {
             await _projectService.DeleteProjectAsync(id);

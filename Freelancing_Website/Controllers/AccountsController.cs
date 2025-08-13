@@ -39,7 +39,6 @@ public class AccountsController : Controller
                 {
                     Bio = profile.Bio,
                 },
-                HourlyRate = model.HourlyRate
             };
             freelancer.Profile.Freelancer = freelancer;
 

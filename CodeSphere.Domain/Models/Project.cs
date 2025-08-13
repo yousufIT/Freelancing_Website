@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,6 +13,7 @@ namespace CodeSphere.Domain.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "Budget must be a positive number")]
         public double Budget { get; set; }
         public string Status { get; set; } 
         public int ClientId { get; set; }

@@ -178,7 +178,6 @@ namespace Freelancing_Website
                     Name = "Freelancer 1",
                     Rating = 5.0,
                     Role = "Freelancer",
-                    HourlyRate = 20.5
                 };
 
                 var freelancer2 = new Freelancer
@@ -186,7 +185,6 @@ namespace Freelancing_Website
                     Name = "Freelancer 2",
                     Rating = 4.2,
                     Role = "Freelancer",
-                    HourlyRate = 18.0
                 };
 
                 context.Freelancers.AddRange(freelancer1, freelancer2);

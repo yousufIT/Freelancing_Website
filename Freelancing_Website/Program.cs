@@ -47,7 +47,8 @@ namespace Freelancing_Website
                     ValidateIssuerSigningKey = true
                 };
             });
-           
+            builder.Services.AddAuthorization();
+
             // 1. Enable CORS
             builder.Services.AddCors(options =>
             {

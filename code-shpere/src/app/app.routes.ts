@@ -208,5 +208,5 @@ export const routes: Routes = [
   { path: '**',
     component: ProjectListComponent ,
     canActivate: [AuthGuard] 
-   },
+  },
 ];

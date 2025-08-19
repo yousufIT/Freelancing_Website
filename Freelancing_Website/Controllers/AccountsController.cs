@@ -1,6 +1,7 @@
 ﻿using CodeSphere.Domain.Models;
 using Freelancing_Website.Models;
 using Freelancing_Website.Models.ForCreate;
+using Freelancing_Website.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,17 +50,19 @@ public class AccountsController : Controller
 
             if (result.Succeeded)
             {
-
-                var roleExists = await _roleManager.RoleExistsAsync("Freelancer");
-                if (!roleExists)
-                {
+                if (!await _roleManager.RoleExistsAsync("Freelancer"))
                     await _roleManager.CreateAsync(new IdentityRole("Freelancer"));
-                }
-                // Add the user to the "Freelancer" role
+
                 await _userManager.AddToRoleAsync(freelancer, "Freelancer");
-                var token = _jwtService.CreateJWT(model);
-                return Ok(new { token, freelancer.Id, freelancer.Role });
+
+                // get actual role and create token
+                var roles = await _userManager.GetRolesAsync(freelancer);
+                var role = roles.FirstOrDefault() ?? "Freelancer";
+
+                var token = _jwtService.CreateJWT(freelancer.Email, freelancer.UserName, role);
+                return Ok(new { token, id = freelancer.Id, role });
             }
+
 
             foreach (var error in result.Errors)
             {
@@ -91,19 +94,19 @@ public class AccountsController : Controller
 
             if (result.Succeeded)
             {
-                // Check if the role "Client" exists, if not, create it
-                var roleExists = await _roleManager.RoleExistsAsync("Client");
-                if (!roleExists)
-                {
+                if (!await _roleManager.RoleExistsAsync("Client"))
                     await _roleManager.CreateAsync(new IdentityRole("Client"));
-                }
 
-                // Add the user to the "Client" role
                 await _userManager.AddToRoleAsync(client, "Client");
 
-                var token = _jwtService.CreateJWT(model);
-                return Ok(new { token, client.Id, client.Role });
+                // get actual role and create token
+                var roles = await _userManager.GetRolesAsync(client);
+                var role = roles.FirstOrDefault() ?? "Client";
+
+                var token = _jwtService.CreateJWT(client.Email, client.UserName, role);
+                return Ok(new { token, id = client.Id, role });
             }
+
 
             foreach (var error in result.Errors)
             {
@@ -118,31 +121,26 @@ public class AccountsController : Controller
     [HttpPost("Login")]
     public async Task<IActionResult> Login(LoginData loginData)
     {
-        if (ModelState.IsValid)
-        {
-            var user = await _userManager.FindByEmailAsync(loginData.Email);
-            if (user != null)
-            {
-                var result = await _signInManager.PasswordSignInAsync(user, loginData.Password,
-                    false, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    UserForCreate model = new UserForCreate
-                    {
-                        UserName = user.UserName,
-                        Role = user.Role,
-                        Email = user.Email,
-                        Name = user.Name
-                    };
-                    var token = _jwtService.CreateJWT(model);
-                    return Ok(new { token, user.Id, user.Role });
-                }
-            }
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-        }
+        if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        return BadRequest(ModelState);
+        var user = await _userManager.FindByEmailAsync(loginData.Email);
+        if (user == null)
+            return BadRequest(new { message = "Invalid login attempt." });
+
+        // validate password without issuing cookie
+        if (!await _userManager.CheckPasswordAsync(user, loginData.Password))
+            return BadRequest(new { message = "Invalid login attempt." });
+
+        // get role from Identity (works even if you added role on register)
+        var roles = await _userManager.GetRolesAsync(user);
+        var role = roles.FirstOrDefault() ?? user.Role ?? "Client";
+
+        // create JWT using actual user info + role
+        var token = _jwtService.CreateJWT(user.Email, user.UserName, role);
+
+        return Ok(new { token, id = user.Id, role });
     }
+
 
     // Logout
     [HttpPost("Logout")]
@@ -151,4 +149,7 @@ public class AccountsController : Controller
         await _signInManager.SignOutAsync();
         return Ok(new { message = "User logged out successfully." });
     }
+
+
+
 }

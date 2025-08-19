@@ -1,46 +1,45 @@
-﻿using Freelancing_Website.Models.ForCreate;
-using Microsoft.IdentityModel.Tokens;
+﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
-public class JWTService
+namespace Freelancing_Website.Services
 {
-    private readonly IConfiguration _config;
-    private readonly SymmetricSecurityKey _jwtkey;
-    public JWTService(IConfiguration config)
+    public class JWTService
     {
-        _config = config;
-        _jwtkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-            _config["Authentication:SecretKey"]));
-    }
+        private readonly IConfiguration _config;
 
-    public string CreateJWT(UserForCreate user)
-    {
-        var userClaims = new List<Claim>
+        public JWTService(IConfiguration config)
         {
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim("user-name", user.UserName),
-            new Claim(ClaimTypes.Role, user.Role),
-            new Claim(ClaimTypes.Name, user.Name),
-        };
+            _config = config;
+        }
 
-        var credentials = new SigningCredentials(_jwtkey,
-            SecurityAlgorithms.HmacSha512Signature);
-
-        var tokenDescriptor = new SecurityTokenDescriptor
+        // Create token using email, username and role
+        public string CreateJWT(string email, string userName, string role)
         {
-            Subject = new ClaimsIdentity(userClaims),
-            Expires = DateTime.UtcNow.AddDays(7),
-            SigningCredentials = credentials,
-            Issuer = _config["Authentication:Issuer"],
-            Audience = _config["Authentication:Audience"]
-        };
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Email, email ?? string.Empty),
+                new Claim(JwtRegisteredClaimNames.UniqueName, userName ?? string.Empty),
+                // Use ClaimTypes.Role (standard Microsoft role claim URI)
+                new Claim(ClaimTypes.Role, role ?? string.Empty)
+            };
 
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var jwt = tokenHandler.CreateToken(tokenDescriptor);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Authentication:SecretKey"] ?? ""));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
-        return tokenHandler.WriteToken(jwt);
+            var token = new JwtSecurityToken(
+                issuer: _config["Authentication:Issuer"],
+                audience: _config["Authentication:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(6),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
-
 }

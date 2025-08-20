@@ -1,32 +1,29 @@
-<div>
-  <div class="container py-5">
-    <h2 class="mb-4 text-white">Manage Skills for Project ID: {{ projectId }}</h2>
-    
-    <div class="card bg-dark text-white p-4 mb-4">
-      <h3 class="mb-3">Select Skills to Add:</h3>
-      <ul class="list-group">
-        <li *ngFor="let skill of allskills" class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white">
-          <label>
-            <input 
-              type="checkbox" 
-              (change)="onSkillChange(skill.id, $event)" 
-              class="form-check-input"
-            />
-            {{ skill.name }}
-          </label>
-        </li>
-      </ul>
-      <button class="btn btn-primary mt-3" (click)="addSkills()">Add Selected Skills</button>
-    </div>
+<div class="container py-5">
+  <h2 class="mb-4 text-dark">Manage Skills for Project ID: {{ projectId }}</h2>
 
-    <div class="card bg-dark text-white p-4">
-      <h3 class="mb-3">Existing Skills:</h3>
-      <ul class="list-group">
-        <li *ngFor="let skill of skills" class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white">
+  <!-- Add Skills Section -->
+  <div class="card llfmp-card-light p-4 mb-4">
+    <h5 class="mb-3">Select Skills to Add:</h5>
+    <ul class="list-unstyled">
+      <li *ngFor="let skill of allskills" class="mb-2">
+        <label class="llfmp-checkbox">
+          <input type="checkbox" (change)="onSkillChange(skill.id, $event)">
+          <span class="checkmark"></span>
           {{ skill.name }}
-          <button class="btn btn-danger btn-sm" (click)="removeSkill(skill.id)">Remove</button>
-        </li>
-      </ul>
-    </div>
+        </label>
+      </li>
+    </ul>
+    <button class="btn llfmp-btn-primary mt-3" (click)="addSkills()">Add Selected Skills</button>
+  </div>
+
+  <!-- Existing Skills Section -->
+  <div class="card llfmp-card-light p-4">
+    <h5 class="mb-3">Existing Skills:</h5>
+    <ul class="list-unstyled">
+      <li *ngFor="let skill of skills" class="mb-2 d-flex justify-content-between align-items-center">
+        <span class="skill-badge">{{ skill.name }}</span>
+        <button class="btn llfmp-btn-danger btn-sm" (click)="removeSkill(skill.id)">Remove</button>
+      </li>
+    </ul>
   </div>
 </div>

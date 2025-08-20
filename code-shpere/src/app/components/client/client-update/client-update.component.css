@@ -1,0 +1,37 @@
+/* Card Light Style */
+.llfmp-card-light {
+    background: #fff;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .llfmp-card-light:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+  
+  /* Input Light Style with animation */
+  .llfmp-input-light {
+    background: #f8f9fa;
+    color: #343a40;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  .llfmp-input-light:focus {
+    border-color: #4e54c8;
+    box-shadow: 0 0 8px rgba(78, 84, 200, 0.3);
+  }
+  
+  /* Button Light Style */
+  .llfmp-btn-light {
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  .llfmp-btn-light:hover {
+    background: linear-gradient(to right, #8f94fb, #4e54c8);
+    box-shadow: 0 4px 12px rgba(78, 84, 200, 0.3);
+    transform: translateY(-2px);
+  }
+  

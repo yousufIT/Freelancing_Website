@@ -1,52 +1,41 @@
-/* Apply gradient background */
-.gradient-custom {
-  background: #6a11cb;
-  background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-  background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+/* Card Light Style */
+.llfmp-card-light {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.llfmp-card-light:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
-/* Full viewport height */
-.min-vh-100 {
-  min-height: 100vh;
-}
-
-/* Container styling for the card */
-.container {
-  max-width: 600px; /* Maximum width for better layout */
-  margin: 0 auto; /* Center the container */
-}
-
-/* Card style for better structure */
-.card {
+/* Input Style */
+.llfmp-input {
   border-radius: 8px;
-  background-color: #343a40; /* Dark background for the card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  transition: all 0.3s ease;
+}
+.llfmp-input:focus {
+  outline: none;
+  border-color: #4e54c8;
+  box-shadow: 0 0 8px rgba(78, 84, 200, 0.3);
 }
 
-/* Input fields styling */
-.form-control {
-  border-radius: 4px;
-  border: 1px solid #ced4da; /* Light border color */
-  background-color: #343a40; /* Dark background for the input fields */
-  color: white; /* Text color for input */
-}
-label {
-  color: white;
-}
-/* Change border color on focus */
-.form-control:focus {
-  border-color: #ffffff; /* Change border color on focus */
-  box-shadow: none; /* Remove shadow on focus */
-}
-
-/* Labels with bold text */
-.form-label {
+/* Buttons Large */
+.llfmp-btn-lg {
+  padding: 12px 30px;
+  border-radius: 12px;
   font-weight: 600;
+  border: none;
+  color: white;
+  transition: all 0.3s ease, box-shadow 0.3s ease;
 }
-
-/* Button styles */
-.btn-primary {
-  background-color: #007bff; /* Primary button color */
-  border-color: #007bff;
+.llfmp-btn-lg.btn-primary {
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+}
+.llfmp-btn-lg.btn-primary:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(78, 84, 200, 0.3);
 }

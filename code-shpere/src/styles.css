@@ -1,109 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-@import 'Bootstrap';
-/* @import './assets/css/local-design.css'; */
-
-
-
-
-/* styles.css or footer.component.css */
-html, body {
-  height: 100%;
-  margin: 0;
+:root {
+  --primary: #4e54c8;
+  --secondary: #8f94fb;
+  --accent: #ff6b6b;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --gray-light: #e4e6eb;
+  --input-bg: #f0f2f5;
+  --input-focus: #ffffff;
 }
 
-
-
-.wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* Sidebar Links */
+aside a {
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: block;
+  color: #333;
+  transition: all 0.3s ease;
+}
+aside a:hover {
+  background: var(--gray-light);
+  color: var(--primary);
+  transform: translateX(3px);
 }
 
-.footer {
-  background-color: #f8f9fa; /* Light background */
-  text-align: center;
-  margin-top: auto; /* Pushes footer to the bottom */
+/* Feed Cards */
+.feed-fb .card {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.feed-fb .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
 }
 
-.container {
+/* Input in Create Post */
+.feed-fb input {
+  background: var(--input-bg);
+  border: none;
+  padding: 12px 15px;
+  border-radius: 8px;
   width: 100%;
-  max-width: 960px; /* Optional: limits the width of the footer content */
-  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+.feed-fb input:focus {
+  outline: none;
+  background: var(--input-focus);
+  box-shadow: 0 0 0 2px var(--primary);
 }
 
-
-
-.list-group-item img {
-  max-width: 100px;
-  max-height: 100px;
+/* Contacts */
+.contacts-fb ul {
+  list-style: none;
+  padding: 0;
 }
-
-.form-label {
-  font-weight: bold;
+.contacts-fb li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+  padding: 6px 8px;
+  border-radius: 8px;
 }
-
-.img-thumbnail {
-  width: 150px;
-  height: 150px;
+.contacts-fb li:hover {
+  background: var(--gray-light);
+  transform: translateX(3px);
+}
+.contacts-fb img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
   object-fit: cover;
+  border: 2px solid var(--primary);
 }
-
-
-.gradient-custom {
-  background: #6a11cb;
-  background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-  background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
-  }
-  .btn {
-    text-transform: none;
-  }
-
-
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
-/*
-body {
-  background-color: white;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #111827; 
-  }
-}
-
-::-webkit-scrollbar {
-  width: 0.5rem; scrollbar width
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #6b7280; scrollbar color
-  border-radius: 1.5rem; scrollbar thumb shape
-}
-
-a {
-  cursor: pointer;
-}
-
-.medium-zoom-overlay {
-  background-color: rgba(255, 255, 255, 0.85); default zoom overlay
-  z-index: 2 !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  .medium-zoom-overlay {
-    background-color: rgba(17, 24, 39, 0.85); dark mode zoom overlay
-  }
-}
-
-.medium-zoom-image {
-  z-index: 10;
-}
-
-*/

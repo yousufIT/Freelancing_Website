@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
   standalone:true,
   imports:[FormsModule,CommonModule,RouterLink],
   templateUrl: './freelancer-details.component.html',
-  styleUrls: ['./freelancer-details.component.css','../../../../assets/css/local-design.css']
+  styleUrls: ['./freelancer-details.component.css']
 })
 export class FreelancerDetailsComponent implements OnInit {
   freelancerId: number | null = null;

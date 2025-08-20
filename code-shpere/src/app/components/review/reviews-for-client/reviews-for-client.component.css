@@ -1,0 +1,96 @@
+:root {
+    --primary: #4e54c8;
+    --secondary: #8f94fb;
+    --success-start: #28a745;
+    --success-end: #71dd8a;
+    --danger-start: #ff4d4f;
+    --danger-end: #ff7b79;
+    --light: #f8f9fa;
+    --dark: #343a40;
+  }
+  
+  /* Section Background */
+  .llfmp-section {
+    background: var(--light);
+    min-height: 100vh;
+  }
+  
+  /* Table Card */
+  .llfmp-table {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .llfmp-table:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  }
+  
+  /* Table Head */
+  .llfmp-table-head th {
+    color: var(--dark);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary);
+    padding: 12px 15px;
+  }
+  
+  /* Table Cells */
+  .llfmp-table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    color: var(--dark);
+  }
+  
+  /* Buttons */
+  .llfmp-btn-sm {
+    padding: 6px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+  }
+  
+  /* Info Button */
+  .llfmp-btn-sm.btn-info {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+  }
+  .llfmp-btn-sm.btn-info:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(78,84,200,0.3);
+  }
+  
+  /* Success Button */
+  .llfmp-btn-sm.btn-success {
+    background: linear-gradient(to right, var(--success-start), var(--success-end));
+  }
+  .llfmp-btn-sm.btn-success:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(40,167,69,0.3);
+  }
+  
+  /* Danger Button */
+  .llfmp-btn-sm.btn-danger {
+    background: linear-gradient(to right, var(--danger-start), var(--danger-end));
+  }
+  .llfmp-btn-sm.btn-danger:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(255,77,79,0.3);
+  }
+  
+  /* Pagination */
+  .pagination .page-item .llfmp-btn-sm {
+    margin: 0 2px;
+  }
+  
+  /* Pagination Active */
+  .page-item.active .llfmp-btn-sm.btn-success {
+    background: linear-gradient(to right, var(--success-start), var(--success-end));
+    color: white;
+    border: none;
+  }
+  

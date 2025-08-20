@@ -1,9 +1,101 @@
-
-        /* Background colors for selected roles */
-        .selected-client {
-            background-color: rgba(106, 17, 203, 1);
-        }
-
-        .selected-freelancer {
-            background-color: rgba(37, 117, 252, 1);
-        }
+:root {
+    --primary: #4e54c8;
+    --secondary: #8f94fb;
+    --accent: #ff6b6b;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --card-light: #ffffff;
+  }
+  
+  /* General Background */
+  .llfmp-bg-light {
+    background: #f8f9fa;
+    color: var(--dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Card */
+  .llfmp-card-light {
+    border-radius: 16px;
+    background: var(--card-light);
+    border: 2px solid var(--primary);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .llfmp-card-light:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  }
+  
+  /* Role Selection */
+  .role-option {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .role-option input:checked + .role-label-light {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    transform: scale(1.05);
+    border: 2px solid var(--primary);
+  }
+  .role-label-light {
+    display: block;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-align: center;
+    color: var(--dark);
+    background: #fdfdfd;
+  }
+  .role-label-light i {
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  .role-option input:checked + .role-label-light i {
+    transform: scale(1.2) rotate(-5deg);
+    color: #fff;
+  }
+  
+  /* Buttons */
+ /* زر Continue */
+.llfmp-btn-lg {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 12px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease, box-shadow 0.3s ease;
+  }
+  .llfmp-btn-lg:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(78, 84, 200, 0.3);
+    background: linear-gradient(to right, var(--secondary), var(--primary));
+  }
+  .llfmp-btn-lg:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 0 3px 10px rgba(78, 84, 200, 0.2);
+  }
+  
+  
+  .llfmp-btn-outline {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 12px;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: 600;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .llfmp-btn-outline:hover {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    border-color: var(--primary);
+    transform: translateY(-2px) scale(1.02);
+    color: white;
+  }
+  

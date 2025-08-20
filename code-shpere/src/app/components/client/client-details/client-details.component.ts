@@ -10,7 +10,7 @@ import { ClientService } from 'src/app/services/client.service';
   standalone: true,
   imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './client-details.component.html',
-  styleUrls: ['./client-details.component.css','../../../../assets/css/local-design.css']
+  styleUrls: ['./client-details.component.css']
 })
 export class ClientDetailsComponent implements OnInit {
   clientId: number | null = null;

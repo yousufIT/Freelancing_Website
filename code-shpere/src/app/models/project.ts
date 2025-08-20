@@ -15,4 +15,6 @@ export interface Project {
     budget: number;
     status: string;
     bids: Bid[];
+    bidCount?: number; 
+    createdAt:number;
 }

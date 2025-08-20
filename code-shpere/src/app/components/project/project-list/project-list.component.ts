@@ -23,6 +23,7 @@ export class ProjectListComponent implements OnInit {
   skillIds: string = ''; 
   skills: Skill[] = [];
   skillsIds: number[] = [];
+  bidCounts:number=0;
   paginationMetaData: PaginationMetaData = {
     currentPage: 1,
     pageSize: 10,
@@ -50,6 +51,12 @@ export class ProjectListComponent implements OnInit {
           this.projects = data.items;
           this.paginationMetaData = data.paginationMetaData;
           this.totalPageCount=this.paginationMetaData.totalPageCount;
+          this.projects.forEach(project => {
+            project.bidCount = project.bids?.length ?? 0;
+            project.createdAt=Date.now();
+          });
+         
+          
         });
   }
 

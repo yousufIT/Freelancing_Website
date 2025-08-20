@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
   standalone: true,
   imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './register-client.component.html',
-  styleUrls: ['./register-client.component.css','../../../../assets/css/local-design.css']
+  styleUrls: ['./register-client.component.css']
 })
 export class RegisterClientComponent {
   user: ClientForCreate = {

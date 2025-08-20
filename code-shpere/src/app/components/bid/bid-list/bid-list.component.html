@@ -1,40 +1,70 @@
-<div class="min-vh-100 gradient-custom">
+<div class="min-vh-100 bg-light">
   <div class="container py-5">
-    <h2 class="text-center mb-4 text-white">Bids for Project</h2>
-    <button [routerLink]="['/project', projectId]" class="btn btn-secondary mb-3">Back to Project Details</button>
-    
-    <div class="list-group">
-      <div *ngFor="let bid of bids" class="list-group-item bg-dark text-white ">
-        <h5 class="mb-1">Bid Amount: {{ bid.amount | currency }}</h5>
-        <p class="mb-1">Proposal: {{ bid.proposal }}</p>
-        <small>Freelancer ID: {{ bid.freelancerId }}</small>
-        @if(auth.getUserRole()==='Freelancer'&& auth.getUserId()===bid.freelancerId){
-          <button [routerLink]="['/bids', bid.id, 'update']" class="btn btn-outline-warning btn-sm ms-3">Edit</button>
-      }
-        <button [routerLink]="['/freelancer/',bid.freelancerId]" class="btn btn-outline-light btn-sm ms-3">View Freelancer</button>
+    <h2 class="text-center mb-4 text-dark">Bids for Project</h2>
+
+    <!-- Back Button -->
+    <button [routerLink]="['/project', projectId]" class="llfmp-btn-sm btn-secondary mb-3">
+      Back to Project Details
+    </button>
+
+    <!-- Bids List -->
+    <div class="row g-3">
+      <div *ngFor="let bid of bids" class="col-md-6">
+        <div class="llfmp-card-light p-3 h-100">
+          <h5 class="mb-2">
+            Bid Amount: 
+            <span class="text-primary fw-bold">{{ bid.amount | currency }}</span>
+          </h5>
+          <p class="mb-2">Proposal: {{ bid.proposal }}</p>
+          <small class="text-muted">Freelancer ID: {{ bid.freelancerId }}</small>
+
+          <!-- Action Buttons -->
+          <div class="mt-3 d-flex flex-wrap gap-2">
+            <button *ngIf="auth.getUserRole()==='Freelancer' && auth.getUserId()===bid.freelancerId"
+                    [routerLink]="['/bids', bid.id, 'update']" 
+                    class="llfmp-btn-success">
+              Edit
+            </button>
+            <button [routerLink]="['/freelancer/', bid.freelancerId]" 
+                    class="llfmp-btn-sm btn-info">
+              View Freelancer
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  
+
+    <!-- No Bids Alert -->
     <div *ngIf="bids.length === 0" class="alert alert-info mt-3">
       No bids available for this project.
     </div>
-  </div>
-  <div class="row g-0 align-items-center pb-4">
-           
-    <div class="col-sm-6">
+
+    <!-- Pagination -->
+    <div class="row g-0 align-items-center mt-4">
+      <div class="col-sm-6">
         <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
-                <li class="page-item" [class.disabled]="currentPage === 1">
-                    <button class="page-link btn btn-outline-dark bg-dark text-white" (click)="goToPage(currentPage - 1)">Previous</button>
-                </li>
-                <li class="page-item" *ngFor="let page of [].constructor(totalPageCount); let i = index">
-                    <button class="page-link btn btn-outline-dark bg-dark text-white" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
-                </li>
-                <li class="page-item" [class.disabled]="currentPage === totalPageCount">
-                    <button class="page-link btn btn-outline-dark bg-dark text-white" (click)="goToPage(currentPage + 1)">Next</button>
-                </li>
-            </ul>
+          <ul class="pagination justify-content-end">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link llfmp-btn-sm " 
+                      (click)="goToPage(currentPage - 1)">
+                Previous
+              </button>
+            </li>
+            <li class="page-item" *ngFor="let page of [].constructor(totalPageCount); let i = index">
+              <button class="page-link llfmp-btn-sm " 
+                      (click)="goToPage(i + 1)">
+                {{ i + 1 }}
+              </button>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPageCount">
+              <button class="page-link llfmp-btn-sm " 
+                      (click)="goToPage(currentPage + 1)">
+                Next
+              </button>
+            </li>
+          </ul>
         </nav>
+      </div>
     </div>
-</div>
+  </div>
 </div>

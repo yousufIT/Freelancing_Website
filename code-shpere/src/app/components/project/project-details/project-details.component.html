@@ -1,41 +1,47 @@
-<section class="vh-100 gradient-custom">
-  <div class="container py-5">
-    <div *ngIf="errorMessage" class="alert alert-danger">
+<section class="vh-100 py-5">
+  <div class="container">
+
+    <!-- رسالة الخطأ -->
+    <div *ngIf="errorMessage" class="alert alert-danger llfmp-loading">
       {{ errorMessage }}
     </div>
 
-    <div *ngIf="project" class="card text-white bg-dark shadow-lg">
+    <!-- كارد المشروع -->
+    <div *ngIf="project" class="card llfmp-card p-4 mb-4">
       <div class="card-body">
-        <h2 class="card-title">{{ project.title }}</h2>
+        <h2 class="card-title mb-3">{{ project.title }}</h2>
         <p class="card-text"><strong>Description:</strong> {{ project.description }}</p>
-        <p class="card-text"><strong>Budget:</strong> {{ project.budget | currency }}</p>
+        <p class="card-text"><strong>Budget:</strong> <span class="text-primary fw-bold">{{ project.budget | currency }}</span></p>
         <p class="card-text"><strong>Skills Required:</strong>
-          <span *ngFor="let skill of project.requiredSkills" class="badge bg-secondary me-1">
+          <span *ngFor="let skill of project.requiredSkills" class="skill-badge">
             {{ skill?.name }}
           </span>
         </p>
         <p class="card-text"><strong>Status:</strong> {{ project.status }}</p>
 
-        <div class="mt-3 d-flex gap-2">
-          <a [routerLink]="['/projects', project.id, 'bids']" class="btn btn-outline-light">View Bids</a>
-          @if(auth.getUserRole()==='Freelancer' ){
-            <a [routerLink]="['/projects', project.id, 'bids', 'create']" class="btn btn-outline-info">Create Bid</a>
-        }
+        <!-- أزرار الإجراءات -->
+        <div class="mt-3 d-flex flex-wrap gap-2">
+          <a [routerLink]="['/projects', project.id, 'bids']" class="llfmp-btn-sm">View Bids</a>
+          <a *ngIf="auth.getUserRole()==='Freelancer'" [routerLink]="['/projects', project.id, 'bids', 'create']" class="llfmp-btn-success ">
+            Create Bid
+          </a>
         </div>
       </div>
-      <div class="card-footer bg-dark border-light">
-        <div class="d-flex justify-content-end gap-2">
-          <button (click)="goBack()" class="btn btn-outline-secondary">Go Back</button>
-          @if(auth.getUserRole()==='Client' && auth.getUserId()===project.clientId){
-            <button (click)="edit()" class="btn btn-outline-primary">Edit</button>
-            <button (click)="deleteProject()" class="btn btn-outline-danger">Delete Project</button>
-        }
-        </div>
+
+      <!-- Footer Buttons -->
+      <div class="card-footer d-flex justify-content-end gap-2">
+        <button (click)="goBack()" class="llfmp-btn-sm btn-secondary">Go Back</button>
+        <ng-container *ngIf="auth.getUserRole()==='Client' && auth.getUserId()===project.clientId">
+          <button (click)="edit()" class="llfmp-btn-sm btn-primary">Edit</button>
+          <button (click)="deleteProject()" class="llfmp-btn-sm btn-danger">Delete Project</button>
+        </ng-container>
       </div>
     </div>
 
-    <div *ngIf="!project && !errorMessage" class="alert alert-info text-white bg-secondary">
+    <!-- Loading -->
+    <div *ngIf="!project && !errorMessage" class="llfmp-loading">
       Loading project details...
     </div>
+
   </div>
 </section>

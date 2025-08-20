@@ -1,11 +1,11 @@
-<div class="min-vh-100 gradient-custom">
+<div class="min-vh-100 bg-light">
   <div class="container py-5">
-    <div class="card bg-dark text-white shadow-lg p-4">
-      <h2 class="text-center mb-4">Update Bid</h2>
+    <div class="card llfmp-card-light shadow-lg p-4">
+      <h2 class="text-center mb-4 text-dark">Update Bid</h2>
 
       <form (ngSubmit)="updateBid()">
         <div class="form-outline mb-4">
-          <label for="amount" class="form-label">Amount</label>
+          <label for="amount" class="form-label text-dark">Amount</label>
           <input 
             type="number" 
             id="amount" 
@@ -13,11 +13,12 @@
             [(ngModel)]="bid.amount" 
             name="amount" 
             required 
+            placeholder="Enter your bid amount"
           />
         </div>
 
         <div class="form-outline mb-4">
-          <label for="proposal" class="form-label">Proposal</label>
+          <label for="proposal" class="form-label text-dark">Proposal</label>
           <textarea 
             id="proposal" 
             class="form-control" 
@@ -25,11 +26,14 @@
             name="proposal" 
             rows="4" 
             required
+            placeholder="Write your proposal..."
           ></textarea>
         </div>
 
         <div class="text-center">
-          <button type="submit" class="btn btn-primary btn-lg">Update Bid</button>
+          <button type="submit" class="btn llfmp-btn-primary btn-lg">
+            Update Bid
+          </button>
         </div>
       </form>
     </div>

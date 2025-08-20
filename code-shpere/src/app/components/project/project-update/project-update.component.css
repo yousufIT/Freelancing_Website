@@ -1,67 +1,42 @@
-/* Ensuring proper styling with the main style */
-.gradient-custom {
-  background: #6a11cb;
-  background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-  background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+/* Card */
+.llfmp-card {
+  border-radius: 12px;
+  background: white;
+  border: 2px solid var(--primary);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.llfmp-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
-/* Full viewport height */
-.min-vh-100 {
-  min-height: 100vh;
-}
-
-/* Card style for better structure */
-.card {
+/* Input */
+.llfmp-input {
   border-radius: 8px;
-  background-color: #343a40; /* Dark background */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+}
+.llfmp-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 6px rgba(78,84,200,0.3);
 }
 
-/* Input fields styling */
-.form-control {
-  background-color: #343a40; /* Dark background */
-  border: 1px solid #ccc; /* Border color */
-  color: white; /* Text color */
-  padding: 10px; /* Adjust padding */
+/* Button */
+.llfmp-btn-sm {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
 }
-
-.form-control:focus {
-  border-color: #ffffff; /* Change border color on focus */
-  box-shadow: none; /* Remove shadow on focus */
-}
-
-/* Labels positioned above the input fields */
-.form-label {
-  font-weight: 600; /* Bold text */
-  color: #ffffff; /* Label color */
-  margin-bottom: 0.5rem; /* Space between label and input */
-}
-
-/* Make the button more prominent */
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-}
-
-/* Center the form for better user experience */
-.text-center {
-  text-align: center;
-}
-
-/* Add spacing between sections */
-.mt-5 {
-  margin-top: 3rem;
-}
-
-.mb-4 {
-  margin-bottom: 1.5rem;
-}
-
-/* Manage Skills specific section */
-.card + .card {
-  margin-top: 20px;
-  padding: 20px;
+.llfmp-btn-sm:hover {
+  background: linear-gradient(to right, var(--secondary), var(--primary));
+  box-shadow: 0 4px 12px rgba(78,84,200,0.3);
+  transform: translateY(-2px);
 }

@@ -1,24 +1,26 @@
-<div class="min-vh-100 gradient-custom">
-  <div class="container py-5">
-    <h2 class="mb-4 text-light">{{ isEdit ? 'Edit Portfolio Item' : 'Create Portfolio Item' }}</h2>
+<div class="min-vh-100 py-5 bg-light">
+  <div class="container">
+    <h2 class="mb-4 text-dark">{{ isEdit ? 'Edit Portfolio Item' : 'Create Portfolio Item' }}</h2>
 
-  <form (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="title" class="form-label text-light">Title</label>
-      <input type="text" id="title" [(ngModel)]="portfolioItem.title" name="title" class="form-control bg-dark text-light" required />
-    </div>
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <input type="text" id="title" [(ngModel)]="portfolioItem.title" name="title"
+               placeholder="Title" class="form-control llfmp-input" required />
+      </div>
 
-    <div class="mb-3">
-      <label for="description" class="form-label text-light">Description</label>
-      <textarea id="description" [(ngModel)]="portfolioItem.description" name="description" class="form-control bg-dark text-light" required></textarea>
-    </div>
+      <div class="mb-3">
+        <textarea id="description" [(ngModel)]="portfolioItem.description" name="description"
+                  placeholder="Description" class="form-control llfmp-input" required></textarea>
+      </div>
 
-    <div class="mb-3">
-      <label for="imageUrl" class="form-label text-light">Image URL</label>
-      <input type="text" id="imageUrl" [(ngModel)]="portfolioItem.imageUrl" name="imageUrl" class="form-control bg-dark text-light" />
-    </div>
+      <div class="mb-3">
+        <input type="text" id="imageUrl" [(ngModel)]="portfolioItem.imageUrl" name="imageUrl"
+               placeholder="Image URL" class="form-control llfmp-input" />
+      </div>
 
-    <button type="submit" class="btn btn-primary">{{ isEdit ? 'Update' : 'Create' }} Portfolio Item</button>
-  </form>
+      <button type="submit" class="llfmp-btn-lg mt-3">
+        {{ isEdit ? 'Update' : 'Create' }} Portfolio Item
+      </button>
+    </form>
   </div>
 </div>

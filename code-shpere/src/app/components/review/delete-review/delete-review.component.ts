@@ -9,7 +9,7 @@ import { ReviewService } from 'src/app/services/review.service';
   standalone: true,
   imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './delete-review.component.html',
-  styleUrls: ['./delete-review.component.css','../../../../assets/css/local-design.css']
+  styleUrls: ['./delete-review.component.css']
 })
 export class DeleteReviewComponent implements OnInit {
   reviewId!: number;

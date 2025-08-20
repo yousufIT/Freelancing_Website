@@ -11,7 +11,7 @@ import { SkillService } from 'src/app/services/skill.service';
   standalone: true,
   imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './freelancer-skills.component.html',
-  styleUrls: ['./freelancer-skills.component.css','../../../../assets/css/local-design.css']
+  styleUrls: ['./freelancer-skills.component.css']
 })
 export class FreelancerSkillsComponent implements OnInit, OnDestroy{
 

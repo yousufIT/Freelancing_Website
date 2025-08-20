@@ -1,34 +1,40 @@
-<div class="min-vh-100 gradient-custom">
+<div class="min-vh-100 bg-light">
   <div class="container py-5">
-    <h2 class="mb-4 text-white">Create Bid</h2>
-    <div class="card bg-dark text-white p-4">
+    <h2 class="mb-4 text-dark">Create Bid</h2>
+
+    <div class="card llfmp-card-light p-4 mx-auto" style="max-width: 600px;">
       <form (ngSubmit)="createBid()">
+
         <div class="mb-3">
-          <label for="amount" class="form-label">Amount</label>
+          <label for="amount" class="form-label text-dark">Amount</label>
           <input 
             type="number" 
             id="amount" 
-            class="form-control" 
+            class="form-control llfmp-input" 
             [(ngModel)]="bid.amount" 
             name="amount" 
             required 
+            placeholder="Enter your bid amount"
           />
         </div>
-        
+
         <div class="mb-3">
-          <label for="proposal" class="form-label">Proposal</label>
+          <label for="proposal" class="form-label text-dark">Proposal</label>
           <textarea 
             id="proposal" 
-            class="form-control" 
+            class="form-control llfmp-input" 
             [(ngModel)]="bid.proposal" 
             name="proposal" 
+            rows="5" 
             required 
+            placeholder="Write your proposal here"
           ></textarea>
         </div>
-        
+
         <div class="text-center">
-          <button type="submit" class="btn btn-primary">Submit Bid</button>
+          <button type="submit" class="btn llfmp-btn-lg btn-primary">Submit Bid</button>
         </div>
+
       </form>
     </div>
   </div>

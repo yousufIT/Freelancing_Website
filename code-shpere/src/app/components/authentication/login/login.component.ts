@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
   imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './login.component.html',
   // stylesUrl: 
-  styleUrls:['./login.component.css','../../../../assets/css/local-design.css']
+  styleUrls:['./login.component.css']
 })
 export class LoginComponent {
   email: string = '';

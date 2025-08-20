@@ -12,7 +12,7 @@ import { ClientService } from 'src/app/services/client.service';
   standalone: true,
   imports: [FormsModule, CommonModule,RouterLink],
   templateUrl: './manage-client.component.html',
-  styleUrls: ['./manage-client.component.css','../../../../assets/css/local-design.css']
+  styleUrls: ['./manage-client.component.css']
 })
 export class ManageClientComponent implements OnInit {
   clientId: number | null = null;

@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './client-update.component.html',
-  styleUrls: ['./client-update.component.css','../../../../assets/css/local-design.css']
+  styleUrls: ['./client-update.component.css']
 })
 export class ClientUpdateComponent implements OnInit {
   clientId: number | undefined; // Store the client ID

@@ -1,32 +1,40 @@
 <section class="min-vh-100 gradient-custom">
-  <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                  <div class="card-body p-5 text-center">
-
-                      <h2 class="fw-bold mb-4 text-uppercase">Update Review</h2>
-
-                      <form (ngSubmit)="submitReview()">
-                          <div class="form-outline form-white mb-4">
-                              <input type="number" id="rating" class="form-control form-control-lg" [(ngModel)]="review.rating" name="rating" min="1" max="5" required placeholder=" " />
-                              <label for="rating" class="form-label">Rating</label>
-                          </div>
-
-                          <div class="form-outline form-white mb-4">
-                              <textarea id="comment" class="form-control form-control-lg" [(ngModel)]="review.comment" name="comment" rows="4" required placeholder=" "></textarea>
-                              <label for="comment" class="form-label">Comment</label>
-                          </div>
-
-                          <div class="d-flex justify-content-center">
-                              <button type="submit" class="btn btn-outline-light btn-lg px-5">Update Review</button>
-                              <a (click)="goToList()" class="btn btn-outline-secondary btn-lg px-5 ms-2">Cancel</a>
-                          </div>
-                      </form>
-
-                  </div>
-              </div>
+    <div class="container py-5 h-100 d-flex justify-content-center align-items-center">
+      <div class="card llr-card-light p-4 text-center">
+        <h2 class="fw-bold mb-4">Update Review</h2>
+  
+        <form (ngSubmit)="submitReview()">
+          <div class="form-outline mb-4">
+            <input 
+              type="number" 
+              id="rating" 
+              class="form-control llr-input" 
+              [(ngModel)]="review.rating" 
+              name="rating" 
+              min="1" max="5" 
+              required 
+              placeholder="Rating (1-5)" 
+            />
           </div>
+  
+          <div class="form-outline mb-4">
+            <textarea 
+              id="comment" 
+              class="form-control llr-input" 
+              [(ngModel)]="review.comment" 
+              name="comment" 
+              rows="4" 
+              required 
+              placeholder="Write your comment here..."
+            ></textarea>
+          </div>
+  
+          <div class="d-flex justify-content-center gap-2">
+            <button type="submit" class="btn llr-btn-primary">Update Review</button>
+            <button type="button" class="btn llr-btn-secondary" (click)="goToList()">Cancel</button>
+          </div>
+        </form>
       </div>
-  </div>
-</section>
+    </div>
+  </section>
+  

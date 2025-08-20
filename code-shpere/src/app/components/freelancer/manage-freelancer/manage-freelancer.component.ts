@@ -14,7 +14,7 @@ import { PortfolioItem } from 'src/app/models/portfolio-item';
   standalone: true,
   imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './manage-freelancer.component.html',
-  styleUrls: ['./manage-freelancer.component.css', '../../../../assets/css/local-design.css']
+  styleUrls: ['./manage-freelancer.component.css']
 })
 export class ManageFreelancerComponent implements OnInit {
   freelancerId: number | null = null;

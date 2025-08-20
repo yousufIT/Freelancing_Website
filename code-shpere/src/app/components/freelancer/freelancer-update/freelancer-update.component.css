@@ -1,0 +1,37 @@
+/* Card Style */
+.llfmp-card-light {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .llfmp-card-light:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+  
+  /* Input fields */
+  .llfmp-input {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  .llfmp-input:focus {
+    border-color: #4e54c8;
+    box-shadow: 0 0 8px rgba(78, 84, 200, 0.4);
+    outline: none;
+  }
+  
+  /* Buttons */
+  .llfmp-btn-primary {
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  .llfmp-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(78, 84, 200, 0.3);
+    background: linear-gradient(to right, #8f94fb, #4e54c8);
+  }
+  

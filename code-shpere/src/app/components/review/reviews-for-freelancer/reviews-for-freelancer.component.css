@@ -1,0 +1,154 @@
+:root {
+    --primary: #2563eb;
+    --secondary: #4f46e5;
+    --info: #0ea5e9;
+    --light-bg: #f9fafb;
+    --card-bg: #ffffff;
+    --text-dark: #111827;
+  }
+  
+  /* Section Background */
+  .llfmp-bg-light {
+    background-color: var(--light-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-dark);
+  }
+  
+  /* Table Styles */
+  .llfmp-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+  .llfmp-table thead th {
+    color: var(--text-dark);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary);
+  }
+  .llfmp-table tbody tr {
+    background: var(--card-bg);
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .llfmp-table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .llfmp-table td, .llfmp-table th {
+    vertical-align: middle;
+    padding: 12px 15px;
+  }
+  
+  /* Buttons */
+  .llfmp-btn-outline-sm {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    background: transparent;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+  }
+  .llfmp-btn-outline-sm:hover {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  .llfmp-btn-primary-sm {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+  }
+  .llfmp-btn-primary-sm:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(78, 84, 200, 0.3);
+  }
+  
+  .llfmp-btn-info-sm {
+    background: var(--info);
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+  }
+  .llfmp-btn-info-sm:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(14, 165, 233,0.3);
+  }
+  
+  /* Pagination */
+  .pagination .page-link {
+    color: white;
+    background: linear-gradient(to right, #28a745, #71dd8a);
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease, box-shadow 0.3s ease;
+  }
+  .pagination .page-link:hover {
+    background: linear-gradient(to right, #71dd8a, #28a745);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+    transform: translateY(-3px) scale(1.05);
+  }
+  .pagination .page-item.active .page-link {
+    background: linear-gradient(to right, #28a745, #71dd8a);
+    color: white;
+    border: none;
+  }
+/* LLFMP Table Buttons */
+.llfmp-table .btn {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+  }
+  
+  .llfmp-table .btn:hover {
+    background: linear-gradient(to right, var(--secondary), var(--primary));
+    box-shadow: 0 4px 12px rgba(78, 84, 200, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .llfmp-btn-success {
+    background: linear-gradient(to right, #28a745, #71dd8a);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    padding: 8px 15px;
+    text-decoration: none;
+    transition: all 0.3s ease, box-shadow 0.3s ease;
+  }
+  .llfmp-btn-success:hover {
+    background: linear-gradient(to right, #71dd8a, #28a745);
+    box-shadow: 0 6px 20px rgba(40,167,69,0.3);
+    transform: translateY(-2px);
+}
+  
+  /* Button Danger Animation */
+  .llfmp-btn-danger {
+    background: linear-gradient(to right, #ff4d4f, #ff7b79);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 8px 15px;
+    transition: all 0.3s ease, box-shadow 0.3s ease;
+}
+  .llfmp-btn-danger:hover {
+    background: linear-gradient(to right, #ff7b79, #ff4d4f);
+    box-shadow: 0 6px 20px rgba(255,77,79,0.3);
+    transform: translateY(-2px);
+ }
+  

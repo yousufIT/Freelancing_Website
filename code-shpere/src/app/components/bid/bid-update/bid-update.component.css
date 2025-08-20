@@ -1,47 +1,25 @@
-/* Full viewport height */
-.min-vh-100 {
-  min-height: 100vh;
+/* Card Light Style */
+.llfmp-card-light {
+  background: #fff;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.llfmp-card-light:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-/* Gradient background */
-.gradient-custom {
-  background: #6a11cb;
-  background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-  background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-}
-
-/* Centered card with dark theme */
-.card {
-  background-color: #343a40; /* Input background color */
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Form inputs */
-.form-control {
-  background-color: #343a40; /* Input background matches the main style */
+/* Buttons Primary */
+.llfmp-btn-primary {
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
   color: white;
-  border: 1px solid #ccc;
-}
-
-.form-control:focus {
-  border-color: #ffffff; /* Change border color on focus */
-  box-shadow: none;
-}
-
-.form-label {
-  color: #ffffff; /* Label color */
   font-weight: 600;
-}
-
-/* Button styling */
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+  border: none;
+  border-radius: 8px;
   padding: 10px 20px;
-  font-size: 1.2rem;
+  transition: all 0.3s ease, box-shadow 0.3s ease;
 }
-
-.text-center {
-  text-align: center;
+.llfmp-btn-primary:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(78, 84, 200, 0.3);
 }

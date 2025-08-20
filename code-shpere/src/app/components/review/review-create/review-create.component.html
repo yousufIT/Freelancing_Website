@@ -1,32 +1,46 @@
-<section class="min-vh-100 gradient-custom">
-  <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                  <div class="card-body p-5 text-center">
-
-                      <h2 class="fw-bold mb-4 text-uppercase">Create a Review</h2>
-
-                      <form (ngSubmit)="submitReview()">
-                          <div class="form-outline form-white mb-4">
-                              <input type="number" id="rating" class="form-control form-control-lg" [(ngModel)]="review.rating" name="rating" min="1" max="5" required placeholder=" " />
-                              <label for="rating" class="form-label">Rating</label>
-                          </div>
-
-                          <div class="form-outline form-white mb-4">
-                              <textarea id="comment" class="form-control form-control-lg" [(ngModel)]="review.comment" name="comment" rows="4" required placeholder=" "></textarea>
-                              <label for="comment" class="form-label">Comment</label>
-                          </div>
-
-                          <div class="d-flex justify-content-center">
-                              <button type="submit" class="btn btn-outline-light btn-lg px-5">Submit Review</button>
-                              <a [routerLink]="['/review/freelancer/',freelancerId]" class="btn btn-outline-secondary btn-lg px-5 ms-2">Cancel</a>
-                          </div>
-                      </form>
-
-                  </div>
-              </div>
+<section class="min-vh-100 llfmp-bg-light">
+    <div class="container py-5 h-100 d-flex justify-content-center align-items-center">
+      <div class="card llfmp-card-light p-4 text-center">
+  
+        <h2 class="fw-bold mb-4 llfmp-title">Create a Review</h2>
+  
+        <form (ngSubmit)="submitReview()">
+  
+          <div class="form-outline mb-3 text-start">
+            <label class="form-label llfmp-label mb-2" for="rating">Rating (1-5)</label>
+            <input 
+              type="number" 
+              id="rating" 
+              class="llfmp-input" 
+              [(ngModel)]="review.rating" 
+              name="rating" 
+              min="1" max="5" 
+              required
+              placeholder="Enter rating from 1 to 5"
+            />
           </div>
+  
+          <div class="form-outline mb-3 text-start">
+            <label class="form-label llfmp-label mb-2" for="comment">Comment</label>
+            <textarea 
+              id="comment" 
+              class="llfmp-input" 
+              [(ngModel)]="review.comment" 
+              name="comment" 
+              rows="4" 
+              required
+              placeholder="Write your comment here..."
+            ></textarea>
+          </div>
+  
+          <div class="d-flex justify-content-center gap-2 mt-3">
+            <button type="submit" class="llfmp-btn-lg btn-success">Submit Review</button>
+            <a [routerLink]="['/review/freelancer/', freelancerId]" class="llfmp-btn-danger">Cancel</a>
+          </div>
+  
+        </form>
+  
       </div>
-  </div>
-</section>
+    </div>
+  </section>
+  

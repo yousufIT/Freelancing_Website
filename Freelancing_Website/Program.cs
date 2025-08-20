@@ -1,12 +1,14 @@
-using CodeSphere.Domain.Interfaces.Repos;
+﻿using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
 using CodeSphere.Infrastructure.Context;
 using CodeSphere.Infrastructure.Repos;
 using Freelancing_Website.Interfaces;
 using Freelancing_Website.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 namespace Freelancing_Website
@@ -34,19 +36,59 @@ namespace Freelancing_Website
 
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddAuthentication().AddJwtBearer(options =>
+
+
+            // Identity (user/role management). Keep if you need UserManager/RoleManager.
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
             {
-                options.TokenValidationParameters = new()
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredLength = 8;
+            })
+            .AddEntityFrameworkStores<CodeSphereContext>()
+            .AddDefaultTokenProviders();
+
+            // Prevent cookie auth from redirecting to /Account/Login (useful fallback)
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                };
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    return Task.CompletedTask;
+                };
+            });
+
+            // NOW register Authentication and make JWT the default scheme (after AddIdentity)
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidIssuer = builder.Configuration["Authentication:Issuer"],
                     ValidAudience = builder.Configuration["Authentication:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(
-                                         builder.Configuration["Authentication:SecretKey"])),
+                        builder.Configuration["Authentication:SecretKey"] ?? string.Empty)),
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateIssuerSigningKey = true
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    RoleClaimType = ClaimTypes.Role,   
+                    NameClaimType = ClaimTypes.Email
                 };
             });
+
+
             builder.Services.AddAuthorization();
 
             // 1. Enable CORS
@@ -60,17 +102,9 @@ namespace Freelancing_Website
                 });
             });
 
-            builder.Services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequiredLength = 8;
-            })
-                    .AddEntityFrameworkStores<CodeSphereContext>()
-                    .AddDefaultTokenProviders();
+            
 
+            
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -119,10 +153,13 @@ namespace Freelancing_Website
             }
 
             app.UseHttpsRedirection();
+
+
+            app.UseCors("AllowAll");
+
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors("AllowAll");
 
             app.MapControllers();
 

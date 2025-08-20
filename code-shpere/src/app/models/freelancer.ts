@@ -11,7 +11,6 @@ export interface Freelancer {
     role: string;
     passwordHash: string;
     email: string;
-    hourlyRate: number;
     bids: Bid[];
     reviewsReceived: Review[];
     completedProjects: Project[];

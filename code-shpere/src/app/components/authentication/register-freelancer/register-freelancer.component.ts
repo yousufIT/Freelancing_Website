@@ -23,7 +23,6 @@ export class RegisterFreelancerComponent {
     role: 'freelancer', 
     passwordHash: '',
     email: '',
-    hourlyRate: 0 
   };
   errorMessage: string = '';
 

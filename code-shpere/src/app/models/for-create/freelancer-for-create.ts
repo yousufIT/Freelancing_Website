@@ -8,5 +8,4 @@ export interface FreelancerForCreate {
     role: string;
     passwordHash: string;
     email: string;
-    hourlyRate: number;
 }

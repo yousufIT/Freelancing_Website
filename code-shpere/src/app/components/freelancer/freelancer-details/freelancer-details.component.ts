@@ -27,7 +27,6 @@ export class FreelancerDetailsComponent implements OnInit {
     role: '',
     passwordHash: '',
     email: '',
-    hourlyRate: 0,
     bids: [],
     reviewsReceived: [],
     completedProjects: [],

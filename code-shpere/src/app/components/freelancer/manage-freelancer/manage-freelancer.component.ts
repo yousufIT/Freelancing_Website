@@ -26,7 +26,6 @@ export class ManageFreelancerComponent implements OnInit {
     passwordHash: '',
     role: '',
     rating: 0,
-    hourlyRate: 0,
     profile: {
       bio: ''
     }
@@ -39,7 +38,6 @@ export class ManageFreelancerComponent implements OnInit {
     role: '',
     passwordHash: '',
     email: '',
-    hourlyRate: 0,
     bids: [],
     reviewsReceived: [],
     completedProjects: [],

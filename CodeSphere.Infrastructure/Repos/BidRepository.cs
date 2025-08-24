@@ -73,6 +73,17 @@ namespace CodeSphere.Infrastructure.Repos
             _context.SaveChanges();
 
         }
+
+        public async Task<List<Bid>> GetRecentBidsAsync(int count)
+        {
+            return await _context.Bids
+                .Include(b => b.Freelancer)
+                .Include(b => b.Project)
+                .Where(b => !b.IsDeleted)
+                .OrderByDescending(b => b.Id)
+                .Take(count)
+                .ToListAsync();
+        }
     }
 
 }

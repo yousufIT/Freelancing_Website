@@ -32,8 +32,16 @@ import { ProfileEditForClientGuard } from './guards/profile-edit-for-client.guar
 import { ProfileEditForFreelancerGuard } from './guards/profile-edit-for-freelancer.guard';
 import { ClientUpdateComponent } from './components/client/client-update/client-update.component';
 import { FreelancerUpdateComponent } from './components/freelancer/freelancer-update/freelancer-update.component';
+import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
+
+  { 
+    path: 'dashboard', 
+    loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent),
+    canActivate: [AdminGuard]
+  },
+
   { path: '',
      redirectTo: '/projects', 
      pathMatch: 'full' 
@@ -209,4 +217,7 @@ export const routes: Routes = [
     component: ProjectListComponent ,
     canActivate: [AuthGuard] 
   },
+  
+
+
 ];

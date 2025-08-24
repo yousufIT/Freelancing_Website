@@ -38,6 +38,18 @@ namespace CodeSphere.Infrastructure.Repos
 
         }
 
+        public async Task<List<Freelancer>> GetTopFreelancersByRatingAsync(int count)
+        {
+            return await _context.Freelancers
+                .Include(f => f.CompletedProjects)
+                .Where(f => !f.IsDeleted)
+                .OrderByDescending(f => f.Rating)
+                .ThenByDescending(f => f.CompletedProjects.Count)
+                .Take(count)
+                .ToListAsync();
+        }
+
+
     }
 
 

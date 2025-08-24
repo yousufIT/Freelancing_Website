@@ -15,7 +15,7 @@ namespace Freelancing_Website
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -142,8 +142,60 @@ namespace Freelancing_Website
             builder.Services.AddScoped<IRequiredSkillService,RequiredSkillService>();
             builder.Services.AddScoped<IReviewService,ReviewService>();
             builder.Services.AddScoped<ISkillService,SkillService>();
+            builder.Services.AddScoped<IDashboardService, DashboardService>();
+
 
             var app = builder.Build();
+
+            // Adding Admin
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = services.GetRequiredService<UserManager<User>>();
+                var logger = services.GetRequiredService<ILogger<Program>>();
+
+                // Ensure Admin role exists
+                var adminRoleExists = await roleManager.RoleExistsAsync("Admin");
+                if (!adminRoleExists)
+                {
+                    var roleResult = await roleManager.CreateAsync(new IdentityRole("Admin"));
+                    if (!roleResult.Succeeded)
+                    {
+                        logger.LogWarning("Failed to create Admin role: {Errors}", string.Join(", ", roleResult.Errors.Select(e => e.Description)));
+                    }
+                }
+
+                // Create default admin user if none exists
+                var adminEmail = builder.Configuration["Authentication:AdminEmail"] ?? "admin@example.com";
+                var adminUsername = builder.Configuration["Authentication:AdminUserName"] ?? "admin";
+                var adminPassword = builder.Configuration["Authentication:AdminPassword"] ?? "Admin@1234"; // change in production!
+
+                var existingAdmin = await userManager.FindByEmailAsync(adminEmail);
+                if (existingAdmin == null)
+                {
+                    var adminUser = new User
+                    {
+                        UserName = adminUsername,
+                        Email = adminEmail,
+                        Name = "Administrator",
+                        Role = "Admin",
+                        Rating = 0
+                    };
+
+                    var createAdminResult = await userManager.CreateAsync(adminUser, adminPassword);
+                    if (createAdminResult.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(adminUser, "Admin");
+                        logger.LogInformation("Seeded default Admin user: {email}", adminEmail);
+                    }
+                    else
+                    {
+                        logger.LogWarning("Failed to create default admin: {Errors}", string.Join(", ", createAdminResult.Errors.Select(e => e.Description)));
+                    }
+                }
+            }
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

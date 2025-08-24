@@ -19,6 +19,12 @@
         <li class="nav-item">
           <a class="nav-link nav-btn" routerLink="/projects">projects</a>
         </li>
+
+        <!-- Dashboard -->
+         <li class="nav-item">
+          <a class="nav-link nav-btn" *ngIf="auth.getUserRole() === 'Admin'" routerLink="/dashboard">Dashboard</a>
+        </li>
+
         <ng-container *ngIf="isSigned">
           <li class="nav-item">
             <a class="nav-link nav-btn" routerLink="/{{auth.getUserRole() | lowercase}}/{{auth.getUserId()}}">
@@ -26,6 +32,9 @@
             </a>
           </li>
         </ng-container>
+
+        
+
         <ng-container *ngIf="!isSigned">
           <li class="nav-item">
             <a class="nav-link nav-btn" routerLink="/account/register">Register</a>

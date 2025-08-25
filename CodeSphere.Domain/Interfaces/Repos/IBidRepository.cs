@@ -12,8 +12,10 @@ namespace CodeSphere.Domain.Interfaces.Repos
         Task<DataWithPagination<Bid>> GetBidsByProjectIdAsync(int projectId, int pageNumber, int pageSize);
         Task<DataWithPagination<Bid>> GetBidsByFreelancerIdAsync(int freelancerId, int pageNumber, int pageSize);
         Task AddBidToProjectAsync(int freelancerId, int projectId, Bid bid);
-        Task DeleteBidsForProjectAsync(int projectId); 
-        
+        Task DeleteBidsForProjectAsync(int projectId);
+        Task<List<Bid>> GetRecentBidsAsync(int count);
+
+
     }
 
 }

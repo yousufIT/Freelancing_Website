@@ -39,6 +39,11 @@ export class AuthService {
     return this.http.post<AuthenticationData>(`${this.apiUrl}/Freelancer`, user);
   }
 
+  registerAdmin(user: any) {
+  return this.http.post<any>(`${this.apiUrl}/Admin`, user);
+}
+
+
   // Clear client auth state immediately, then call API (ignore API errors for UI)
   logout(): Observable<void> {
     // clear client state immediately so UI updates without waiting for network

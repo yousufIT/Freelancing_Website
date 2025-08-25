@@ -2,6 +2,7 @@
 using Freelancing_Website.Models;
 using Freelancing_Website.Models.ForCreate;
 using Freelancing_Website.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -112,6 +113,46 @@ public class AccountsController : Controller
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+        }
+
+        return BadRequest(ModelState);
+    }
+
+    // Register Admin
+    [Authorize(Roles = "Admin")]
+    [HttpPost("Admin")]
+    public async Task<IActionResult> RegisterAdmin(AdminForCreate model)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var admin = new User
+        {
+            UserName = model.UserName,
+            Email = model.Email,
+            Name = model.Name,
+            Role = "Admin",
+            Rating = model.Rating
+        };
+
+        var result = await _userManager.CreateAsync(admin, model.PasswordHash);
+
+        if (result.Succeeded)
+        {
+            if (!await _roleManager.RoleExistsAsync("Admin"))
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+
+            await _userManager.AddToRoleAsync(admin, "Admin");
+
+            var roles = await _userManager.GetRolesAsync(admin);
+            var role = roles.FirstOrDefault() ?? "Admin";
+
+            var token = _jwtService.CreateJWT(admin.Email, admin.UserName, role);
+            return Ok(new { token, id = admin.Id, role });
+        }
+
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
         }
 
         return BadRequest(ModelState);

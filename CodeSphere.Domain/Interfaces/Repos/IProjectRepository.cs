@@ -14,6 +14,8 @@ namespace CodeSphere.Domain.Interfaces.Repos
         Task AddProjectToClient(int clientId, Project project);
         Task<DataWithPagination<Project>> GetProjectsBySkillsAsync(List<int> skillsIds, int pageSize, int pageNumber);
         Task<Project> GetProjectById(int id);
+        Task<List<Project>> GetRecentProjectsAsync(int count);
+
     }
 
 

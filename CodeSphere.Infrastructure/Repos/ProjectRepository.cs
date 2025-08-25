@@ -86,7 +86,16 @@ namespace CodeSphere.Infrastructure.Repos
             return result;
         }
 
-        
+        public async Task<List<Project>> GetRecentProjectsAsync(int count)
+        {
+            return await _context.Projects
+                .Include(p => p.Client)
+                .Include(p => p.Bids)
+                .Where(p => !p.IsDeleted)
+                .OrderByDescending(p => p.Id)
+                .Take(count)
+                .ToListAsync();
+        }
 
     }
 

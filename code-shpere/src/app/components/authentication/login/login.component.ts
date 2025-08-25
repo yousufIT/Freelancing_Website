@@ -30,10 +30,16 @@ export class LoginComponent {
         localStorage.setItem('role',role);
         localStorage.setItem('User-Id',id.toString());
         this.authService.setLoggedInState(true); // Update logged-in state
-        if(response.role=='Freelancer')
-          this.router.navigate(['/freelancer/',id])
-        else 
-          this.router.navigate(['/client/',id])
+        if (response.role === 'Freelancer') {
+          this.router.navigate(['/freelancer/', id]);
+        } else if (response.role === 'Client') {
+          this.router.navigate(['/client/', id]);
+        } else if (response.role === 'Admin') {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/']); // fallback
+        }
+
 
 
       },

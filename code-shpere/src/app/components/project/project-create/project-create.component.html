@@ -1,28 +1,30 @@
 <div class="py-5">
   <div class="container">
-    <h2 class="mb-4 text-white">Create New Project</h2>
-    <form (ngSubmit)="createProject()">
-      <div class="mb-3">
-        <label for="title" class="form-label text-white">Title</label>
-        <input type="text" id="title" class="form-control bg-dark text-white" [(ngModel)]="project.title" name="title" required />
-      </div>
-  
-      <div class="mb-3">
-        <label for="description" class="form-label text-white">Description</label>
-        <textarea id="description" class="form-control bg-dark text-white" [(ngModel)]="project.description" name="description" required></textarea>
-      </div>
-  
-      <div class="mb-3">
-        <label for="budget" class="form-label text-white">Budget</label>
-        <input type="number" id="budget" class="form-control bg-dark text-white" [(ngModel)]="project.budget" name="budget" required />
-      </div>
-  
-      <div class="mb-3">
-        <label for="status" class="form-label text-white">Status</label>
-        <input type="text" id="status" class="form-control bg-dark text-white" [(ngModel)]="project.status" name="status" required />
-      </div>
-  
-      <button type="submit" class="btn btn-success">Create Project</button>
-    </form>
+    <div class="card llfmp-card p-4">
+      <h2 class="mb-4">Create New Project</h2>
+      <form (ngSubmit)="createProject()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" id="title" class="form-control llfmp-input" [(ngModel)]="project.title" name="title" required />
+        </div>
+    
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea id="description" class="form-control llfmp-input" [(ngModel)]="project.description" name="description" required></textarea>
+        </div>
+    
+        <div class="mb-3">
+          <label for="budget" class="form-label">Budget</label>
+          <input type="number" id="budget" class="form-control llfmp-input" [(ngModel)]="project.budget" name="budget" required />
+        </div>
+    
+        <div class="mb-3">
+          <label for="status" class="form-label">Status</label>
+          <input type="text" id="status" class="form-control llfmp-input" [(ngModel)]="project.status" name="status" required />
+        </div>
+    
+        <button type="submit" class="btn llfmp-btn-sm btn-primary">Create Project</button>
+      </form>
+    </div>
   </div>
 </div>

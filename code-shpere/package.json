@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^18.2.8",
     "@angular/platform-server": "^18.2.8",
     "@angular/router": "^18.2.8",
+    "@microsoft/signalr": "^9.0.6",
     "@tailwindcss/typography": "^0.5.15",
     "@types/chart.js": "^2.9.41",
     "bootstrap": "^5.3.3",

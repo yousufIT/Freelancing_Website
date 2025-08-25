@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -30,6 +31,9 @@ export class LoginComponent {
         localStorage.setItem('role',role);
         localStorage.setItem('User-Id',id.toString());
         this.authService.setLoggedInState(true); // Update logged-in state
+
+        
+
         if (response.role === 'Freelancer') {
           this.router.navigate(['/freelancer/', id]);
         } else if (response.role === 'Client') {

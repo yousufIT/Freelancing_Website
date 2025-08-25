@@ -9,6 +9,7 @@ import { PaginationMetaData } from 'src/app/models/data-with-pagination';
 import { CommonModule } from '@angular/common';
 import { ProjectCreateComponent } from '../project-create/project-create.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { SignalRService } from 'src/app/services/signalr.service';
 
 @Component({
   selector: 'app-project-list',
@@ -43,6 +44,8 @@ export class ProjectListComponent implements OnInit {
   ngOnInit(): void {
     this.loadFilteredProjects();
     this.fetchAllSkills();
+    
+    
   }
 
   loadFilteredProjects(): void {

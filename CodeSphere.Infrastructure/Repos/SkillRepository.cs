@@ -51,6 +51,12 @@ namespace CodeSphere.Infrastructure.Repos
 
             await _context.SaveChangesAsync();
         }
+        public async Task<List<Skill>> GetByIdsAsync(List<int> ids)
+        {
+            return await _context.Skills
+                .Where(s => ids.Contains(s.Id))
+                .ToListAsync();
+        }
 
         public async Task<List<Skill>> GetSkillsForFreelancerAsync(int freelancerId)
         {

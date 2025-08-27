@@ -41,6 +41,7 @@ namespace Freelancing_Website.Interfaces
         Task CreateSkillsToFreelancerAsync(int freelancerId, List<int> skillsIds);
         Task UpdateSkillAsync(Skill skill);
         Task DeleteSkillAsync(int id);
+        Task ReplaceSkillsForFreelancerAsync(int freelancerId, List<int> skillsIds);
     }
 
     public interface IReviewService

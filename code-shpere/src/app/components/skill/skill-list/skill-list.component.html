@@ -1,24 +1,30 @@
-<section class="min-vh-100 llfmp-bg">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card llfmp-card p-5 text-center">
-            <h2 class="fw-bold mb-4 text-uppercase llfmp-title">Skill List</h2>
-  
-            <div *ngIf="skills.length > 0; else noSkills">
-              <ul class="list-group list-group-flush llfmp-skill-list">
-                <li *ngFor="let skill of skills" class="list-group-item llfmp-skill-item">
-                  {{ skill.name }}
-                </li>
-              </ul>
+<section class="min-vh-100 llfmp-bg-light d-flex align-items-center justify-content-center">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10">
+        <div class="card llfmp-card p-4 text-center">
+
+          <!-- Title -->
+          <h2 class="llfmp-title mb-4">Freelancer Skills</h2>
+
+          <!-- Skills Grid -->
+          <div class="row g-3 mb-4">
+            <div class="col-12 col-md-4" *ngFor="let skill of skills">
+              <div class="llfmp-skill-card p-3">
+                {{ skill.name }}
+              </div>
             </div>
-  
-            <ng-template #noSkills>
-              <p class="text-muted mt-3">No skills found.</p>
-            </ng-template>
           </div>
+
+          <!-- Centered Button -->
+          <div class="d-flex justify-content-center">
+            <a [routerLink]="['/skills/create']" class="llfmp-btn llfmp-btn-primary w-50">
+              Add Skill
+            </a>
+          </div>  
+
         </div>
       </div>
     </div>
-  </section>
-  
+  </div>
+</section>

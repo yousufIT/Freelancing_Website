@@ -1,39 +1,35 @@
-/* Skill List - LLFMP Light Layout */
-.llfmp-bg {
-    background: #f8f9fa;
-    min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  .llfmp-card {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .llfmp-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  }
-  .llfmp-title {
-    color: #343a40;
-  }
-  .llfmp-skill-list {
-    max-height: 300px;
-    overflow-y: auto;
-    padding-right: 10px;
-  }
-  .llfmp-skill-item {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin-bottom: 8px;
-    transition: all 0.3s ease;
-  }
-  .llfmp-skill-item:hover {
-    background: linear-gradient(to right, #4e54c8, #8f94fb);
-    color: white;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 4px 15px rgba(78, 84, 200, 0.2);
-  }
-  
+/* Card for each skill */
+.llfmp-skill-card {
+  background-color: #f5f6ff;
+  border-radius: 12px;
+  padding: 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #4e54c8;
+  box-shadow: 0 2px 8px rgba(78, 84, 200, 0.1);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.llfmp-skill-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(78, 84, 200, 0.2);
+}
+
+/* LLFMP button style */
+.llfmp-btn-primary {
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.llfmp-btn-primary:hover {
+  background: linear-gradient(to right, #8f94fb, #4e54c8);
+  box-shadow: 0 4px 12px rgba(78, 84, 200, 0.3);
+  transform: translateY(-2px);
+}

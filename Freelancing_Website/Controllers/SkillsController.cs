@@ -58,12 +58,12 @@ namespace Freelancing_Website.Controllers
             return CreatedAtAction(nameof(GetSkillById), new { id = skill.Id }, skillView);
         }
         [HttpPost("Freelancer/{freelancerId}")]
-        public async Task<IActionResult> AddSkillsForFreelancer(int freelancerId,[FromBody] List<int> skillsIds)
+        public async Task<IActionResult> SetSkillsForFreelancer(int freelancerId, [FromBody] List<int> skillsIds)
         {
-            await _skillService.CreateSkillsToFreelancerAsync(freelancerId, skillsIds);
-            
+            await _skillService.ReplaceSkillsForFreelancerAsync(freelancerId, skillsIds);
             return Ok();
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSkill(int id, [FromBody] SkillForCreate skillForCreate)

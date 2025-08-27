@@ -1,84 +1,73 @@
-/* Add Skills - LLFMP Light Layout */
-.llfmp-bg {
-    background: #f8f9fa;
-    min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .llfmp-card {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .llfmp-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  }
-  
-  .llfmp-title {
-    color: #343a40;
-  }
-  
-  .llfmp-skill-list {
-    max-height: 300px;
-    overflow-y: auto;
-    padding-right: 10px;
-  }
-  
-  .llfmp-skill-item {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: all 0.3s ease;
-  }
-  .llfmp-skill-item:hover {
-    background: linear-gradient(to right, #4e54c8, #8f94fb);
-    color: white;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 4px 15px rgba(78, 84, 200, 0.2);
-  }
-  
-  /* Checkbox */
-  .llfmp-skill-item input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: #4e54c8; /* modern browser checkbox color */
-    transition: all 0.3s ease;
-  }
-  .llfmp-skill-item input[type="checkbox"]:hover {
-    transform: scale(1.1);
-  }
-  
-  /* Button */
-  .llfmp-btn-lg {
-    padding: 12px 30px;
-    border-radius: 12px;
-    font-weight: 600;
-    border: none;
-    color: white;
-    transition: all 0.3s ease, box-shadow 0.3s ease;
-  }
-  .llfmp-btn-lg.btn-success {
-    background: linear-gradient(to right, #28a745, #71dd8a);
-  }
-  .llfmp-btn-lg.btn-success:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
-  }
-  
-  /* Link */
-  .llfmp-link {
-    color: #4e54c8;
-    font-weight: 600;
-  }
-  .llfmp-link:hover {
-    color: #8f94fb;
-    text-decoration: underline;
-  }
-  
+/* Light Background */
+.llfmp-bg-light {
+  background: #f7f9fc;
+}
+
+/* Card */
+.llfmp-card {
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.llfmp-title {
+  color: #333;
+  font-weight: 700;
+}
+
+/* Skill Buttons (replaces checkbox) */
+.llfmp-skill-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.llfmp-skill-btn {
+  border: 2px solid #4e54c8;
+  background: #fff;
+  color: #4e54c8;
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.llfmp-skill-btn:hover {
+  background: #f0f2ff;
+}
+
+.llfmp-skill-btn.active {
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Action Button */
+.llfmp-btn {
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+.llfmp-btn-primary {
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  color: #fff;
+}
+.llfmp-btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Links */
+.llfmp-link {
+  color: #4e54c8;
+  font-weight: 500;
+  text-decoration: none;
+}
+.llfmp-link:hover {
+  text-decoration: underline;
+}

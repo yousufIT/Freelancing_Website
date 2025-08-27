@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace CodeSphere.Domain.Interfaces.Repos
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
+        Task<T> GetByIdWithIncludesAsync(int id, params Expression<Func<T, object>>[] includes);
     }
 
     public class DataWithPagination<T>

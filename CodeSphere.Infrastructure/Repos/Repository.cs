@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,8 +43,20 @@ namespace CodeSphere.Infrastructure.Repos
         {
             return await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id && !e.IsDeleted);
         }
+        
+        public async Task<T> GetByIdWithIncludesAsync(int id, params Expression<Func<T, object>>[] includes)
+         {
+        IQueryable<T> query = _context.Set<T>().Where(e => e.Id == id && !e.IsDeleted);
 
-        public async Task AddAsync(T entity)
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+
+        return await query.FirstOrDefaultAsync();
+        }
+
+    public async Task AddAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();

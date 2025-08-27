@@ -13,6 +13,8 @@ namespace CodeSphere.Domain.Interfaces.Repos
         Task AddSkillToFreelancerAsync(int freelancerId, Skill skill);
         Task UpdateSkillsForFreelancerAsync(int freelancerId, List<Skill> skills);
         Task DeleteSkillsForFreelancerAsync(int freelancerId);
+        Task<List<Skill>> GetByIdsAsync(List<int> ids);
+
     }
 
 }

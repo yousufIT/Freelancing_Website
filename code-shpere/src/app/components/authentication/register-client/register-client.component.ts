@@ -40,6 +40,9 @@ export class RegisterClientComponent {
         localStorage.setItem('token',token);
         localStorage.setItem('role',role);
         localStorage.setItem('User-Id',id.toString());
+
+        this.authService.setLoggedInState(true);
+
         this.router.navigate(['/client/',id])
       },
       (error) => {

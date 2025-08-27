@@ -2,6 +2,7 @@
 using CodeSphere.Domain.Models;
 using CodeSphere.Infrastructure.Context;
 using CodeSphere.Infrastructure.Repos;
+using Freelancing_Website.Hubs;
 using Freelancing_Website.Interfaces;
 using Freelancing_Website.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -86,6 +87,24 @@ namespace Freelancing_Website
                     RoleClaimType = ClaimTypes.Role,   
                     NameClaimType = ClaimTypes.Email
                 };
+
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"].FirstOrDefault();
+
+                        // If the request is for our SignalR hub endpoint, read the token from the query string
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/notifications"))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+
             });
 
 
@@ -96,9 +115,11 @@ namespace Freelancing_Website
             {
                 options.AddPolicy("AllowAll", builder =>
                 {
-                    builder.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
+                    builder
+                            .SetIsOriginAllowed(origin => true)
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
                 });
             });
 
@@ -143,6 +164,9 @@ namespace Freelancing_Website
             builder.Services.AddScoped<IReviewService,ReviewService>();
             builder.Services.AddScoped<ISkillService,SkillService>();
             builder.Services.AddScoped<IDashboardService, DashboardService>();
+
+            // Add SignalR
+            builder.Services.AddSignalR();
 
 
             var app = builder.Build();
@@ -211,6 +235,14 @@ namespace Freelancing_Website
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // map the hub endpoint
+            app.MapHub<NotificationHub>("/hubs/notifications", options =>
+            {
+                options.Transports =
+                    Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets |
+                    Microsoft.AspNetCore.Http.Connections.HttpTransportType.LongPolling;
+            });
 
 
             app.MapControllers();

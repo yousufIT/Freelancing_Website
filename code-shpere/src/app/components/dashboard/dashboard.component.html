@@ -97,3 +97,67 @@
 <section *ngIf="error" class="min-vh-100 d-flex align-items-center justify-content-center">
   <div class="text-danger">{{ error }}</div>
 </section>
+
+
+<!-- Skills Management  -->
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="llfmp-card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0" style="color: var(--dark)">Manage Skills</h5>
+        </div>
+
+        <!-- Add Skill Form -->
+        <form (ngSubmit)="addSkill()" class="d-flex flex-wrap gap-2 align-items-center">
+          <input type="text"
+                class="form-control llfmp-input flex-grow-1"
+                placeholder="Enter new skill"
+                [(ngModel)]="newSkillName"
+                name="skillName"
+                required>
+          <button class="llfmp-btn-sm ms-2" type="submit">Add</button>
+        </form>
+
+        <!-- Skills Grid -->
+        <div class="mt-4">
+          <div class="row g-2">
+            <div class="col-12 col-md-6" *ngFor="let s of skills">
+              <div class="d-flex align-items-center justify-content-between py-2 px-3 skill-row">
+                <div class="d-flex align-items-center gap-3">
+                  <!-- Skill badge / name or inline edit -->
+                  <span *ngIf="editingSkill?.id !== s.id" class="skill-badge">{{ s.name }}</span>
+
+                  <input *ngIf="editingSkill && editingSkill.id === s.id"
+                        [(ngModel)]="editingSkill.name"
+                        class="form-control"
+                        name="editName{{s.id}}"
+                        style="min-width: 180px;">
+                </div>
+
+                <div class="d-flex gap-2 align-items-center">
+                  <!-- Edit / Save / Cancel -->
+                  <button *ngIf="editingSkill?.id !== s.id"
+                          class="llfmp-btn-sm btn-outline"
+                          (click)="startEdit(s)">Edit</button>
+
+                  <button *ngIf="editingSkill?.id === s.id"
+                          class="llfmp-btn-success"
+                          (click)="saveEdit()">Save</button>
+                  <button *ngIf="editingSkill?.id === s.id"
+                          class="llfmp-btn-sm btn-outline"
+                          (click)="cancelEdit()">Cancel</button>
+
+                  <!-- Delete -->
+                  <button class="llfmp-btn-danger" (click)="deleteSkill(s.id)">Delete</button>
+                </div>
+              </div>
+            </div> <!-- col -->
+          </div> <!-- row -->
+        </div> <!-- skills grid -->
+
+      </div> <!-- card -->
+    </div>
+  </div>
+</div>
+

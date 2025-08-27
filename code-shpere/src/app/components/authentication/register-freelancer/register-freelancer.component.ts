@@ -40,6 +40,9 @@ export class RegisterFreelancerComponent {
         localStorage.setItem('token',token);
         localStorage.setItem('role',role);
         localStorage.setItem('User-Id',id.toString());
+
+        this.authService.setLoggedInState(true);
+
         this.router.navigate(['/freelancer/',id])
 
       },

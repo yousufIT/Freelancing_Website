@@ -5,6 +5,7 @@ import { DataWithPagination, PaginationMetaData } from 'src/app/models/data-with
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { SignalRService } from 'src/app/services/signalr.service';
 
 @Component({
   standalone: true,
@@ -23,7 +24,9 @@ export class BidListComponent implements OnInit {
   auth:AuthService;
   constructor(private bidService: BidService,
     private authService:AuthService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private signalR: SignalRService
+  ) {
       this.auth=authService;
     }
 
@@ -32,6 +35,16 @@ export class BidListComponent implements OnInit {
       this.projectId = +params['projectId']; // Retrieve project ID from route parameters
     });
     this.loadBids();
+
+    this.signalR.newBid$.subscribe(payload => {
+    if (!payload) return;
+
+    console.log('Got new bid broadcast:', payload);
+
+    this.loadBids();
+    
+    });
+
   }
 
   loadBids(): void {

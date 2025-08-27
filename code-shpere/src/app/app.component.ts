@@ -12,6 +12,7 @@ import { Router, RouterModule, RouterOutlet } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { HeaderComponent } from "./components/header/header.component";
 import { FooterComponent } from "./components/footer/footer.component";
+import { SignalRService } from "./services/signalr.service";
 
 @Component({
   standalone: true,
@@ -30,7 +31,9 @@ import { FooterComponent } from "./components/footer/footer.component";
 export class AppComponent implements OnInit {
   constructor(
     private renderer: Renderer2,
-    public location: Location  ) {}
+    private signalRService: SignalRService,
+    public location: Location
+  ) {}
   @HostListener("window:scroll", ["$event"])
   onWindowScroll() {
     if (window.pageYOffset > 100) {
@@ -49,6 +52,8 @@ export class AppComponent implements OnInit {
   }
   ngOnInit() {
     this.onWindowScroll();
+
+    this.signalRService.startConnection();
   }
 }
 

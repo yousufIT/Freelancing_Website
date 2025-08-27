@@ -30,7 +30,7 @@
             <div class="card llfmp-card-light mb-3 p-4">
               
               <div class="d-flex justify-content-between align-items-center mb-3">
-                <h6><a [routerLink]="['/review/freelancer', freelancer.id]" class="text-secondary">Reviews Received</a></h6>
+                <h6><a [routerLink]="['/review/freelancer', freelancer.id]" class="llfmp-btn-outline">Reviews Received</a></h6>
                 <button *ngIf="auth.getUserRole() === 'Client'" (click)="onCreateReviewFromCLient()" class="btn llfmp-btn-primary btn-sm">Add Review</button>
               </div>
   

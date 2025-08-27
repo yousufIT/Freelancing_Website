@@ -25,7 +25,7 @@
           <a class="nav-link nav-btn" *ngIf="auth.getUserRole() === 'Admin'" routerLink="/dashboard">Dashboard</a>
         </li>
 
-        <ng-container *ngIf="isSigned">
+        <ng-container *ngIf="isSigned && auth.getUserRole() !== 'Admin'">
           <li class="nav-item">
             <a class="nav-link nav-btn" routerLink="/{{auth.getUserRole() | lowercase}}/{{auth.getUserId()}}">
               Profile

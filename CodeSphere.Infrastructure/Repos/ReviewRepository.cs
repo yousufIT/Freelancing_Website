@@ -76,6 +76,13 @@ namespace CodeSphere.Infrastructure.Repos
             return result;
         }
 
+        public async Task<List<Review>> GetReviewsByFreelancerIdAsync(int freelancerId)
+        {
+            return await _context.Reviews
+                .Where(r => r.FreelancerId == freelancerId && !r.IsDeleted)
+                .ToListAsync();
+        }
+
         public async Task AddReviewToFreelancerAndClient(int clientId, int freelancerId, Review review)
         {
             var client=await _context.Clients

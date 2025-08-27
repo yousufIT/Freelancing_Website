@@ -37,3 +37,127 @@
   padding: 12px 8px;
   border-bottom: 1px solid #f1f1f1;
 }
+
+.llfmp-card {
+  background: white;
+  border: 2px solid var(--primary); /* uses :root var in the file */
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  color: var(--dark);
+}
+.llfmp-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  border-color: var(--secondary);
+}
+
+/* Input consistent look (small) */
+.llfmp-input {
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid #e6e6ee;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+.llfmp-input:focus {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(78,84,200,0.12);
+  transform: translateY(-1px);
+}
+
+/* Skill Badges (the nice pill look) */
+.skill-badge {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-right: 8px;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+.skill-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(78,84,200,0.18);
+}
+
+/* Small primary button like project list */
+.llfmp-btn-sm {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease, box-shadow 0.3s ease;
+}
+.llfmp-btn-sm:hover {
+  background: linear-gradient(to right, var(--secondary), var(--primary));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(78,84,200,0.18);
+}
+
+/* Success button (green) */
+.llfmp-btn-success {
+  padding: 7px 12px;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(to right, #28a745, #71dd8a);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease, box-shadow 0.25s ease;
+}
+.llfmp-btn-success:hover {
+  background: linear-gradient(to right, #71dd8a, #28a745);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(40,167,69,0.2);
+}
+
+/* Danger button (red) */
+.llfmp-btn-danger {
+  padding: 7px 12px;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(to right, #ff4d4f, #ff7b79);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease, box-shadow 0.25s ease;
+}
+.llfmp-btn-danger:hover {
+  background: linear-gradient(to right, #ff7b79, #ff4d4f);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255,77,79,0.18);
+}
+
+/* Outline variant used for secondary small actions */
+.llfmp-btn-sm.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(78,84,200,0.12);
+  color: var(--dark);
+}
+.llfmp-btn-sm.btn-outline:hover {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Skill row spacing */
+.skill-row {
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+.skill-row:hover {
+  background: rgba(78,84,200,0.03);
+}
+
+/* Loading / small helper */
+.llfmp-loading {
+  background: #f0f2f5;
+  color: var(--dark);
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  font-weight: 500;
+}

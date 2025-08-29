@@ -23,8 +23,8 @@
     overflow: hidden;
   }
   .expanded-sidebar {
-    width: 75%;
-    max-width: 80%;
+    width: 100%;
+    max-width: 25%;
   }
   
   /* Buttons */

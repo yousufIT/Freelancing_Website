@@ -57,6 +57,7 @@ namespace Freelancing_Website.Controllers
             try
             {
                 var bid = _mapper.Map<Bid>(bidForCreate);
+                bid.BidDate=DateTime.Now;
                 await _bidService.CreateBidAsync(freelancerId, projectId, bid);
 
                 var bidViewModel = _mapper.Map<BidView>(bid);

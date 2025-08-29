@@ -15,7 +15,9 @@ namespace CodeSphere.Domain.Models
         public string Description { get; set; }
         [Range(0, double.MaxValue, ErrorMessage = "Budget must be a positive number")]
         public double Budget { get; set; }
-        public string Status { get; set; } 
+        public string Status { get; set; }
+        public DateTime ProjectDate { get; set; }
+
         public int ClientId { get; set; }
         public Client Client { get; set; } 
          public List<Bid> Bids { get; set; }

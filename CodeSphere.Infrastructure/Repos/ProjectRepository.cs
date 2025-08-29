@@ -65,12 +65,14 @@ namespace CodeSphere.Infrastructure.Repos
             {
                 projects = _context.Projects
                 .Include(p => p.RequiredSkills)
+                .Include(p => p.Bids)
                 .Where(p => !p.IsDeleted);
             }
             else
             {
                 projects = _context.Projects
                 .Include(p => p.RequiredSkills)
+                .Include(p => p.Bids)
                 .Where(p => !p.IsDeleted && p.RequiredSkills.Any(s => skillsIds.Contains(s.Id)));
             }
 

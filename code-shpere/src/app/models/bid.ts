@@ -9,5 +9,6 @@ export interface Bid {
     freelancerId: number;
     freelancer: Freelancer;
     amount: number;
+    bidDate:Date;
     proposal: string;
 }

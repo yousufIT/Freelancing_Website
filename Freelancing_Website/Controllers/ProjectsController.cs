@@ -54,6 +54,7 @@ namespace Freelancing_Website.Controllers
         public async Task<IActionResult> CreateProject(int clientId,[FromBody] ProjectForCreate projectForCreate)
         {
             var project = _mapper.Map<Project>(projectForCreate);
+            project.ProjectDate = DateTime.Now;
             await _projectService.CreateProjectAsync(clientId,project);
             var projectView = _mapper.Map<ProjectView>(project);
             return CreatedAtAction(nameof(GetProjectById), new { id = project.Id }, projectView);

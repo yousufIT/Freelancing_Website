@@ -16,5 +16,5 @@ export interface Project {
     status: string;
     bids: Bid[];
     bidCount?: number; 
-    createdAt:number;
+    projectDate:number;
 }

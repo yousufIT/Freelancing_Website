@@ -13,6 +13,7 @@ namespace CodeSphere.Domain.Models
         [Range(0, double.MaxValue, ErrorMessage = "Amount must be a positive number")]
         public double Amount { get; set; }
         public string Proposal { get; set; }
+        public DateTime BidDate { get; set; }
         public int FreelancerId { get; set; }
         public Freelancer Freelancer { get; set; }
         public int ProjectId { get; set; }

@@ -7,14 +7,23 @@ namespace Freelancing_Website.Models.ViewModels
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+
         [Range(0, double.MaxValue, ErrorMessage = "Budget must be a positive number")]
         public double Budget { get; set; }
+
         public string Status { get; set; }
+        public DateTime ProjectDate { get; set; }
+
         public int ClientId { get; set; }
+
         public List<SkillView> RequiredSkills { get; set; }
+        public List<BidView> Bids { get; set; }
+
         public ProjectView()
         {
             RequiredSkills = new List<SkillView>();
+            Bids = new List<BidView>(); 
         }
     }
+
 }

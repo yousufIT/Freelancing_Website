@@ -264,21 +264,8 @@ namespace Freelancing_Website
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }
-            app.Use(async (context, next) =>
-            {
-                await next();
-
-                if (context.Response.StatusCode == 404 &&
-                    !Path.HasExtension(context.Request.Path.Value) &&
-                    !context.Request.Path.Value.StartsWith("/api") &&
-                    !context.Request.Path.Value.StartsWith("/hubs"))
-                {
-                    context.Request.Path = "/index.html";
-                    await next();
-                }
-            });
-
-            app.UseStaticFiles();
+            app.UseStaticFiles(); 
+            app.MapFallbackToFile("index.html");
 
             app.Run();
         }

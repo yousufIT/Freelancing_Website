@@ -60,6 +60,24 @@ namespace Freelancing_Website.Controllers
         {
             try
             {
+                var existingReview = await _reviewService.GetByClientAndFreelancerAsync(clientId, freelancerId);
+
+                if (existingReview != null)
+                {
+                    if (existingReview.IsDeleted)
+                    {
+                        existingReview.IsDeleted = false;
+                        await _reviewService.UpdateReviewAsync(existingReview);
+                        return await UpdateReview(existingReview.Id, reviewForCreate);
+                    }
+                    else
+                    {
+                        // إذا موجود وغير محذوف
+                        return BadRequest(new { message = "You have already left a review for this freelancer." });
+                    }
+                }
+
+                // إنشاء review جديد إذا لم يوجد أي review سابق
                 var review = _mapper.Map<Review>(reviewForCreate);
                 await _reviewService.CreateReviewAsync(clientId, freelancerId, review);
 
@@ -75,6 +93,7 @@ namespace Freelancing_Website.Controllers
                 return StatusCode(500, "An error occurred while creating the review.");
             }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReview(int id,[FromBody] ReviewForCreate reviewForCreate)

@@ -40,4 +40,33 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
   }
-  
+  .llfmp-btn-danger {
+    background: linear-gradient(to right, #ff4d4f, #ff7b79);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    padding: 8px 15px;
+    transition: all 0.3s ease, box-shadow 0.3s ease;
+}
+
+.llfmp-btn-danger:hover {
+    background: linear-gradient(to right, #ff7b79, #ff4d4f);
+    box-shadow: 0 6px 20px rgba(255,77,79,0.3);
+    transform: translateY(-2px);
+}
+.llfmp-btn-success {
+  background: linear-gradient(to right, #28a745, #71dd8a);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  padding: 8px 15px;
+  transition: all 0.3s ease, box-shadow 0.3s ease;
+}
+
+.llfmp-btn-success:hover {
+  background: linear-gradient(to right, #71dd8a, #28a745);
+  box-shadow: 0 6px 20px rgba(40,167,69,0.3);
+  transform: translateY(-2px);
+}

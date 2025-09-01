@@ -51,7 +51,7 @@
             <!-- Bottom row: date, button, bids -->
             <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
               <!-- Date on left -->
-              <small class="text-muted small-text">{{ project.projectDate | date:'EEEE, dd MMMM yyyy - HH:mm' }}</small>
+              <small class="text-muted small-text">{{ project.projectDate | date:'short' }}</small>
 
               <!-- View Button in center -->
               <button class="btn view-btn btn-sm" (click)="viewProject(project.id)">

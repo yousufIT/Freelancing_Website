@@ -14,6 +14,7 @@ namespace Freelancing_Website.Services
             _reviewRepository = reviewRepository;
             _freelancerRepository = freelancerRepository;
         }
+   
 
         public async Task<DataWithPagination<Review>> GetReviewsByFreelancerIdAsync(int freelancerId, int pageNumber, int pageSize)
         {
@@ -76,5 +77,10 @@ namespace Freelancing_Website.Services
             }
         }
 
+        public async Task<Review> GetByClientAndFreelancerAsync(int clientId, int freelancerId)
+        {
+            return await _reviewRepository.GetByClientAndFreelancerAsync(clientId, freelancerId);
+
+        }
     }
 }

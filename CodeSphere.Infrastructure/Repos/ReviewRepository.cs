@@ -100,5 +100,11 @@ namespace CodeSphere.Infrastructure.Repos
             client.ReviewsGiven.Add(review);
             await _context.SaveChangesAsync();
         }
+        public async Task<Review?> GetByClientAndFreelancerAsync(int clientId, int freelancerId)
+        {
+            return await _context.Reviews
+                .FirstOrDefaultAsync(r => r.ClientId == clientId && r.FreelancerId == freelancerId);
+        }
+
     }
 }

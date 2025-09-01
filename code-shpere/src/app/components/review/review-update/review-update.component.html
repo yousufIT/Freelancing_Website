@@ -8,7 +8,7 @@
             <input 
               type="number" 
               id="rating" 
-              class="form-control llr-input" 
+              class="form-control llfmp-input" 
               [(ngModel)]="review.rating" 
               name="rating" 
               min="1" max="5" 
@@ -20,7 +20,7 @@
           <div class="form-outline mb-4">
             <textarea 
               id="comment" 
-              class="form-control llr-input" 
+              class="form-control llfmp-input" 
               [(ngModel)]="review.comment" 
               name="comment" 
               rows="4" 
@@ -30,8 +30,8 @@
           </div>
   
           <div class="d-flex justify-content-center gap-2">
-            <button type="submit" class="btn llr-btn-primary">Update Review</button>
-            <button type="button" class="btn llr-btn-secondary" (click)="goToList()">Cancel</button>
+            <button type="submit" class="llfmp-btn-success">Update Review</button>
+            <button type="button" class="llfmp-btn-danger" (click)="goToList()">Cancel</button>
           </div>
         </form>
       </div>

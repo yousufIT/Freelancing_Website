@@ -15,6 +15,7 @@ namespace CodeSphere.Domain.Interfaces.Repos
         Task<List<Review>> GetReviewsByFreelancerIdAsync(int freelancerId);
         Task DeleteReviewsByFreelancerIdAsync(int freelancerId);
         Task AddReviewToFreelancerAndClient(int clientId, int freelancerId, Review review);
+        Task<Review> GetByClientAndFreelancerAsync(int clientId, int freelancerId);
     }
 
 

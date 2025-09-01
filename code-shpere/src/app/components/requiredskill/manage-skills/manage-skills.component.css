@@ -27,13 +27,13 @@
   cursor: pointer;
   position: relative;
   font-weight: 500;
-  padding-left: 30px;
+  padding-left: 100px;
   user-select: none;
   transition: color 0.3s ease;
 }
 
 .llfmp-checkbox input {
-  position: absolute;
+  position: relative;
   opacity: 0;
   cursor: pointer;
   height: 0;
@@ -41,7 +41,7 @@
 }
 
 .llfmp-checkbox .checkmark {
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
   height: 20px;

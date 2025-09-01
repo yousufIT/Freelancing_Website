@@ -1,5 +1,6 @@
 ﻿using CodeSphere.Domain.Interfaces.Repos;
 using CodeSphere.Domain.Models;
+using CodeSphere.Infrastructure.Repos;
 
 namespace Freelancing_Website.Interfaces
 {
@@ -52,6 +53,7 @@ namespace Freelancing_Website.Interfaces
         Task CreateReviewAsync(int clientId,int freelancerId, Review review);
         Task UpdateReviewAsync(Review review);
         Task DeleteReviewAsync(int id);
+        Task<Review> GetByClientAndFreelancerAsync(int clientId, int freelancerId);
     }
     public interface IBidService
     {

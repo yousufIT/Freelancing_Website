@@ -17,24 +17,27 @@
     <div [ngClass]="{'collapse': isNavbarCollapsed, 'navbar-collapse': true}" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link nav-btn" routerLink="/projects">projects</a>
+          <a class="nav-link nav-btn" routerLink="/projects">Projects</a>
         </li>
 
-        <!-- Dashboard -->
-         <li class="nav-item">
-          <a class="nav-link nav-btn" *ngIf="auth.getUserRole() === 'Admin'" routerLink="/dashboard">Dashboard</a>
+        <!-- Dashboard for Admin -->
+        <li class="nav-item" *ngIf="auth.getUserRole() === 'Admin'">
+          <a class="nav-link nav-btn" routerLink="/dashboard">Dashboard</a>
         </li>
 
+        <!-- Profile for signed-in non-admin -->
         <ng-container *ngIf="isSigned && auth.getUserRole() !== 'Admin'">
           <li class="nav-item">
-            <a class="nav-link nav-btn" routerLink="/{{auth.getUserRole() | lowercase}}/{{auth.getUserId()}}">
+            <a
+              class="nav-link nav-btn"
+              routerLink="/{{auth.getUserRole() | lowercase}}/{{auth.getUserId()}}"
+            >
               Profile
             </a>
           </li>
         </ng-container>
 
-        
-
+        <!-- If not signed -->
         <ng-container *ngIf="!isSigned">
           <li class="nav-item">
             <a class="nav-link nav-btn" routerLink="/account/register">Register</a>
@@ -43,6 +46,8 @@
             <a class="nav-link nav-btn" routerLink="/account/login">Login</a>
           </li>
         </ng-container>
+
+        <!-- If signed -->
         <ng-container *ngIf="isSigned">
           <li class="nav-item">
             <a class="nav-link nav-btn" (click)="logout()">Logout</a>

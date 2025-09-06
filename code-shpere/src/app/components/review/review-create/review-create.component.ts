@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NumericRangeDirective } from 'src/app/directives/numeric-range.directive';
 import { ReviewForCreate } from 'src/app/models/for-create/review-for-create';
 import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
   selector: 'app-review-create',
   standalone: true,
-  imports: [FormsModule,CommonModule,RouterLink],
+  imports: [FormsModule,CommonModule,RouterLink, NumericRangeDirective],
   templateUrl: './review-create.component.html',
   styleUrls: ['./review-create.component.css']
 })

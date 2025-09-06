@@ -14,10 +14,15 @@
               class="llfmp-input" 
               [(ngModel)]="review.rating" 
               name="rating" 
-              min="1" max="5" 
+              min="0" max="5" 
+              step="1"
               required
-              placeholder="Enter rating from 1 to 5"
+              placeholder="Enter rating from 0 to 5"
+              appNumericRange
             />
+            <div class="text-danger small mt-1" *ngIf="review.rating < 0 || review.rating > 5">
+              الرجاء إدخال تقييم بين 0 و 5
+            </div>
           </div>
   
           <div class="form-outline mb-3 text-start">

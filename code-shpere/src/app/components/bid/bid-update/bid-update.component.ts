@@ -3,10 +3,12 @@ import { BidService } from 'src/app/services/bid.service';
 import { BidForCreate } from 'src/app/models/for-create/bid-for-create';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { NumericRangeDirective } from 'src/app/directives/numeric-range.directive';
 
 @Component({
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule, NumericRangeDirective],
   selector: 'app-bid-update',
   templateUrl: './bid-update.component.html',
   styleUrls: ['./bid-update.component.css']

@@ -6,13 +6,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ManageSkillsComponent } from '../../requiredskill/manage-skills/manage-skills.component';
 import { Unsubscribable } from 'rxjs';
+import { NumericRangeDirective } from 'src/app/directives/numeric-range.directive';
 
 @Component({
   selector: 'app-project-update',
   standalone: true,
   templateUrl: './project-update.component.html',
   styleUrls: ['./project-update.component.css'],
-  imports: [CommonModule, FormsModule, ManageSkillsComponent]
+  imports: [CommonModule, FormsModule, ManageSkillsComponent, NumericRangeDirective]
 })
 export class ProjectUpdateComponent implements OnInit {
   project: ProjectForCreate = { title: '', description: '', budget: 0, status: '',clientId:0 };

@@ -6,15 +6,20 @@
       <form (ngSubmit)="updateBid()">
         <div class="form-outline mb-4">
           <label for="amount" class="form-label text-dark">Amount</label>
-          <input 
-            type="number" 
-            id="amount" 
-            class="form-control" 
-            [(ngModel)]="bid.amount" 
-            name="amount" 
-            required 
-            placeholder="Enter your bid amount"
+          <input
+            type="number"
+            id="amount"
+            class="form-control llfmp-input"
+            [(ngModel)]="bid.amount"
+            name="amount"
+            required
+            min="0"
+            step="1"
+            appNumericRange
           />
+          <div class="text-danger small mt-1" *ngIf="bid.amount < 0">
+            الرجاء إدخال مبلغ موجب
+          </div>
         </div>
 
         <div class="form-outline mb-4">

@@ -4,10 +4,12 @@ import { BidForCreate } from 'src/app/models/for-create/bid-for-create';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { NumericRangeDirective } from 'src/app/directives/numeric-range.directive';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule, NumericRangeDirective],
   selector: 'app-bid-create',
   templateUrl: './bid-create.component.html',
   styleUrls: ['./bid-create.component.css']

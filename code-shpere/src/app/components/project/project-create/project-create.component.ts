@@ -6,13 +6,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Skill } from 'src/app/models/skill';
 import { AuthService } from 'src/app/services/auth.service';
+import { NumericRangeDirective } from 'src/app/directives/numeric-range.directive';
 
 @Component({
   selector: 'app-project-create',
   standalone: true,
   templateUrl: './project-create.component.html',
   styleUrls: ['./project-create.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, NumericRangeDirective]
 })
 export class ProjectCreateComponent {
   project: ProjectForCreate = { title: '', description: '', budget: 0, status: '',clientId:0  };

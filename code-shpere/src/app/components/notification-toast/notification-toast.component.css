@@ -1,0 +1,19 @@
+.notification-toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2000;
+  width: 320px;
+}
+
+/* optionally tweak toast visuals to match llfmp theme */
+.toast {
+  border: 1px solid rgba(78,84,200,0.12);
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.toast .toast-header {
+  background: transparent;
+  border-bottom: 1px solid #f1f1f1;
+}

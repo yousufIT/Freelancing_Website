@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -9,9 +9,12 @@ import { AuthService } from './auth.service';
 })
 export class SignalRService {
   private hubConnection?: signalR.HubConnection;
+  // for all users
   public newBid$ = new BehaviorSubject<any | null>(null);
+  // for the owner of a project 
+  public newOwnerBid$ = new BehaviorSubject<any | null>(null);
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private ngZone: NgZone) {}
 
   private hubUrl(): string {
     // this returns "https://localhost:5001/hubs/notifications"
@@ -60,6 +63,14 @@ export class SignalRService {
     this.hubConnection.on('NewBid', (payload: any) => {
       console.log('SignalR: NewBid received', payload);
       this.newBid$.next(payload);
+    });
+
+    // NewBidForOwner - only sent to project owner
+    this.hubConnection.on('NewBidForOwner', (payload: any) => {
+      this.ngZone.run(() => {
+        console.log('SignalR: NewBidForOwner received', payload);
+        this.newOwnerBid$.next(payload);
+      });
     });
   }
 

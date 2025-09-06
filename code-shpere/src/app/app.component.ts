@@ -13,6 +13,7 @@ import { FormsModule } from "@angular/forms";
 import { HeaderComponent } from "./components/header/header.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { SignalRService } from "./services/signalr.service";
+import { NotificationToastComponent } from "./components/notification-toast/notification-toast.component";
 
 @Component({
   standalone: true,
@@ -25,6 +26,7 @@ import { SignalRService } from "./services/signalr.service";
     CommonModule,
     FormsModule,
     RouterModule,
+    NotificationToastComponent
 ],
   styleUrls: ["./app.component.scss"],
 })

@@ -3,6 +3,7 @@ using CodeSphere.Domain.Models;
 using CodeSphere.Infrastructure.Context;
 using CodeSphere.Infrastructure.Repos;
 using Freelancing_Website.Hubs;
+using Freelancing_Website.Infrastructure;
 using Freelancing_Website.Interfaces;
 using Freelancing_Website.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -164,6 +165,7 @@ namespace Freelancing_Website
             builder.Services.AddScoped<IReviewService,ReviewService>();
             builder.Services.AddScoped<ISkillService,SkillService>();
             builder.Services.AddScoped<IDashboardService, DashboardService>();
+            builder.Services.AddSingleton<Microsoft.AspNetCore.SignalR.IUserIdProvider, EmailBasedUserIdProvider>();
 
             // Add SignalR
             builder.Services.AddSignalR();

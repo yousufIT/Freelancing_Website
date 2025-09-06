@@ -11,13 +11,17 @@ namespace Freelancing_Website.Services
     public class BidService : IBidService
     {
         private readonly IBidRepository _bidRepository;
-        private readonly IProjectRepository _projectRepository; // optional, for payload enrichment
+        private readonly IProjectRepository _projectRepository;
+        private readonly IFreelancerRepository _freelancerRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly IHubContext<NotificationHub> _hubContext;
 
-        public BidService(IBidRepository bidRepository, IProjectRepository projectRepository, IHubContext<NotificationHub> hubContext)
+        public BidService(IBidRepository bidRepository, IProjectRepository projectRepository, IFreelancerRepository freelancerRepository, IClientRepository clientRepository, IHubContext<NotificationHub> hubContext)
         {
             _bidRepository = bidRepository;
             _projectRepository = projectRepository;
+            _freelancerRepository = freelancerRepository;
+            _clientRepository = clientRepository;
             _hubContext = hubContext;
         }
 
@@ -36,8 +40,9 @@ namespace Freelancing_Website.Services
             // Add bid to DB (existing repository method)
             await _bidRepository.AddBidToProjectAsync(freelancerId, projectId, bid);
 
-            // Optional: fetch project title or other fields to enrich payload
+            // fetch project title or other fields to enrich payload
             var project = await _projectRepository.GetByIdAsync(projectId);
+            var freelancer = await _freelancerRepository.GetByIdAsync(freelancerId);
 
             // Build a simple payload describing the new bid
             var payload = new
@@ -49,11 +54,20 @@ namespace Freelancing_Website.Services
                 amount = bid.Amount,
                 proposal = bid.Proposal,
                 freelancerId,
-                freelancerName = bid.Freelancer?.Name
+                freelancerName = freelancer?.Name,
             };
 
             // Broadcast to ALL connected clients
             await _hubContext.Clients.All.SendAsync("NewBid", payload);
+
+            // Send only to the project owner (client) by their email as userId
+            var client = await _clientRepository.GetByIdAsync(project.ClientId);
+            var clientEmail = client?.Email;
+            if (!string.IsNullOrEmpty(clientEmail))
+            {
+                await _hubContext.Clients.User(clientEmail)
+                      .SendAsync("NewBidForOwner", payload);
+            }
         }
 
         public async Task UpdateBidAsync(Bid bid)

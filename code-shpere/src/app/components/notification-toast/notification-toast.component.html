@@ -1,0 +1,21 @@
+<!-- container in top-right corner -->
+<div class="notification-toast-container" aria-live="polite" aria-atomic="true">
+  <div *ngFor="let t of toasts" class="toast show mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">New Bid</strong>
+      <small class="text-muted">just now</small>
+      <button type="button" class="btn-close ms-2" aria-label="Close" (click)="close(t)"></button>
+    </div>
+    <div class="toast-body">
+      <div>
+        <strong>{{ t.freelancerName }}</strong> placed a bid of
+        <span class="fw-bold">{{ t.amount | currency }}</span>
+        on your project <span class="fw-bold">{{ t.projectTitle }}</span>.
+      </div>
+      <div class="mt-2">
+        <a [routerLink]="['/project', t.projectId]" class="btn btn-sm btn-primary">View Project</a>
+        <a [routerLink]="['/projects', t.projectId, 'bids']" class="btn btn-sm btn-outline-secondary ms-2">View Bids</a>
+      </div>
+    </div>
+  </div>
+</div>
